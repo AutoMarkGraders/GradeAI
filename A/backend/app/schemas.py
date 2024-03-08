@@ -1,0 +1,62 @@
+# Modify
+from pydantic import BaseModel, EmailStr
+from pydantic.types import conint
+from datetime import datetime
+from typing import Optional
+
+'''
+class PostBase(BaseModel):
+    title: str
+    content: str
+    published: bool=True
+
+class PostCreate(PostBase): # owner_id is also needed for the table posts, we will take it from the token 
+    pass
+'''
+'''
+class Post(PostBase):
+    id: int
+    created_at: datetime
+    owner_id: int
+    owner: UserOut # returns this pydantic model
+
+    class Config:   # to convert to a pydantic model since this class is used as a response
+        orm_mode = True
+
+class PostOut(BaseModel):
+    Post: Post
+    votes: int
+
+    class Config:
+        orm_mode = True
+'''
+class UserOtp(BaseModel): # (user.py) request model for the create_otp
+    email: EmailStr
+    otp: Optional[int] = None
+    name: Optional[str] = None
+    password: Optional[str] = None
+
+class UserCreate(BaseModel): # (user.py) request model for the verify_user
+    email: EmailStr
+    otp: int
+    password: str
+    name: str
+
+class UserOut(BaseModel): # (user.py) response model for the verify_user and get_user
+    email: EmailStr
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    id: Optional[int] = None
+
