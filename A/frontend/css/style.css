@@ -1634,8 +1634,10 @@ pre {
     color: #6c757d;
     opacity: 1; }
   .form-control:disabled, .form-control[readonly] {
-    background-color: #e9ecef;
-    opacity: 1; }
+    opacity: 0.2;
+    color: #495057;
+    background-color: #fff;
+  }
 
 select.form-control:focus::-ms-value {
   color: #495057;
@@ -2064,7 +2066,7 @@ textarea.form-control {
     -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
   .btn.disabled, .btn:disabled {
-    opacity: 0.65; }
+    opacity: 0.5; }
 
 a.btn.disabled,
 fieldset:disabled a.btn {
@@ -8359,3 +8361,7 @@ textarea.form-control {
 }
 
       
+.disabled-input {
+  background-color: rgba(255, 0, 0, 0);
+  color: rgba(255, 0, 0, 0)
+}
