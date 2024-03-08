@@ -8359,9 +8359,3 @@ textarea.form-control {
 .bottom-line-signup-ext {
   color: var(--pink);
 }
-
-      
-.disabled-input {
-  background-color: rgba(255, 0, 0, 0);
-  color: rgba(255, 0, 0, 0)
-}
