@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .routers import user, auth
 
-#uvicorn app.main:app --reload  ##fetch('http://localhost:8000/').then(res => res.json()).then(console.log)
+#uvicorn A.backend.app.main:app --reload  ##fetch('http://localhost:8000/').then(res => res.json()).then(console.log)
 
 app = FastAPI()
 
