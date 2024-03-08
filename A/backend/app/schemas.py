@@ -48,15 +48,16 @@ class UserOut(BaseModel): # (user.py) response model for the verify_user and get
 
     class Config:
         orm_mode = True
-'''
-class UserLogin(BaseModel):
-    email: EmailStr
+
+class StudentLogin(BaseModel):
+    institution: str
+    id: str
     password: str
-'''
-class Token(BaseModel): # (auth.py) response model for the login
+
+class Token(BaseModel): # (auth.py) response model for the login and studLogin
     access_token: str
     token_type: str
 
-class TokenData(BaseModel):
+class TokenData(BaseModel): # (oauth2.py) used to store the user_id for verify_access_token
     id: Optional[int] = None
 
