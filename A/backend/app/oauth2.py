@@ -15,9 +15,9 @@ ALGORITHM = settings.algorithm
 ACCESS_TOKEN_EXPIRE_MINUTES = settings.access_token_expire_minutes
 
 def create_access_token(data: dict): # used in routers/auth.py/login()
-    to_encode = data.copy() # {"user_id": 'alan'}
+    to_encode = data.copy() # {"user_id": 'alan@gmail.com'}
     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    to_encode.update({"exp": expire})   # {"user_id": 'alan', "exp": expire-datetime}
+    to_encode.update({"exp": expire})   # {"user_id": 'alan@gmail.com', "exp": expire-datetime}
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
@@ -29,7 +29,7 @@ def verify_access_token(token: str, credentials_exception):
         id: str = payload.get("user_id")
         if id is None:
             raise credentials_exception
-        token_data = schemas.TokenData(id=id)   # simply stores the user_id
+        token_data = schemas.TokenData(id=id)   # simply stores the user_id(emailid)
     except JWTError:
         raise credentials_exception # JWT expired or invalid
     return token_data
@@ -39,7 +39,7 @@ def verify_access_token(token: str, credentials_exception):
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(database.get_db)):
     credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail = "Couldnt validate credentials", headers={"WWW-Authenticate": "Bearer"})
 
-    token = verify_access_token(token, credentials_exception)   # simply stores the user_id
+    token = verify_access_token(token, credentials_exception)   # simply stores the user_id(emailid)
 
-    user = db.query(models.User).filter(models.User.id == token.id).first()
+    user = db.query(models.User).filter(models.User.email == token.email).first()
     return user

@@ -48,12 +48,12 @@ class UserOut(BaseModel): # (user.py) response model for the verify_user and get
 
     class Config:
         orm_mode = True
-
+'''
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
-
-class Token(BaseModel):
+'''
+class Token(BaseModel): # (auth.py) response model for the login
     access_token: str
     token_type: str
 
