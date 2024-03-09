@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <h2>Student Login</h2>
+    <form id="studLoginForm">
+        <label for="institution">Institution:</label><br>
+        <input type="text" id="institution" name="institution"><br>
+        <label for="id">ID:</label><br>
+        <input type="text" id="id" name="id"><br>
+        <label for="studPassword">Password:</label><br>
+        <input type="password" id="studPassword" name="password"><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        $("#loginForm").submit(function(event) {
+            event.preventDefault();
+            var username = $("#username").val();
+            var password = $("#password").val();
+            $.post("http://127.0.0.1:8000/login", { username: username, password: password })
+                .done(function(data) {
+                    alert("Access Token: " + data.access_token);
+                })
+                .fail(function() {
+                    alert("Invalid credentials.");
+                });
+        });
+
+        $("#studLoginForm").submit(function(event) {
+            event.preventDefault();
+            var id = $("#id").val();
+            var institution = $("#institution").val();
+            var password = $("#studPassword").val();
+            $.ajax({
+                url: "http://127.0.0.1:8000/login/student",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify({ id: id, institution: institution, password: password }),
+                success: function(data) {
+                    alert("Access Token: " + data.access_token);
+                },
+                error: function() {
+                    alert("Invalid credentials.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

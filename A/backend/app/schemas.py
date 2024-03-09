@@ -47,7 +47,7 @@ class UserOut(BaseModel): # (user.py) response model for the verify_user and get
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        orm_mode = True # renamed to from_attributes but causes problems for sqlalchemy
 
 class StudentLogin(BaseModel):
     institution: str
