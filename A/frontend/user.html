@@ -51,7 +51,7 @@
                                     <input type="text" class="form-control" id="email" placeholder="Email">
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="form-control btn btn-primary submit px-3" id="sendOtp">Send OTP</button>
+                                    <button class="form-control btn btn-primary px-3" id="sendOtp">Send OTP</button>
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="otp" placeholder="OTP" disabled >
@@ -78,6 +78,7 @@
         $(document).ready(function() {
             $("#sendOtp").click(function() {
                 var email = $("#email").val();
+                console.log(email)
                 $.ajax({
                     url: 'http://127.0.0.1:8000/users/otp',
                     type: 'post',
