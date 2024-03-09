@@ -8347,5 +8347,13 @@ textarea.form-control {
         background: #fbceb5;
         color: #fff; }
 
+.nav-col {
+  background: rgba(0, 0, 0, 0.7);
+}
+        
+.bottom-line-signup {
+  color: white;
+}        
+
 
       
