@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="img js-fullheight" style="background-image: url(images/bg.jpg);">
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">Sign Up</h2>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="login-wrap p-0">
+                        <form class="signin-form" id="myform">
+                            <div class="form-group">
+                                <input id="username" type="text" class="form-control" placeholder="Username" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" class="form-control" placeholder="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input  id="password" type="text" class="form-control" placeholder="Password" required>
+                                <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="form-control btn btn-primary submit px-3">SUBMIT</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center ">Already have an account? <p></p><p class="text-center ">yes????? then why u in this page u retard <a href="index.html">Sign In</a></p>
+        </div>
+    </section>
+    
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+
+    
+
+    <!--FIREBASE sdk setup and configuration-->
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
+
+    import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword , sendEmailVerification} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyBz1pSw5rCyFXdmRtepCCryQLRrkGVdl7k",
+      authDomain: "auto-mark-grader.firebaseapp.com",
+      projectId: "auto-mark-grader",
+      storageBucket: "auto-mark-grader.appspot.com",
+      messagingSenderId: "1036661490233",
+      appId: "1:1036661490233:web:7d2b16ff18ee727ebfc3e8",
+      measurementId: "G-43ZSMWENXR"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+        const db=getDatabase();
+        const auth=getAuth(app);
+
+        
+        
+let Emaillnp = document.getElementById('email');
+let Passlnp = document.getElementById('password');
+let Fnamelnp = document.getElementById("username");
+
+let Registeruser = evt => {
+        evt.preventDefault(); 
+        createUserWithEmailAndPassword(auth, Emaillnp.value, Passlnp.value)
+            .then((credentials) => {
+                set(ref(db, 'UsersAuthList/' + credentials.user.uid), {
+                    fullname: Fnamelnp.value
+                }).then(() => {
+                    sendEmailVerification(auth.currentUser)
+                        .then(() => {
+                            // Email verification sent!
+                            alert("Verification email sent. Please check your email inbox.");
+                        }).catch((error) => {
+                            console.error(error);
+                            alert("Error sending verification email: " + error.message);
+                        });
+                });
+            })
+            .catch((error) => {
+                alert(error.message);
+                console.error(error);
+            });
+    }
+    myform.addEventListener('submit', Registeruser);
+        
+  </script>
+  
+</body>
+</html>
