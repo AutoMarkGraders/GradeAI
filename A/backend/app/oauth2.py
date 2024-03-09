@@ -14,10 +14,10 @@ SECRET_KEY = settings.secret_key
 ALGORITHM = settings.algorithm
 ACCESS_TOKEN_EXPIRE_MINUTES = settings.access_token_expire_minutes
 
-def create_access_token(data: dict): # used in routers/auth.py/login()
-    to_encode = data.copy() # {"user_id": 'alan'}
+def create_access_token(data: dict): # used in routers/auth.py/login and studLogin
+    to_encode = data.copy() # {"user_id": 'rset@edu.in'} or {"user_id": 'u2103021'}
     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    to_encode.update({"exp": expire})   # {"user_id": 'alan', "exp": expire-datetime}
+    to_encode.update({"exp": expire})   # {"user_id": 'rset@edu.in', "exp": expire-datetime}
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
@@ -40,6 +40,6 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail = "Couldnt validate credentials", headers={"WWW-Authenticate": "Bearer"})
 
     token = verify_access_token(token, credentials_exception)   # simply stores the user_id
-
-    user = db.query(models.User).filter(models.User.id == token.id).first()
+    # works only for institutions table
+    user = db.query(models.User).filter(models.User.email == token.email).first()
     return user
