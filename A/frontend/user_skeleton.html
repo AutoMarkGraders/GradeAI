@@ -3,16 +3,47 @@
 <head>
     <title>Registration Page</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="user.css">
 </head>
 <body>
-    <input type="text" id="email" placeholder="Email">
-    <button id="sendOtp">Send OTP</button>
-    <br>
-    <input type="text" id="otp" placeholder="OTP" disabled>
-    <input type="text" id="password" placeholder="Password" disabled>
-    <input type="text" id="name" placeholder="Name" disabled>
-        <button id="register" disabled>Register</button>
+    <!-- Add a container class to wrap the entire content for better styling and positioning -->
+    <div class="container">
+        <!-- Create a form container to group form-related elements -->
+        <div class="form-container">
 
+            <!-- The active form section -->
+            <div class="form-active">
+                <!-- Heading for the form -->
+                <h1 class="heading">Sign Up</h1>
+
+                <!-- Email input with a label -->
+                <label for="email">Email</label>
+                <input type="text" id="email" placeholder="e.g carlos@mail.com">
+
+                <!-- Button for sending OTP -->
+                <button id="sendOtp" class="btn btn-active">Send OTP</button>
+            </div>
+
+            <!-- The inactive form section -->
+            <div class="form-inctive">
+                <!-- Label and input for OTP -->
+                <label for="otp">Enter your OTP</label>
+                <input type="text" id="otp" placeholder="OTP" disabled>
+
+                <!-- Label and input for full name-->
+                <label for="name">Full name</label>
+                <input type="text" id="name" placeholder="e.g Carlos Ferreira" disabled>
+
+                <!-- Label and input for password -->
+                <label for="password">Password</label>
+                <input type="text" id="password" placeholder="e.g GsMvefV6x" disabled>
+
+                <!-- Button for registration -->
+                <button id="register" class="btn" disabled>Register</button>
+            </div>
+        </div>
+    </div>
+        
     <script>
         $(document).ready(function() {
             $("#sendOtp").click(function() {
@@ -24,8 +55,8 @@
                     data: JSON.stringify({ email: email }),
                     success: function(data) {
                         $("#otp").prop('disabled', false);
-                        $("#password").prop('disabled', false);
                         $("#name").prop('disabled', false);
+                        $("#password").prop('disabled', false);
                         $("#register").prop('disabled', false);
                     }
                 });
@@ -34,8 +65,8 @@
             $("#register").click(function() {
                 var email = $("#email").val();
                 var otp = $("#otp").val();
-                var password = $("#password").val();
                 var name = $("#name").val();
+                var password = $("#password").val();
                 $.ajax({
                     url: 'http://127.0.0.1:8000/users/register',
                     type: 'post',
