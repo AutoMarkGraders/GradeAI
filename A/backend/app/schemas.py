@@ -1,4 +1,5 @@
-# Modify
+# Pydantic models for the request and response bodies of the API
+
 from pydantic import BaseModel, EmailStr
 from pydantic.types import conint
 from datetime import datetime
@@ -61,3 +62,20 @@ class Token(BaseModel): # (auth.py) response model for the login and studLogin
 class TokenData(BaseModel): # (oauth2.py) used to store the user_id for verify_access_token
     id: Optional[int] = None
 
+
+class ExamCreate(BaseModel): # (exam.py) request model for the create_exam
+    institution: str
+    name: str
+    max_marks: int
+    qstn_count: int
+    mark_each: Optional[list[int]] = None
+    answer_key: Optional[str] = None
+    answers: Optional[list[str]] = None
+    contestants: Optional[int] = None
+
+class ExamOut(BaseModel): # (exam.py) response model for the create_exam and get_exam
+    id: int
+    created_at: datetime
+
+    class Config:
+        orm_mode = True    
