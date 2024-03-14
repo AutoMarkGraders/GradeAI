@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign In | GradeAI</title>
     <link rel="stylesheet" href="sign.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
 	<div id="container" class="container">
@@ -18,20 +19,20 @@
 
 						<div class="input-group">
 							<i class='bx bxs-user'></i>
-							<input type="text" placeholder="Institution Name">
+							<input type="text" placeholder="Institution Name" id="institution">
 						</div>
 
 						<div class="input-group">
 							<i class='bx bx-mail-send'></i>
-							<input type="text" placeholder="Student ID">
+							<input type="text" placeholder="Student ID" id="id">
 						</div>
 
 						<div class="input-group">
 							<i class='bx bxs-lock-alt'></i>
-							<input type="password" placeholder="Password">
+							<input type="password" placeholder="Password" id="studPassword">
 						</div>
 
-						<button>
+						<button id="studButton">
 							Sign in
 						</button>
 
@@ -52,15 +53,15 @@
 
 						<div class="input-group">
 							<i class='bx bxs-user'></i>
-							<input type="text" placeholder="Email">
+							<input type="email" placeholder="Email" id="emailid">
 						</div>
 
 						<div class="input-group">
 							<i class='bx bxs-lock-alt'></i>
-							<input type="password" placeholder="Password">
+							<input type="password" placeholder="Password" id="instiPassword">
 						</div>
 
-						<button>
+						<button id="instiButton">
 							Sign in
 						</button>
 
@@ -118,5 +119,40 @@
 	</div>
 
 	<script src="sign.js"></script>
+
+    <script>
+        $("#instiButton").click(function() {
+            //event.preventDefault();
+            var username = $("#emailid").val();
+            var password = $("#instiPassword").val();
+            $.post("http://127.0.0.1:8000/login", { username: username, password: password })
+                .done(function(data) {
+                    alert("Access Token: " + data.access_token);
+                })
+                .fail(function() {
+                    alert("Invalid credentials.");
+                });
+        });
+
+        $("#studButton").click(function() {
+            //event.preventDefault();
+            var institution = $("#institution").val();
+            var id = $("#id").val();
+            var password = $("#studPassword").val();
+            $.ajax({
+                url: "http://127.0.0.1:8000/login/student",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify({ id: id, institution: institution, password: password }),
+                success: function(data) {
+                    alert("Access Token: " + data.access_token);
+                },
+                error: function() {
+                    alert("Invalid credentials.");
+                }
+            });
+        });
+    </script>
+	
   </body>
 </html>
