@@ -274,6 +274,12 @@ body {
     right: 50%;
 }
 
+/* Show 'not-allowed' cursor on hover */
+button:disabled, :disabled {
+    cursor: not-allowed; 
+}
+
+
 /* RESPONSIVE */
 
 @media only screen and (max-width: 425px) {

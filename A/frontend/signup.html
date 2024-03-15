@@ -49,12 +49,8 @@
 						</button>
 
 						<p>
-							<span>
-								Already Registered?
-							</span>
-							<b>
-								<a href="signin.html">Sign in here</a>
-							</b>
+							<span> Already Registered? </span>
+							<b> <a href="signin.html">Sign in here</a> </b>
 						</p>
 
 					</div>
@@ -73,7 +69,7 @@
 			<div class="col align-items-center flex-col">
 				<div class="text sign-in">
 					<h2>
-						Institution Registration
+						Institution Sign-Up
 					</h2>
 				</div>
 				<div class="img sign-in">
@@ -91,9 +87,7 @@
             event.preventDefault();
         });	*/
         $(document).ready(function() {
-            $("#sendOtp").click(function(document.getElementById('sendOtp').addEventListener('click', function(event) {
-            event.preventDefault();
-        });) {
+            $("#sendOtp").click(function() {
                 var email = $("#email").val();
                 $.ajax({
                     url: 'http://127.0.0.1:8000/users/otp',
@@ -105,7 +99,10 @@
                         $("#name").prop('disabled', false);
                         $("#password").prop('disabled', false);
                         $("#register").prop('disabled', false);
-                    }
+                    },
+					error: function(jqXHR, textStatus, errorThrown) {
+            			alert("This email is already registered. Please login.");
+        			}
                 });
             });
 
