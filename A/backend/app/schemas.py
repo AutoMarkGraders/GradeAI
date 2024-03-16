@@ -60,11 +60,11 @@ class Token(BaseModel): # (auth.py) response model for the login and studLogin
     token_type: str
 
 class TokenData(BaseModel): # (oauth2.py) used to store the user_id for verify_access_token
-    id: Optional[int] = None
+    id: Optional[str] = None
 
 
 class ExamCreate(BaseModel): # (exam.py) request model for the create_exam
-    institution: str
+    #institution: str # taken from the JWT
     name: str
     max_marks: int
     qstn_count: int

@@ -10,8 +10,9 @@ router = APIRouter(
 )
 
 @router.post("/create", status_code=status.HTTP_201_CREATED, response_model=schemas.ExamOut)
-def create_exam(exam: schemas.ExamCreate, db: Session = Depends(get_db)):
-    new_exam = models.Exam(**dict(exam))
+def create_exam(exam: schemas.ExamCreate, db: Session = Depends(get_db), current_user: models.User = Depends(oauth2.get_current_user)):
+    #print(current_user.name)
+    new_exam = models.Exam(institution=current_user.name, **dict(exam))
     db.add(new_exam)
     db.commit()
     db.refresh(new_exam)
