@@ -75,6 +75,7 @@ class ExamCreate(BaseModel): # (exam.py) request model for the create_exam
 
 class ExamOut(BaseModel): # (exam.py) response model for the create_exam and get_exam
     id: int
+    name: str
     created_at: datetime
 
     class Config:

@@ -37,6 +37,7 @@ class Exam(Base):
     name = Column(String, nullable=False)
     max_marks = Column(Integer, nullable=False)
     qstn_count = Column(Integer, nullable=False)
+    
     mark_each = Column(ARRAY(Integer), nullable=True)
     answer_key = Column(Text, nullable=True)
     answers = Column(ARRAY(String), nullable=True)
