@@ -29,7 +29,7 @@ def create_exam(exam: schemas.ExamCreate, db: Session = Depends(get_db), current
     table = Table(table_name, metadata, *columns, extend_existing=True)
     metadata.create_all()
 
-    return new_exam
+    return {"name": new_exam.name, "table_name": table_name}
 
 
 @router.post("/anskey/{tname}", status_code=status.HTTP_201_CREATED)
@@ -48,3 +48,25 @@ def upload_anskey(anskey: dict, tname: str, db: Session = Depends(get_db), curre
     db.commit()
 
     return {"message": f"Answer key inserted into {tname}"}
+
+
+@router.post("/ans/{tname}", status_code=status.HTTP_201_CREATED)
+def upload_ans(ans: dict, tname: str, db: Session = Depends(get_db), current_user: models.User = Depends(oauth2.get_current_user)):
+    
+    #add student if not present
+    stud = db.query(models.Student).filter(models.Student.id == ans['student_id'], models.Student.institution == current_user.name).first() 
+    if not stud:
+        new_stud = models.Student(institution=current_user.name, id=ans['student_id'], password=ans['student_id'])
+        db.add(new_stud)
+        db.commit()
+
+    # Create a reference to the tname table
+    metadata = MetaData(bind=db.get_bind())
+    t = Table(tname, metadata, autoload_with=db.get_bind())
+
+    # Insert ans as a new row into the table
+    stmt = insert(t).values(**ans)
+    db.execute(stmt)
+    db.commit()
+
+    return {"message": f"Answer inserted into {tname}"}

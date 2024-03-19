@@ -74,9 +74,10 @@ class ExamCreate(BaseModel): # (exam.py) request model for the create_exam
     contestants: Optional[int] = None
 
 class ExamOut(BaseModel): # (exam.py) response model for the create_exam and get_exam
-    id: int
+    #id: int
     name: str
-    created_at: datetime
+    #created_at: datetime
+    table_name: str
 
     class Config:
         orm_mode = True    
