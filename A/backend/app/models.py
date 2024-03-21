@@ -24,6 +24,7 @@ class Student(Base):
     institution = Column(String, ForeignKey('institutions.name'), nullable=False)
     id = Column(String, nullable=False)
     password = Column(String, nullable=False)
+    exams_attended = Column(ARRAY(String), nullable=True)
     created_at = Column(TIMESTAMP(timezone=True), server_default=text('now()'), nullable=False)
 
     __table_args__ = (PrimaryKeyConstraint('institution', 'id'),)
