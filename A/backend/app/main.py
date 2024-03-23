@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers import user, auth
+from .routers import user, auth, exam
 
-#uvicorn A.backend.app.main:app --reload  ##fetch('http://localhost:8000/').then(res => res.json()).then(console.log)
+# uvicorn app.main:app --reload  ##fetch('http://localhost:8000/').then(res => res.json()).then(console.log)
 
 app = FastAPI()
 
@@ -19,6 +19,7 @@ app.add_middleware(
 
 app.include_router(user.router)
 app.include_router(auth.router)
+app.include_router(exam.router)
 
 @app.get("/")
 def root():

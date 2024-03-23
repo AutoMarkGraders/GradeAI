@@ -7,6 +7,8 @@ from ..database import get_db
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from dotenv import load_dotenv 
+import os
 
 router = APIRouter(
     prefix="/users",
@@ -19,12 +21,11 @@ def create_otp(user: schemas.UserOtp, db: Session = Depends(get_db)):
     otp = random.randint(1000, 9999)    # generate an otp
     
     # send email
-    smtp_object = smtplib.SMTP('smtp.elasticemail.com', 2525)
-    smtp_object.ehlo()  # this line should always come after the line above
-    smtp_object.starttls()
+    smtp_object = smtplib.SMTP_SSL('smtp.gmail.com', 465)
     from_address = "notalan.notification@gmail.com"
     to_address = user.email
-    smtp_object.login(from_address, "1075738EE6A62D415E157663391DEABC06B1")
+    load_dotenv()  # Will still attempt to load from .env if it exists
+    smtp_object.login(from_address, os.getenv('gmail_api'))
     msg = MIMEMultipart()
     msg['From'] = from_address
     msg['To'] = to_address
