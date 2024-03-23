@@ -4,11 +4,8 @@
     <title>Sign Up</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    
     <link rel="stylesheet" href="css/style.css">
 </head>
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top nav-col">
@@ -26,7 +23,7 @@
 			<a class="nav-link" href="#">Link</a>
 		  </li>
           <li class="nav-item">
-			<a class="nav-link active" aria-current="page" href="#">Sign In</a>
+			<a class="nav-link active" aria-current="page" href="index.html">Sign In</a>
 		</li>
 		</ul>
 		
@@ -115,7 +112,7 @@ let Registeruser = evt => {
         evt.preventDefault(); 
         createUserWithEmailAndPassword(auth, Emaillnp.value, Passlnp.value)
             .then((credentials) => {
-                set(ref(db, 'UsersAuthList/' + credentials.user.uid), {
+                set(ref(db, 'UsersAuthList/'+credentials.user.uid), {
                     fullname: Fnamelnp.value
                 }).then(() => {
                     sendEmailVerification(auth.currentUser)
@@ -134,8 +131,8 @@ let Registeruser = evt => {
             });
     }
     myform.addEventListener('submit', Registeruser);
-        
+    
   </script>
-  
+
 </body>
 </html>
