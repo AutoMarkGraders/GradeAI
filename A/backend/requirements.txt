@@ -1,0 +1,12 @@
+easyocr==1.7.1
+fastapi==0.110.0
+passlib==1.7.4
+pdfminer==20191125
+pdfminer.six==20231228
+pydantic==2.6.4
+pydantic_settings==2.2.1
+python-dotenv==1.0.1
+python_jose==3.3.0
+qrcode==7.4.2
+SQLAlchemy==1.4.50
+SQLAlchemy==1.4.7
