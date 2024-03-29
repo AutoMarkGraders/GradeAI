@@ -1,7 +1,7 @@
 """exams_attended
 
 Revision ID: 0fde9ebaccf8
-Revises: 272a939386c9
+Revises: 62bc1167b4d2
 Create Date: 2024-03-21 19:01:08.005773
 
 """
@@ -13,7 +13,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision: str = '0fde9ebaccf8'
-down_revision: Union[str, None] = '272a939386c9'
+down_revision: Union[str, None] = '62bc1167b4d2'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
