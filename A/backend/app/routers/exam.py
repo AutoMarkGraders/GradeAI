@@ -36,8 +36,9 @@ def create_exam(exam: schemas.ExamCreate, db: Session = Depends(get_db), current
 @router.post("/anskey/{tname}", status_code=status.HTTP_201_CREATED)
 def upload_anskey(anskey: dict, tname: str, db: Session = Depends(get_db), current_user: models.User = Depends(oauth2.get_current_user)):
     akey = {"student_id": "answerkey"}
-    akey.update(anskey)
-    #add total also
+    akey.update(anskey) #adds individual answers and marks to akey
+    total = sum(value for i, value in enumerate(anskey.values()) if i % 2 != 0) #total marks
+    akey['total'] = total
     
     # Create a reference to the table
     metadata = MetaData(bind=db.get_bind())

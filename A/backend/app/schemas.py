@@ -2,7 +2,7 @@
 
 from pydantic import BaseModel, EmailStr
 from pydantic.types import conint
-from datetime import datetime
+from datetime import datetime, date
 from typing import Optional
 
 '''
@@ -66,12 +66,15 @@ class TokenData(BaseModel): # (oauth2.py) used to store the user_id for verify_a
 class ExamCreate(BaseModel): # (exam.py) request model for the create_exam
     #institution: str # taken from the JWT
     name: str
-    max_marks: int
+    date: date
     qstn_count: int
-    mark_each: Optional[list[int]] = None
-    answer_key: Optional[str] = None
-    answers: Optional[list[str]] = None
+    max_marks: int
+    
+    avg_marks: Optional[int] = None
     contestants: Optional[int] = None
+    #mark_each: Optional[list[int]] = None
+    #answer_key: Optional[str] = None
+    #answers: Optional[list[str]] = None
 
 class ExamOut(BaseModel): # (exam.py) response model for the create_exam and get_exam
     #id: int
