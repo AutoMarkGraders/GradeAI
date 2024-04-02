@@ -176,9 +176,13 @@
 				name:snapshot.val().name
 			}));
 			sessionStorage.setItem("user-creds",JSON.stringify(credentials.user));
-			alert(JSON.stringify({
-				name:snapshot.val().name
-			}));
+			
+			credentials.user.getIdToken().then((idToken) => {
+				// You can use this token to authenticate requests to your server
+				sessionStorage.setItem("jwt", idToken);
+				alert(idToken);
+        	});
+			
 			window.location.href='login_student.html';
 			}
 		})
