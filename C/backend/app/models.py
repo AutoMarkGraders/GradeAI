@@ -1,6 +1,5 @@
 # store table models as sqlalchemy models without having to open postgres software
 
-from enum import unique
 from sqlalchemy import Column, Integer, String, ARRAY, Date, ForeignKey, PrimaryKeyConstraint, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.expression import text
@@ -8,6 +7,7 @@ from sqlalchemy.sql.sqltypes import TIMESTAMP
 
 from .database import Base
 
+'''
 class User(Base):
     __tablename__ = "institutions"
 
@@ -17,7 +17,6 @@ class User(Base):
     created_at = Column(TIMESTAMP(timezone=True), server_default=text('now()'), nullable=False)
     otp = Column(Integer, nullable=True)
 
-    
 class Student(Base):
     __tablename__ = "students"
 
@@ -28,13 +27,13 @@ class Student(Base):
     created_at = Column(TIMESTAMP(timezone=True), server_default=text('now()'), nullable=False)
 
     __table_args__ = (PrimaryKeyConstraint('institution', 'id'),)
-
+'''
 
 class Exam(Base):
     __tablename__ = "exams"
 
     id = Column(Integer, primary_key=True, nullable=False)
-    institution = Column(String, ForeignKey('institutions.name'), nullable=False)
+    institution = Column(String, nullable=False)
     name = Column(String, nullable=False)
     date = Column(Date, nullable=False)
     qstn_count = Column(Integer, nullable=False)

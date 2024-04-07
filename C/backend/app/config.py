@@ -15,6 +15,6 @@ class Settings(BaseSettings): #env var are case insensitive by pydantic.
     # tells pydantic to read env vars from .env
     class Config:
         env_file = ".env"
-        extra = "allow" # allows non alembic variables to exist .env
+        extra = "allow" # allows non alembic variables to exist in .env
   
 settings = Settings()    # holds the actual configuration data (db credentials)

@@ -2,7 +2,7 @@ __pycache__
 *.env
 trial.py
 semantics.py
-serviceAccountKey.json
+FirebaseCreds.json
 
 level1.png
 level2.png
