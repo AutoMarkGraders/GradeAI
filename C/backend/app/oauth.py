@@ -13,7 +13,7 @@ cred = credentials.Certificate('/home/aj/Documents/GitHub/GradeAI/C/backend/Fire
 
 # Initialize the Firebase Admin SDK
 firebase_admin.initialize_app(cred, {
-    'databaseURL' : 'https://'
+    'databaseURL' : 'https://auto-mark-grader-default-rtdb.firebaseio.com/'
 })
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='login') # login is the URL that Postman/frontend would use to get the token.
