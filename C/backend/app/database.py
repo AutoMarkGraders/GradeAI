@@ -18,3 +18,17 @@ def get_db():
     finally:
         db.close()
 
+
+import os
+from dotenv import load_dotenv
+import firebase_admin
+from firebase_admin import credentials
+#from firebase_admin import auth, db
+
+load_dotenv() # Load from .env file
+cred = credentials.Certificate(os.getenv('FIREBASE_FILE_PATH'))
+
+# Initialize the Firebase Admin SDK
+firebase_admin.initialize_app(cred, {
+    'databaseURL' : 'https://auto-mark-grader-default-rtdb.firebaseio.com/'
+})
