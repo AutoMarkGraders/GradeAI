@@ -60,7 +60,8 @@
 
     <script>
         let UserCreds = JSON.parse(sessionStorage.getItem("user-creds"));  
-        let UserInfo = JSON.parse(sessionStorage.getItem("institution-name"));    
+        let UserInfo = JSON.parse(sessionStorage.getItem("institution-name"));
+        let JWT = sessionStorage.getItem("jwt");
 
        let MsgHead = document.getElementById('msg');
         let GreetHead = document.getElementById('greet');
@@ -82,7 +83,7 @@
                 
 
                 MsgHead.innerText = 'user with email ' + UserCreds.email + ' is logged in';
-                GreetHead.innerText = 'Welcome ' + UserInfo.name + ' ';
+                GreetHead.innerText = 'Welcome ' + JWT + ' ';
 
            // }
         }
