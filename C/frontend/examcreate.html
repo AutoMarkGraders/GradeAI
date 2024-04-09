@@ -15,10 +15,15 @@
     </div>
 
     <script>
+
         $(document).ready(function() {
+
+            var jwt = sessionStorage.getItem("jwt");
+            console.log(jwt);
+
             $("#createExam").click(function() {
-                var jwt = sessionStorage.getItem("jwt");
-                alert(jwt);
+
+                // get all the necessary data to send request
                 var examData = {
                     "name": $("#examName").val(),
                     "date": $("#examDate").val(),
@@ -26,62 +31,60 @@
                     "max_marks": $("#maxMarks").val()
                 }
 
-                
+                // send post request to backend
                 $.ajax({
                     url: 'http://127.0.0.1:8000/exam/create',
                     type: 'post',
                     dataType: 'json',
                     contentType: 'application/json',
+                    data: JSON.stringify(examData),                    
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader("Authorization", "Bearer " + jwt);
                     },
                     success: function(data) {
                         console.log(data);
-                        $("#submitAnswerKey").show();
-                    },
-                    
-                    data: JSON.stringify(examData)
+                        sessionStorage.setItem("table_name", data.table_name);
+                        // $("#submitAnswerKey").show(); and dynamically create form should actually come here
+                    }
                 });
+
                 $("#submitAnswerKey").show();
 
-                var keyData = {
-                    "questions": []
-                }
+                // dynamically create form based on question count 
                 for (let i = 0; i < $("#questionCount").val(); i++) {
-                    keyData.questions.push({
-                        "answer": "",
-                        "max_marks": 0
-                    }); 
-                    //dynamically created form  
                     $("#examForm").append(` 
                         <br>Question ${i+1}:<br>
-                        Answer___: <input type="text" name="answer[]"><br>
-                        Marks: <input type="number" name="max_marks[]"><br>
+                        Answer___: <input type="text" id="ans${i+1}"><br>
+                        Marks: <input type="number" id="mark${i+1}"><br>
                     `);
                 }
             });
 
 
             $("#submitAnswerKey").click(function() {
-                var tname = sessionStorage.getItem("tname");
+
+                // get all the necessary data to send request
+                var table_name = sessionStorage.getItem("table_name");
                 var answerKeyData = {};
+                for (let i = 0; i < $("#questionCount").val(); i++) {
+                    answerKeyData["ans" + (i + 1)] = $("#ans" + (i + 1)).val();
+                    answerKeyData["mark" + (i + 1)] = parseInt($("#mark" + (i + 1)).val(), 10);
+                }
+                //console.log(answerKeyData);
 
-                $("#examForm input[name='answer[]']").each(function(index) {
-                    answerKeyData["ans" + (index + 1)] = $(this).val();
-                });
-
-                $("#examForm input[name='max_marks[]']").each(function(index) {
-                    answerKeyData["mark" + (index + 1)] = $(this).val();
-                });
-
+                // send post request to backend
                 $.ajax({
-                    url: 'http://127.0.0.1:8000/exam/anskey/' + tname,
+                    url: 'http://127.0.0.1:8000/exam/anskey/' + table_name,
                     type: 'post',
                     dataType: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify(answerKeyData),
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader("Authorization", "Bearer " + jwt);
+                    },
                     success: function(data) {
                         console.log(data);
+                        // upload answers
                     }
                 });
             });
