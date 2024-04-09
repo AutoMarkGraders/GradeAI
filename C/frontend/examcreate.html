@@ -5,11 +5,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-    <input type="text" id="examName" placeholder="Exam Name">
-    <input type="date" id="examDate">
-    <input type="number" id="questionCount" placeholder="Question Count">
-    <input type="number" id="maxMarks" placeholder="Max Marks">
-    <button id="createExam">Create Exam</button>
+    <div id="examForm">
+        <input type="text" id="examName" placeholder="Exam Name">
+        <input type="date" id="examDate">
+        <input type="number" id="questionCount" placeholder="Question Count">
+        <input type="number" id="maxMarks" placeholder="Max Marks">
+        <button id="createExam">Create Exam</button>
+        <button id="submitAnswerKey" style="display: none;">Submit Answer Key</button>
+    </div>
 
     <script>
         $(document).ready(function() {
@@ -21,8 +24,9 @@
                     "date": $("#examDate").val(),
                     "qstn_count": $("#questionCount").val(),
                     "max_marks": $("#maxMarks").val()
-                };
+                }
 
+                
                 $.ajax({
                     url: 'http://127.0.0.1:8000/exam/create',
                     type: 'post',
@@ -31,13 +35,62 @@
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader("Authorization", "Bearer " + jwt);
                     },
-                    success: function (data) {
+                    success: function(data) {
                         console.log(data);
+                        $("#submitAnswerKey").show();
                     },
+                    
                     data: JSON.stringify(examData)
                 });
+                $("#submitAnswerKey").show();
+
+                var keyData = {
+                    "questions": []
+                }
+                for (let i = 0; i < $("#questionCount").val(); i++) {
+                    keyData.questions.push({
+                        "answer": "",
+                        "max_marks": 0
+                    }); 
+                    //dynamically created form  
+                    $("#examForm").append(` 
+                        <br>Question ${i+1}:<br>
+                        Answer___: <input type="text" name="answer[]"><br>
+                        Marks: <input type="number" name="max_marks[]"><br>
+                    `);
+                }
             });
+
+
+            $("#submitAnswerKey").click(function() {
+                var tname = sessionStorage.getItem("tname");
+                var answerKeyData = {};
+
+                $("#examForm input[name='answer[]']").each(function(index) {
+                    answerKeyData["ans" + (index + 1)] = $(this).val();
+                });
+
+                $("#examForm input[name='max_marks[]']").each(function(index) {
+                    answerKeyData["mark" + (index + 1)] = $(this).val();
+                });
+
+                $.ajax({
+                    url: 'http://127.0.0.1:8000/exam/anskey/' + tname,
+                    type: 'post',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify(answerKeyData),
+                    success: function(data) {
+                        console.log(data);
+                    }
+                });
+            });
+
+            
+
         });
+
+    
     </script>
 </body>
 </html>
