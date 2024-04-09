@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Exam</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <input type="text" id="examName" placeholder="Exam Name">
+    <input type="date" id="examDate">
+    <input type="number" id="questionCount" placeholder="Question Count">
+    <input type="number" id="maxMarks" placeholder="Max Marks">
+    <button id="createExam">Create Exam</button>
+
+    <script>
+        $(document).ready(function() {
+            $("#createExam").click(function() {
+                var jwt = sessionStorage.getItem("jwt");
+                alert(jwt);
+                var examData = {
+                    "name": $("#examName").val(),
+                    "date": $("#examDate").val(),
+                    "qstn_count": $("#questionCount").val(),
+                    "max_marks": $("#maxMarks").val()
+                };
+
+                $.ajax({
+                    url: 'http://127.0.0.1:8000/exam/create',
+                    type: 'post',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader("Authorization", "Bearer " + jwt);
+                    },
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    data: JSON.stringify(examData)
+                });
+            });
+        });
+    </script>
+</body>
+</html>
