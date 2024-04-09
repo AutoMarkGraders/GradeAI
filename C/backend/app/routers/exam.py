@@ -1,9 +1,11 @@
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
 from sqlalchemy.orm import Session
 from sqlalchemy import Table, Column, Integer, String, MetaData, insert, func
 
 from .. import schemas, models, oauth
-from ..database import get_db
+from ..database import get_db, firebase_admin
+from firebase_admin import auth, db
+from firebase_admin.exceptions import FirebaseError
 
 router = APIRouter(
     prefix="/exam",
@@ -11,15 +13,15 @@ router = APIRouter(
 )
 
 @router.post("/create", status_code=status.HTTP_201_CREATED, response_model=schemas.ExamOut)
-def create_exam(exam: schemas.ExamCreate, db: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
-    print(current_user)
+def create_exam(exam: schemas.ExamCreate, pdb: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
+    # insert details into the exams table
     new_exam = models.Exam(institution=current_user, **dict(exam))
-    db.add(new_exam)
-    db.commit()
-    db.refresh(new_exam)
+    pdb.add(new_exam)
+    pdb.commit()
+    pdb.refresh(new_exam)
 
     # Create a new table for the exam
-    metadata = MetaData(bind=db.get_bind())
+    metadata = MetaData(bind=pdb.get_bind())
     table_name = f"{new_exam.institution}_{new_exam.name}"
     columns = [Column('student_id', String, primary_key=True)]
     for i in range(1, new_exam.qstn_count + 1):
@@ -34,43 +36,49 @@ def create_exam(exam: schemas.ExamCreate, db: Session = Depends(get_db), current
 
 
 @router.post("/anskey/{tname}", status_code=status.HTTP_201_CREATED)
-def upload_anskey(anskey: dict, tname: str, db: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
+def upload_anskey(anskey: dict, tname: str, pdb: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
     akey = {"student_id": "answerkey"}
     akey.update(anskey) #adds individual answers and marks to akey
     total = sum(value for i, value in enumerate(anskey.values()) if i % 2 != 0) #total marks
     akey['total'] = total
     
     # Create a reference to the table
-    metadata = MetaData(bind=db.get_bind())
-    t = Table(tname, metadata, autoload_with=db.get_bind())
+    metadata = MetaData(bind=pdb.get_bind())
+    t = Table(tname, metadata, autoload_with=pdb.get_bind())
 
     # Insert akey as a new row into the table
     stmt = insert(t).values(**akey)
-    db.execute(stmt)
-    db.commit()
+    pdb.execute(stmt)
+    pdb.commit()
 
     return {"message": f"Answer key inserted into {tname}"}
 
 
-@router.post("/ans/{tname}", status_code=status.HTTP_201_CREATED)
-def upload_ans(ans: dict, tname: str, db: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
+@router.post("/anspdf/{tname}", status_code=status.HTTP_201_CREATED)
+def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...), pdb: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
     
-    #add student if not present to firebase
-    stud = db.query(models.Student).filter(models.Student.id == ans['student_id'], models.Student.institution == current_user).first() 
-    if not stud:
-        new_stud = models.Student(institution=current_user, id=ans['student_id'], password=ans['student_id'], exams_attended=[tname])
-        db.add(new_stud)
-    else:
-        stud.exams_attended = func.array_append(models.Student.exams_attended, tname)
-    db.commit()
+    # add student if not present in firebase
+    student_email = f"{student}@{current_user}.student"
+    try:
+        user = auth.get_user_by_email(student_email)
+    except FirebaseError:
+        user = auth.create_user(email=student_email)
 
-    # Create a reference to the tname table
-    metadata = MetaData(bind=db.get_bind())
-    t = Table(tname, metadata, autoload_with=db.get_bind())
+    # add pdf to firebase storage @BEJ
+
+    # ocr pdf and create ans dict @DR
+
+    ans = { #dummy ans dict for testing
+    "student_id": f"{student}",
+    "ans1": "hello there",
+    "ans2": "general kenobi"
+    }
 
     # Insert ans as a new row into the table
+    metadata = MetaData(bind=pdb.get_bind()) # Create a reference to the tname table
+    t = Table(tname, metadata, autoload_with=pdb.get_bind())
     stmt = insert(t).values(**ans)
-    db.execute(stmt)
-    db.commit()
+    pdb.execute(stmt)
+    pdb.commit()
 
     return {"message": f"Answer inserted into {tname}"}
