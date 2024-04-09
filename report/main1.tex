@@ -383,13 +383,45 @@
 	
 	\section{Description of Implementation Strategies}
 	\paragraph\
-	This section details the important implementation strategies used in your project. For
+	"This section details the important implementation strategies used in your project. For
 	example, (1) if you are doing a audio/ video capture, what is your python library and
 	associated methods for doing that (2) if you are designing a CNN, how did you do that in the
 	language which you are using for implementation (3) what are the different methods in the
 	language you will use to evaluate your work. Small snippets of code can be supplemented to
-	support your strategy.
-	
+	support your strategy."
+    Libraries Used:
+    \begin{itemize}
+        \item[1.] google.generativeai:
+       \paragraph\
+       This library provides tools for generative AI tasks, enabling users to create or train models for tasks such as image generation, text generation, and more.\\
+       - **Methods:** Utilize pre-trained models or train custom models using techniques like GANs (Generative Adversarial Networks) or VAEs (Variational Autoencoders) for various generative tasks.
+    
+    \item[2.] fastapi:
+       \paragraph\
+       FastAPI is a modern, fast (high-performance) web framework for building APIs with Python 3.7+.\\
+       - **Methods:** Define API endpoints using FastAPI decorators, handle request and response validation using Pydantic models, and utilize asynchronous programming for high concurrency.
+    
+    \item[3.] selenium:
+       \paragraph\
+       Selenium is a web testing tool that can automate browser actions and interactions with web pages.\\
+       - **Methods:** Automate interactions with web pages, such as filling forms, clicking buttons, and scraping data from websites.
+    
+    \item[4.] pydantic:
+       \paragraph\
+       Pydantic is a data validation and settings management library in Python.\\
+       - **Methods:** Define Pydantic models to represent data structures, validate incoming data, and serialize data to and from JSON.
+    
+    \item[5.] sqlalchemy:
+       \paragraph\
+       SQLAlchemy is a SQL toolkit and Object-Relational Mapping (ORM) library for Python.\\
+       - **Methods:** Define database models using SQLAlchemy ORM, perform CRUD operations (Create, Read, Update, Delete), and execute raw SQL queries for database manipulation.
+    
+    \item[6.] alembic:
+       \paragraph\
+       Alembic is a database migration tool for SQLAlchemy, providing a way to manage changes to a relational database schema over time.\\
+       - **Methods:** Create and manage database migrations to version control database schema changes, allowing for easy upgrades and downgrades of database schemas.
+	\end{itemize}
+ 
 	\section{Module Division}
     \paragraph\
     "This section describes the different modules involved in this project and a small description
@@ -398,18 +430,18 @@
 	\begin{itemize}
         \item[1.] User Interface Module:\\
          This module involves creation and implementation of the user interface for Grade AI. It handles the design and functionality of features like user authentication, answer sheet uploading, and display of results.
-        Assigned to: You
         \item[2.] OCR Integration Module:\\
-        This module handles the integration of Optical Character Recognition (OCR) technology into the system. It processes uploaded answer sheets to extract text data.
-        Assigned to: Team Member 1
+        This module handles the integration of Optical Character Recognition (OCR), Handwritten Text Recognition (HTR) technology into the system. It processes uploaded answer sheets to extract text data to be used in the evaluation process.
         \item[3.] Answer Correction Module:\\
         This module implements the algorithm for correcting answers based on extracted text data and a predefined answer key. It evaluates the similarity and correctness of answers.
-        Assigned to: Team Member 2
         \item[4.] Database Management Module:\\
         This module manages the storage and retrieval of answer sheets, corrected results, and associated metadata. It ensures data integrity and security.
-        Assigned to: Team Member 3
 	\end{itemize}
-
+    1. User Interface Module - \\
+    2. OCR Integration Module - \\
+    3. Answer Correction Module - \\
+    4. Database Management Module - 
+    
 	\section{Work Schedule - Gantt Chart}
 	\paragraph\ 
 	Outline the work schedule in the appropriate chart format.
