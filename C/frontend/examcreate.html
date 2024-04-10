@@ -8,10 +8,10 @@
 </head>
 <body class="ExamForm">
     <div id="examForm" class="m-3 ExamForm1">
-        <input type="text" id="examName" placeholder="Exam Name" class="m-3">
-        <input type="date" id="examDate" class="m-3">
-        <input type="number" id="questionCount" placeholder="Question Count" class="m-3">
-        <input type="number" id="maxMarks" placeholder="Max Marks" class="m-3">
+        <input type="text" id="examName" placeholder="Exam Name" class="m-3 input-box">
+        <input type="date" id="examDate" class="m-3 input-box">
+        <input type="number" id="questionCount" placeholder="Question Count" class="m-3 input-box">
+        <input type="number" id="maxMarks" placeholder="Max Marks" class="m-3 input-box">
         <button id="createExam" class="m-3 button2 btn-primary btn submit">Create Exam</button>
     </div>
     <div id="keyForm" style="display: none;" class="key">
@@ -20,9 +20,9 @@
     <div id="ansForm" style="display: none;" >
         <div class="m-3 ExamForm2">
             Student Id : 
-            <input type="text" id="student"> 
-            <input type="file" id="pdf">
-            <button class="submitAnswer">+</button>
+            <input type="text" id="student" class="input-box"> 
+            <input type="file" id="pdf" class="input-box">
+            <button class="submitAnswer m-1 button2 submit">+</button>
         </div>
     </div>
 
@@ -68,8 +68,8 @@
                     $("#keyForm").prepend(` 
                         <div class="m-3 ExamForm2">
                         Question ${i+1}:<br>
-                        Answer : <br><textarea row="10" type="text" id="ans${i+1}" class="ans1"></textarea> <br><br>
-                        Marks : <br><input type="number" id="mark${i+1}"> <br>
+                        Answer : <br><textarea row="10" type="text" id="ans${i+1}" class="ans1 input-box"></textarea> <br><br>
+                        Marks : <br><input type="number" id="mark${i+1}" class="input-box"> <br>
                         <div/>
                     `);
                  
@@ -124,8 +124,8 @@
                     return `
                     <div class="m-3 ExamForm2">
                         Student Id : 
-                        <input type="text" id="student">
-                        <input type="file" id="pdf">
+                        <input type="text" id="student" class="input-box">
+                        <input type="file" id="pdf" class="input-box">
                         <button class="submitAnswer">+</button>
                     </div>    
                     `;
