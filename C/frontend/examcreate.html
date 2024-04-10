@@ -13,12 +13,17 @@
         <input type="number" id="maxMarks" placeholder="Max Marks" class="m-3">
         <button id="createExam" class="m-3">Create Exam</button>
     </div>
-    <div id="answersheet">
+    <div id="keyForm" style="display: none;">
 
+        <button id="submitAnswerKey">Submit Answer Key</button>
     </div>
-    <div id="submitbutton"></div>
-        <button id="submitAnswerKey" style="display: none;">Submit Answer Key</button>
+    <div id="ansForm" style="display: none;">
+        <input type="text" id="student">
+        <input type="file" id="pdf">
+        <button class="submitAnswer">+</button>
     </div>
+
+
     <script>
 
         $(document).ready(function() {
@@ -49,15 +54,15 @@
                     success: function(data) {
                         console.log(data);
                         sessionStorage.setItem("table_name", data.table_name);
-                        // $("#submitAnswerKey").show(); and dynamically create form should actually come here
+                        // $("#keyForm").show(); and dynamically create form should actually come here
                     }
                 });
 
-                $("#submitAnswerKey").show();
+                $("#keyForm").show();
 
                 // dynamically create form based on question count 
                 for (let i = 0; i < $("#questionCount").val(); i++) {
-                    $("#answersheet").append(` 
+                    $("#keyForm").append(` 
                         <div class="m-3">
                         <br>Question ${i+1}:<br>
                         Answer___: <input type="text" id="ans${i+1}"><br>
@@ -91,13 +96,34 @@
                     },
                     success: function(data) {
                         console.log(data);
-                        // remove anskey forms & button
-                        // upload answers form should appear
+                        // remove keyForm and show answForm should be here
                     }
                 });
+
+                // remove keyForm and show ansForm
+                $("#keyForm").hide();
+                $("#ansForm").show();
+
             });
 
-            
+            $(document).on('click', '.submitAnswer', function() {
+
+                // get all the necessary data to send request
+
+                // send post request to backend
+
+                // if success hide previous submitAnswer buttons and add next form
+                $(".submitAnswer").hide();
+                function generateForm() {
+                    return `<br>
+                        <input type="text" id="student">
+                        <input type="file" id="pdf">
+                        <button class="submitAnswer">+</button>
+                    `;
+                }
+                $("#ansForm").append(generateForm());
+
+            });
 
         });
 
