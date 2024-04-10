@@ -3,17 +3,22 @@
 <head>
     <title>Create Exam</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../frontend/css/bootstrap.min.css">
 </head>
 <body>
-    <div id="examForm">
-        <input type="text" id="examName" placeholder="Exam Name">
-        <input type="date" id="examDate">
-        <input type="number" id="questionCount" placeholder="Question Count">
-        <input type="number" id="maxMarks" placeholder="Max Marks">
-        <button id="createExam">Create Exam</button>
+    <div id="examForm" class="m-3 ">
+        <input type="text" id="examName" placeholder="Exam Name" class="m-3">
+        <input type="date" id="examDate" class="m-3">
+        <input type="number" id="questionCount" placeholder="Question Count" class="m-3">
+        <input type="number" id="maxMarks" placeholder="Max Marks" class="m-3">
+        <button id="createExam" class="m-3">Create Exam</button>
+    </div>
+    <div id="answersheet">
+
+    </div>
+    <div id="submitbutton"></div>
         <button id="submitAnswerKey" style="display: none;">Submit Answer Key</button>
     </div>
-
     <script>
 
         $(document).ready(function() {
@@ -52,10 +57,12 @@
 
                 // dynamically create form based on question count 
                 for (let i = 0; i < $("#questionCount").val(); i++) {
-                    $("#examForm").append(` 
+                    $("#answersheet").append(` 
+                        <div class="m-3">
                         <br>Question ${i+1}:<br>
                         Answer___: <input type="text" id="ans${i+1}"><br>
                         Marks: <input type="number" id="mark${i+1}"><br>
+                        <div/>
                     `);
                 }
             });
