@@ -4,18 +4,18 @@
     <title>Create Exam</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../frontend/css/bootstrap.min.css">
+    <link rel="stylesheet" href="examcreate.css">
 </head>
-<body>
-    <div id="examForm" class="m-3 ">
+<body class="ExamForm">
+    <div id="examForm" class="m-3 ExamForm1">
         <input type="text" id="examName" placeholder="Exam Name" class="m-3">
         <input type="date" id="examDate" class="m-3">
         <input type="number" id="questionCount" placeholder="Question Count" class="m-3">
         <input type="number" id="maxMarks" placeholder="Max Marks" class="m-3">
-        <button id="createExam" class="m-3">Create Exam</button>
+        <button id="createExam" class="m-3  btn btn-primary submit">Create Exam</button>
     </div>
     <div id="keyForm" style="display: none;">
-
-        <button id="submitAnswerKey">Submit Answer Key</button>
+        <button id="submitAnswerKey" class="m-3 p-2">Submit Answer Key</button>
     </div>
     <div id="ansForm" style="display: none;">
         <input type="text" id="student">
@@ -61,18 +61,21 @@
                 $("#keyForm").show();
 
                 // dynamically create form based on question count 
-                for (let i = 0; i < $("#questionCount").val(); i++) {
-                    $("#keyForm").append(` 
-                        <div class="m-3">
-                        <br>Question ${i+1}:<br>
+                for (let i = $("#questionCount").val()-1; i >=0; i--) {
+                    $("#keyForm").prepend(` 
+                        <div class="m-3 ExamForm2">
+                        Question ${i+1}:<br>
                         Answer___: <input type="text" id="ans${i+1}"><br>
                         Marks: <input type="number" id="mark${i+1}"><br>
                         <div/>
                     `);
+                 
                 }
+    
             });
+        
 
-
+            
             $("#submitAnswerKey").click(function() {
 
                 // get all the necessary data to send request
