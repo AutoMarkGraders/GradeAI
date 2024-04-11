@@ -12,17 +12,17 @@
         <input type="date" id="examDate" class="m-3 input-box">
         <input type="number" id="questionCount" placeholder="Question Count" class="m-3 input-box">
         <input type="number" id="maxMarks" placeholder="Max Marks" class="m-3 input-box">
-        <button id="createExam" class="m-3 button2 btn-primary btn submit">Create Exam</button>
+        <button id="createExam" class="m-3 button2 btn-warning btn submit">Create Exam</button>
     </div>
     <div id="keyForm" style="display: none;" class="key">
-        <button id="submitAnswerKey" class="m-3 form-control p-2 btn btn-primary submit button1">Submit Answer Key</button>
+        <button id="submitAnswerKey" class="m-4 form-control p-2 btn btn-warning submit button1">Submit Answer Key</button>
     </div>
     <div id="ansForm" style="display: none;" >
         <div class="m-3 ExamForm2">
-            Student Id : 
-            <input type="text" id="student" class="input-box"> 
-            <input type="file" id="pdf" class="input-box">
-            <button class="submitAnswer m-1 button2 submit">+</button>
+            Student Id : &emsp;&ensp;&nbsp; <input type="text" id="student" class="input-box"> 
+            <br>Answer Sheet : <input type="file" id="pdf" class="input-box m-2">
+            <button class="submitAnswer m-1 btn btn-warning button3 submit end-0">+</button>
+    
         </div>
     </div>
 
@@ -123,10 +123,9 @@
                 function generateForm() {
                     return `
                     <div class="m-3 ExamForm2">
-                        Student Id : 
-                        <input type="text" id="student" class="input-box">
-                        <input type="file" id="pdf" class="input-box">
-                        <button class="submitAnswer">+</button>
+                        Student Id : &emsp;&ensp;&nbsp; <input type="text" id="student" class="input-box"> 
+                        <br>Answer Sheet : <input type="file" id="pdf" class="input-box m-2">
+                        <button class="submitAnswer m-1 btn btn-warning button3 submit end-0">+</button>
                     </div>    
                     `;
                 }
