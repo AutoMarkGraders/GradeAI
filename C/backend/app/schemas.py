@@ -5,25 +5,6 @@ from pydantic.types import conint
 from datetime import datetime, date
 from typing import Optional
 
-class UserOut(BaseModel): # (user.py) response model for the verify_user and get_user
-    email: EmailStr
-    created_at: datetime
-
-    class Config:
-        orm_mode = True # renamed to from_attributes but causes problems for sqlalchemy
-
-class StudentLogin(BaseModel):
-    institution: str
-    id: str
-    password: str
-
-class Token(BaseModel): # (auth.py) response model for the login and studLogin
-    access_token: str
-    token_type: str
-
-class TokenData(BaseModel): # (oauth2.py) used to store the user_id for verify_access_token
-    id: Optional[str] = None
-
 
 class ExamCreate(BaseModel): # (exam.py) request model for the create_exam
     #institution: str # taken from the JWT
@@ -46,3 +27,14 @@ class ExamOut(BaseModel): # (exam.py) response model for the create_exam and get
 
     class Config:
         orm_mode = True    
+
+
+class ExamsView(BaseModel): # (view.py) response model for the view_exams
+    name: str
+    date: date
+    max_marks: int
+    avg_marks: Optional[int]
+    contestants: Optional[int]
+
+    class Config:
+        orm_mode = True        

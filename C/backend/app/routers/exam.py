@@ -64,6 +64,8 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     except FirebaseError:
         user = auth.create_user(email=student_email)
 
+    # add tname under student in firebase @BEJ    
+
     # add pdf to firebase storage @BEJ
 
     # ocr pdf and create ans dict @DR
@@ -73,6 +75,8 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     "ans1": "hello there",
     "ans2": "general kenobi"
     }
+
+    # Grade using Gemini
 
     # Insert ans as a new row into the table
     metadata = MetaData(bind=pdb.get_bind()) # Create a reference to the tname table

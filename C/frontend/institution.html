@@ -83,7 +83,7 @@
                 
 
                 MsgHead.innerText = 'user with email ' + UserCreds.email + ' is logged in';
-                GreetHead.innerText = 'Welcome ' + JWT + ' ';
+                GreetHead.innerText = 'Welcome ' + (JSON.parse(sessionStorage.getItem("institution-name"))).name + ' ';
 
            // }
         }
