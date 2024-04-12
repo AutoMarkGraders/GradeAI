@@ -67,9 +67,9 @@
                 for (let i = $("#questionCount").val()-1; i >=0; i--) {
                     $("#keyForm").prepend(` 
                         <div class="m-3 ExamForm2">
-                        Question ${i+1}:<br>
+                        Question ${i+1}: <input type="text" class="input-box">
+                        Marks : <input type="number" id="mark${i+1}" class="input-box"> <br>
                         Answer : <br><textarea row="10" type="text" id="ans${i+1}" class="ans1 input-box"></textarea> <br><br>
-                        Marks : <br><input type="number" id="mark${i+1}" class="input-box"> <br>
                         <div/>
                     `);
                  

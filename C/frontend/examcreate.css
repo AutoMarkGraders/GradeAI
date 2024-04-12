@@ -1,14 +1,14 @@
 :root {
-    --primary-color: #16588E;
-    --secondary-color: #81C4FF;
+    --primary-color: #81C4FF;
+    --secondary-color: #ffffff;
     --black: #000000;
     --white: #ffffff;
     --gray: #efefef;
     --gray-2: #757575;
 
-    --facebook-color: #4267B2;
+    --facebook-color: #81C4FF;
     --google-color: #DB4437;
-    --twitter-color: #1DA1F2;
+    --twitter-color: #81C4FF;
     --insta-color: #E1306C;
     --button-color: #AD33AF;
 }
