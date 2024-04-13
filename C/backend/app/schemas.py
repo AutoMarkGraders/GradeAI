@@ -35,6 +35,7 @@ class ExamsView(BaseModel): # (view.py) response model for the view_exams
     max_marks: int
     avg_marks: Optional[int]
     contestants: Optional[int]
+    qstn_count: Optional[int]
 
     class Config:
         orm_mode = True        
