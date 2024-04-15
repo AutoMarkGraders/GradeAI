@@ -16,13 +16,13 @@
 .ExamForm{
     background-color: var(--secondary-color);
 }
-.ExamForm1{
+.examForm{
     background-color: var(--twitter-color);
     border: 3px solid black;
     border-radius: 10px;
 }
 
-.ExamForm2{
+.dynamicForm{
     padding: 10px;
     margin: 20px;
     background-color: var(--twitter-color);
@@ -30,15 +30,8 @@
     border-radius: 10px;
 }
 
-.ans1{
-    width: 1000px;
-    height: 140px;
-    border: 1px solid black;
-    border-radius: 5px;
-}
 
-.button1{
-    border: 2px solid black;
+.longButton{
     width: 50%;
     position: relative;
     left: 50%;
@@ -51,7 +44,6 @@
 .button2{
     border: 1px solid black;
     border-radius: 50px;
-    
 }
 
 .button3{
@@ -63,10 +55,32 @@
     background: rgba(255,255,255,0.7);
     border: 1px solid black;
     border-radius: 5px;
+    width: 18vw;   
 }
-
 .input-box::placeholder{
     color: #000000;
+}
+
+.key-box{
+    background: rgba(255,255,255,0.7);
+    width: 78vw;
+    height: 20vh;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.number-box{
+    background: rgba(255,255,255,0.7);
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 5vw;
+}
+
+.qstn-box{
+    background: rgba(255,255,255,0.7);
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 70vw;
 }
 
 
