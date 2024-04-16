@@ -199,6 +199,47 @@
 	}
 
 	institution_sign_in.addEventListener('submit', SignInuser);
+
+	$("#studButton").click(function() {
+        //event.preventDefault();
+        var institution = $("#institution").val();
+        var id = $("#id").val();
+        var password = $("#studPassword").val();
+		var email = id + "@" + institution + ".student";
+
+		signInWithEmailAndPassword(auth, email, password).then((credentials)=>{
+		if(credentials.user.emailVerified)
+		{
+		alert("Verify your email address before logging in.");
+		}
+		else {
+					get(child(dbref,'institutions/'+ credentials.user.uid)).then((snapshot)=>{
+			if(snapshot.exists())
+			{
+			sessionStorage.setItem("institution-name", JSON.stringify({
+				name:snapshot.val().name
+			}));
+			sessionStorage.setItem("user-creds",JSON.stringify(credentials.user));
+			
+			credentials.user.getIdToken().then((idToken) => {
+				// You can use this token to authenticate requests to your server
+				sessionStorage.setItem("jwt", idToken);
+				//alert(idToken);
+        	});
+			
+			window.location.href='institution.html';
+			}
+		})
+
+		}
+	})
+	.catch((error)=>{
+		alert(error.message);
+		console.log(error.code);
+		console.log(error.message);
+	})
+	}
+
 		
   </script>
 
