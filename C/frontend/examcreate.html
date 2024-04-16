@@ -20,11 +20,11 @@
     </div>
     
     <div id="ansForm" style="display: none;">
-        <h2>Upload Student Answer Sheets:</h2>
+        <h2>&nbsp;Upload Student Answer Sheets:</h2>
         <div class="m-3 dynamicForm">
             Student Id: <input type="text" id="student" class="input-box"> 
             &emsp;&ensp;&nbsp; Answer Sheet: <input type="file" id="pdf" class="input-box m-2">
-            <button class="submitAnswer m-1 btn btn-warning button3 submit end-0">+</button>   
+            <button class="submitAnswer btn btn-warning">+</button>   
         </div>
     </div>
     <button id="submitAnswers" style="display: none;" class="m-4 form-control p-2 btn btn-warning submit longButton">Submit Answers</button>
@@ -70,10 +70,10 @@
                 for (let i = $("#questionCount").val()-1; i >=0; i--) {
                     $("#keyForm").prepend(` 
                         <div class="m-3 dynamicForm">
-                        Question ${i+1}: <input type="text" class="qstn-box">
-                        Marks : <input type="number" id="mark${i+1}" class="number-box"> <br>
-                        Answer : <br><textarea row="10" type="text" id="ans${i+1}" class="key-box"></textarea>
-                        <div/>
+                        Question ${i+1}: <br> <textarea row="1" type="text" class="qstn-box"></textarea><br>
+                        Answer : <br><textarea row="10" type="text" id="ans${i+1}" class="key-box"></textarea><br>
+                        <br>Marks : <input type="number" class="number-box" id="mark${i+1}" min="1" max="15">
+                        </div>
                     `); 
                 }
                 $("#keyForm").prepend(`<h2>Upload the Answer Key:</h2>`);
@@ -130,7 +130,7 @@
                     <div class="m-3 dynamicForm">
                         Student Id : <input type="text" id="student" class="input-box"> 
                         &emsp;&ensp;&nbsp; Answer Sheet : <input type="file" id="pdf" class="input-box m-2">
-                        <button class="submitAnswer m-1 btn btn-warning button3 submit end-0">+</button>
+                        <button class="submitAnswer m-1 btn btn-warning submit end-0">+</button>
                     </div>    
                     `;
                 }

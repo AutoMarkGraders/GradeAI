@@ -46,9 +46,9 @@
     border-radius: 50px;
 }
 
-.button3{
-    border: 1px solid black;
-    justify-content: end;    
+.submitAnswer{
+    justify-content: end;
+    border-radius: 50%;
 }
 
 .input-box{
@@ -80,7 +80,7 @@
     background: rgba(255,255,255,0.7);
     border: 1px solid black;
     border-radius: 5px;
-    width: 70vw;
+    width: 78vw;
 }
 
 

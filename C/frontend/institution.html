@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Institution</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="institution.css" />
+    <link rel="stylesheet" href="table.css" />
   </head>
   <body>
     <!-- Navbar 
@@ -67,7 +67,7 @@
             <th>Max Marks</th>
             <th>Avg Marks</th>
             <th>Contestants</th>
-            <th>View Results</th>
+            <th>Results</th>
           </tr>
         </thead>
       </table>
@@ -99,6 +99,9 @@
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
     <script>
+      var jwt = sessionStorage.getItem("jwt");
+      console.log(jwt);
+
       let UserCreds = JSON.parse(sessionStorage.getItem("user-creds"));
       let UserInfo = JSON.parse(sessionStorage.getItem("institution-name"));
       let JWT = sessionStorage.getItem("jwt");
@@ -154,7 +157,7 @@
               row.append($('<td>').text(item.max_marks));
               row.append($('<td>').text(item.avg_marks || 'N/A'));
               row.append($('<td>').text(item.contestants));
-              var resultLink = $('<a href="viewexam.html">View Results</a>');
+              var resultLink = $('<a href="viewexam.html">👁‍🗨</a>');
               resultLink.on('click', function() {
                 sessionStorage.setItem('exam_name', item.name);
                 sessionStorage.setItem('qstn_count', item.qstn_count); // for column generation in viewexam.html
