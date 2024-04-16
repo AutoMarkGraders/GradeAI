@@ -58,9 +58,20 @@
                         xhr.setRequestHeader("Authorization", "Bearer " + jwt);
                     },
                     success: function(data) {
-                        console.log(data);
+                        // Display success message
+                        alert("Exam '" + data.name + "' created successfully!");
+                        
+                        // Store relevant data from the response
                         sessionStorage.setItem("table_name", data.table_name);
-                        // $("#keyForm").show(); and dynamically create form should actually come here
+                        
+                        // Perform additional actions if needed
+                    },
+                    error: function(xhr, status, error) {
+                        // Display error message
+                        alert("Failed to create exam. Please try again later.");
+                        
+                        // Optional: Log the error details for debugging
+                        console.error("Error:", xhr.responseText);
                     }
                 });
 
