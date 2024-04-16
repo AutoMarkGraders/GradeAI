@@ -65,12 +65,10 @@
                         sessionStorage.setItem("table_name", data.table_name);
                         
                         // Perform additional actions if needed
+                        // $("#keyForm").show(); and dynamically create form should actually come here
                     },
                     error: function(xhr, status, error) {
-                        // Display error message
                         alert("Failed to create exam. Please try again later.");
-                        
-                        // Optional: Log the error details for debugging
                         console.error("Error:", xhr.responseText);
                     }
                 });
