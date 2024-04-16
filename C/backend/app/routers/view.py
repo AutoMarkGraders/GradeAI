@@ -9,12 +9,12 @@ from firebase_admin import auth, db
 from firebase_admin.exceptions import FirebaseError
 
 router = APIRouter(
-    prefix="/view",
+    prefix="/view",#starting of all url in this page
     tags=['Views'] # for documentation
 )
 
-
-@router.get("/", status_code=status.HTTP_200_OK, response_model=List[schemas.ExamsView])
+#
+@router.get("/", status_code=status.HTTP_200_OK, response_model=List[schemas.ExamsView])#view/ exam function is hosted here
 def view_exams(pdb: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
     
     rows = pdb.query(models.Exam).filter(models.Exam.institution == current_user).all()
@@ -25,7 +25,7 @@ def view_exams(pdb: Session = Depends(get_db), current_user: str = Depends(oauth
     return exams
 
 
-@router.get("/{exam_name}", status_code=status.HTTP_200_OK)
+@router.get("/{exam_name}", status_code=status.HTTP_200_OK)#/view/exam_name
 def view_exam(exam_name: str, pdb: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
 
     table_name = f"{current_user}_{exam_name}"

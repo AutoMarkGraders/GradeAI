@@ -68,6 +68,7 @@
             <th>Avg Marks</th>
             <th>Contestants</th>
             <th>Results</th>
+            <th>remove</th>
           </tr>
         </thead>
       </table>
@@ -82,6 +83,8 @@
             <td>automatically</td>
             <td>on</td>
             <td>opening</td>
+            
+            
           </tr>
         </tbody>
       </table>
@@ -140,14 +143,17 @@
       }).resize();
 
       // Send a GET request to the server when the page loads
-      $(document).ready(function() {
+      $(document).ready(function() 
+      {
         $.ajax({
           url: 'http://127.0.0.1:8000/view',
           method: 'GET',
-          headers: {
+          headers: 
+          {
             'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
           },
-          success: function(data) {
+          success: function(data) 
+          {
             // Fill the table with the response
             var tbody = $('.tbl-content tbody');
             data.forEach(function(item) {
@@ -157,14 +163,39 @@
               row.append($('<td>').text(item.max_marks));
               row.append($('<td>').text(item.avg_marks || 'N/A'));
               row.append($('<td>').text(item.contestants));
+
+              // Create a link for exam deletion
+              var deleteLink = $('<a href="#" class="delete-link">🚮</a>');
+              deleteLink.on('click', function() {
+                  // Handle exam deletion here
+                  // For example, you can prompt the user for confirmation and then remove the row from the table
+                  var confirmation = confirm("Are you sure you want to delete this exam?");
+                  if (confirmation) {
+                      row.remove(); // Remove the row from the table
+                      // Here you can also make an AJAX request to delete the exam from the server
+                  }
+                  return false; // Prevent the default action of the link
+              });  
+
+
+
+
               var resultLink = $('<a href="viewexam.html">👁‍🗨</a>');
               resultLink.on('click', function() {
                 sessionStorage.setItem('exam_name', item.name);
                 sessionStorage.setItem('qstn_count', item.qstn_count); // for column generation in viewexam.html
               });
-              row.append($('<td>').append(resultLink));
-              tbody.append(row);
-            });
+              // Append delete link and result link to the same table cell
+                  var actionsCell = $('<td>');
+                  actionsCell.append(resultLink);
+                  actionsCell.append('__________'); // Add a space for visual separation
+                  actionsCell.append(deleteLink);
+                  
+                  
+
+                  row.append(actionsCell);
+                  tbody.append(row);
+                          });
           }
         });
       });
