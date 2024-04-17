@@ -1,3 +1,6 @@
+#function to communicate PG Amin and FireBase
+
+
 from .config import settings # for access to env vars(db config)
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker

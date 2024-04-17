@@ -8,6 +8,8 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl='login') # login is the URL that P
 
 # gets the token from the Authorization header of the HTTP request with Depends(oauth2_scheme)
 # used in routers to identify the user making the request
+
+#input=JWT  output=Name of current user  eg RSET
 def get_current_user(idToken: str = Depends(oauth2_scheme)):
     try:
         # Verify the ID token and get the user's UID

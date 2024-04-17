@@ -1,3 +1,6 @@
+
+#functions to write to table
+
 from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
 from sqlalchemy.orm import Session
 from sqlalchemy import Table, Column, Integer, String, MetaData, insert, func
@@ -57,7 +60,7 @@ def upload_anskey(anskey: dict, tname: str, pdb: Session = Depends(get_db), curr
 @router.post("/anspdf/{tname}", status_code=status.HTTP_201_CREATED)
 def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...), pdb: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
     
-    # add student if not present in firebase
+    # add student if not present in firebase authentication
     student_email = f"{student}@{current_user}.student"
     try:
         user = auth.get_user_by_email(student_email)

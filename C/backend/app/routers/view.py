@@ -1,3 +1,8 @@
+
+
+#functions to view the exams
+
+
 from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
 from sqlalchemy.orm import Session, load_only
 from sqlalchemy import Table, Column, Integer, String, MetaData, insert, func, text
