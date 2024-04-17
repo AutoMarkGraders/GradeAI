@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign Up | GradeAI</title>
 	<link rel="icon" href="favico.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="sign.css">
-		
-  </head>
-  <body>
+    <link rel="stylesheet" href="sign.css">	
+</head>
+<body>
 	<div id="container" class="container">
 		<!-- FORM SECTION -->
 		<div class="row">
@@ -22,27 +21,23 @@
 			<div class="col align-items-center flex-col sign-in">
 				<div class="form-wrapper align-items-center">
 					<div class="form sign-in">
-                    <form class="signin-form" id="myform">
+                        
+                        <form id="myform">
                         <div class="input-group">
 							<i class='bx bxs-lock-alt'></i>
 							<input type="text" id="name" placeholder="Institution Name">
 						</div>
-
 						<div class="input-group">
 							<i class='bx bxs-user'></i>
 							<input type="email" id="email" placeholder="Email">
 						</div>
-				
-						
 						<div class="input-group">
 							<i class='bx bxs-lock-alt'></i>
 							<input type="password" id="password" placeholder="Password">
 						</div>
-						
 						<button id="register">
 							Sign Up
 						</button>
-
                         </form>
 
 						<p>
@@ -65,7 +60,7 @@
 			<div class="col align-items-center flex-col">
 				<div class="text sign-in">
 					<h2>
-						Institution Sign-Up
+						Institution<br>Sign-Up
 					</h2>
 				</div>
 				<div class="img sign-in">
@@ -76,10 +71,8 @@
 	</div>
 
 	<script src="sign.js"></script>
-    
 
     <!--FIREBASE sdk setup and configuration-->
-
     <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
@@ -138,5 +131,5 @@
     myform.addEventListener('submit', Registeruser);
     
     </script>
-    </body>
+</body>
 </html>
