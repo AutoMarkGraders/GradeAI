@@ -73,17 +73,17 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
 
 
     # Upload the PDF file to Firebase Storage
-    bucket = storage.bucket()
+    ''' bucket = storage.bucket()
     blob = bucket.blob(file.filename)
     blob.upload_from_file(file.file)
-    pdf_url = blob.public_url
+    pdf_url = blob.public_url'''
 
     # Store metadata in Firebase Realtime Database
-    '''ref = db.reference(db_path)
+    ref = db.reference(db_path)
     new_entry = ref.push({
-        'student': student,
-        'pdf_url': pdf_url
-    })'''
+        'student': student
+        #'pdf_url': pdf_url
+    })
     return {"message": "PDF uploaded successfully"}
 
 
