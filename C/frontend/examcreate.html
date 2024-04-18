@@ -89,8 +89,8 @@
             });
         
 
-            
-            $("#submitAnswerKey").click(function() {
+
+            $("#submitAnswerKey").click(function() {   ///to send answer KEY
 
                 // get all the necessary data to send request
                 var table_name = sessionStorage.getItem("table_name");
@@ -101,7 +101,7 @@
                 }
                 //console.log(answerKeyData);
 
-                // send post request to backend
+                // send post request to backend   //?????
                 $.ajax({
                     url: 'http://127.0.0.1:8000/exam/anskey/' + table_name,
                     type: 'post',
@@ -125,27 +125,75 @@
             });
 
             
+//--------------//UPLOAD PDF REQUEST----------------------------//
+            $(document).on('click', '.submitAnswer', function() 
+            {
+                    // Get the necessary data to send with the request
+                    var studentId = $(this).closest('.dynamicForm').find('.input-box').val();
+                    var pdfFile = $(this).closest('.dynamicForm').find('#pdf')[0].files[0]; // Assuming the class of the file input is 'input-file'
 
-            $(document).on('click', '.submitAnswer', function() {
+                    // Create a FormData object to send the data as multipart/form-data
+                    var formData = new FormData();
+                    formData.append('student', studentId);
+                    formData.append('file', pdfFile);
 
-                // get all the necessary data to send request
+                    // Extract the table name from the URL
+                    var urlParts = window.location.pathname.split('/');// name retraction not good i guess????????????????
+                    //var tableName = urlParts[urlParts.length - 1];
+                    var tableName = sessionStorage.getItem("table_name");
+                    alert(studentId+"  "+tableName);
+                    //alert(tableName);
+                    
 
-                // send post request to backend
 
-                // if success hide previous submitAnswer buttons and add next form
-                $(".submitAnswer").hide();
-                function generateForm() {
-                    return `
-                    <div class="m-3 dynamicForm">
-                        Student Id : <input type="text" id="student" class="input-box"> 
-                        &emsp;&ensp;&nbsp; Answer Sheet : <input type="file" id="pdf" class="input-box m-2">
-                        <button class="submitAnswer m-1 btn btn-warning submit end-0">+</button>
-                    </div>    
-                    `;
-                }
-                $("#ansForm").append(generateForm());
+                    // Send the AJAX request
+                    $.ajax({
+                        url: 'http://127.0.0.1:8000/exam/anspdf/' + tableName,
+                        type: 'POST',
+                        data: formData,
+                        contentType: false, // Set to false to prevent jQuery from setting the content type
+                        processData: false, // Set to false to prevent jQuery from processing the data
+                        beforeSend: function(xhr) {
+                        xhr.setRequestHeader("Authorization", "Bearer " + jwt);
+                    },
+                        success: function(data)
+                         {
+                            // Handle success response
+                            alert("Successfully received: " + data.message);
+                        },
+                        error: function(xhr, status, error) 
+                        {
+                            // Handle error response
+                            console.error('Error uploading PDF:', error);
+                        }
+                    });
 
-            });
+
+
+                    // Hide the current submitAnswer button and generate a new form
+                    $(".submitAnswer").hide();
+
+                    function generateForm() 
+                    {
+                        // Generate a unique identifier using a timestamp
+                        const uniqueId = Date.now(); // Using timestamp as a unique identifier
+                        
+                        // Construct the HTML form with unique IDs
+                        return `
+                            <div class="m-3 dynamicForm" id="dynamicForm_${uniqueId}">
+                                Student Id : <input type="text" id="student_${uniqueId}" class="input-box"> 
+                                &emsp;&ensp;&nbsp; Answer Sheet : <input type="file" id="pdf_${uniqueId}" class="input-box m-2">
+                                <button class="submitAnswer m-1 btn btn-warning submit end-0">+</button>
+                            </div>    
+                            `;
+                    }
+
+
+
+
+                    $("#ansForm").append(generateForm());
+                });
+
 
         });
 

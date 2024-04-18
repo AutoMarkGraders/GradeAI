@@ -9,6 +9,7 @@ from .. import schemas, models, oauth
 from ..database import get_db, firebase_admin
 from firebase_admin import auth, db
 from firebase_admin.exceptions import FirebaseError
+from firebase_admin import storage
 
 router = APIRouter(
     prefix="/exam",
@@ -67,9 +68,45 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     except FirebaseError:
         user = auth.create_user(email=student_email)
 
+    
+    db_path = f'students/{current_user}/exams/{tname}'
+
+
+    # Upload the PDF file to Firebase Storage
+    bucket = storage.bucket()
+    blob = bucket.blob(file.filename)
+    blob.upload_from_file(file.file)
+    pdf_url = blob.public_url
+
+    # Store metadata in Firebase Realtime Database
+    '''ref = db.reference(db_path)
+    new_entry = ref.push({
+        'student': student,
+        'pdf_url': pdf_url
+    })'''
+    return {"message": "PDF uploaded successfully"}
+
+
+     
+
     # add tname under student in firebase @BEJ    
 
     # add pdf to firebase storage @BEJ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     # ocr pdf and create ans dict @DR
 

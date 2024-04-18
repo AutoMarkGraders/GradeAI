@@ -1,95 +1,151 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-  	<title>MARK</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	
-	<link rel="stylesheet" href="css/style.css">
-
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Sign In | GradeAI</title>
+		<link rel="icon" href="favicon.png">
+		<link rel="stylesheet" href="sign.css">
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	</head>
-	<nav class="navbar navbar-expand-lg navbar-dark fixed-top nav-col">
-		<div class="container-fluid">
-		  <a class="navbar-brand" href="#">Navbar</a>
-		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		  </button>
-		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-			  <li class="nav-item">
-				<a class="nav-link active" aria-current="page" href="#">Home</a>
-			  </li>
-			  <li class="nav-item">
-				<a class="nav-link" href="#">Link</a>
-			  </li>
-			  <li class="nav-item">
-				<a class="nav-link active" aria-current="page" href="#">Sign In</a>
-			</li>
-			</ul>
+	<body>
+	<div id="container" class="container">
+		<!-- FORM SECTION -->
+		<div class="row">
+			<!-- Student -->
+			<div class="col align-items-center flex-col sign-up">
+				<div class="form-wrapper align-items-center">
+					<div class="form sign-up">
 
-		  </div>
-		</div>
-	  </nav>
-	<body class="img js-fullheight" style="background-image: url(images/bg.jpg);">
-	<section class="ftco-section">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-6 text-center mb-5">
-					<h2 class="heading-section">///AMG</h2>
-				</div>
-			</div>
-			<div class="row justify-content-center">
-				<div class="col-md-6 col-lg-4">
-					<div class="login-wrap p-0">
-		      	<h3 class="mb-4 text-center">Have an account?</h3>
+						<div class="input-group">
+							<i class='bx bxs-user'></i>
+							<input type="text" placeholder="Institution Name" id="institution">
+						</div>
 
-		      	<form action="files.html" class="signin-form" id="student_sign_in">
-		      		<div class="form-group">
-		      			<input type="text" class="form-control" placeholder="UID Mail" required id="uid_mail">
-		      		</div>
-	                <div class="form-group">
-						<input id="password-field" type="password" class="form-control" placeholder="Password" required >
-						<span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-	                </div>
-					<div class="form-group">
-						<button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
+						<div class="input-group">
+							<i class='bx bx-mail-send'></i>
+							<input type="text" placeholder="Student ID" id="id">
+						</div>
+
+						<div class="input-group">
+							<i class='bx bxs-lock-alt'></i>
+							<input type="password" placeholder="Password" id="studPassword">
+						</div>
+
+						<button id="studButton">
+							Sign in
+						</button>
+
+						<p>
+							<b onclick="toggle()" class="pointer">
+								Are you an Educator?
+							</b>
+						</p>
+
 					</div>
-	            
-	            </form>
-			  
-			  <!-- sign up -->
-	          <p class="w-100 text-center">&mdash; Or Sign up &mdash;</p>
-	          <div class="social d-flex text-center">
-	          	<a href="signup.html" class="px-2 py-2 mr-md-1 rounded">
-					 Sign Up
-				</a>
-	          	
-	          </div>
-		      </div>
 				</div>
 			</div>
+			<!-- END Student -->
+			<!-- INstitution -->
+			<div class="col align-items-center flex-col sign-in">
+				<div class="form-wrapper align-items-center">
+					<div class="form sign-in">
+					
+					<form id="institution_sign_in">
+					
+						<div class="input-group">
+							<i class='bx bxs-user'></i>
+							<input type="email" placeholder="Email" id="emailid">
+						</div>
+
+						<div class="input-group">
+							<i class='bx bxs-lock-alt'></i>
+							<input type="password" placeholder="Password" id="instiPassword">
+						</div>
+
+						<button id="instiButton">
+							Sign in
+						</button>
+
+						
+						<p class="forgot-password-link" id="forgotPasswordLink">
+							<a href="#" id="forgotPasswordText">Forgot Password?</a>
+						</p>
+						<div class="input-group"  >
+							<i class='bx bxs-user'></i>
+							<input type="email" placeholder="Email" id="resetEmail" style="display: none">
+							<button id="sendResetButton" style="display: none">Send</button>
+						</div>
+						
+
+					</form>	
+
+						<p>
+							<span>
+								Don't have an account?
+							</span>
+							<b>
+								<a href="signup.html">Sign Up</a>
+							</b>
+						</p>
+
+						<p>
+							<b onclick="toggle()" class="pointer">
+								Are you a student?
+							</b>
+						</p>
+
+					</div>
+				</div>
+				<div class="form-wrapper">		
+				</div>
+			</div>
+			<!-- END SIGN IN -->
 		</div>
-	</section>
+		<!-- END FORM SECTION -->
+  
+  
+		<!-- CONTENT SECTION -->
+		<div class="row content-row">
+			<!-- INsti CONTENT -->
+			<div class="col align-items-center flex-col">
+				<div class="text sign-in">
+					<h2>
+						Greetings Educator
+					</h2>	
+				</div>
+				<div class="img sign-in">		
+				</div>
+			</div>
+			<!-- END insti CONTENT -->
+			<!-- Stud CONTENT -->
+			<div class="col align-items-center flex-col">
+				<div class="img sign-up">
+				</div>
+				<div class="text sign-up">
+					<h2>
+						Hello Student
+					</h2>
+				</div>
+			</div>
+			<!-- END stud CONTENT -->
+		</div>
+		<!-- END CONTENT SECTION -->
+	</div>
 
-	<script src="js/jquery.min.js"></script>
-  <script src="js/popper.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/main.js"></script>
+	<script src="sign.js"></script>
+	
 
-
-<!--FIREBASE sdk setup and configuration-->
+	<!--FIREBASE sdk setup and configuration-->
 <script type="module">
 	// Import the functions you need from the SDKs you need
 	import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 	import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
 
 	import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
-	import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-
+	import { getAuth, signInWithEmailAndPassword,sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+	
 	import { get, child } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
 	// TODO: Add SDKs for Firebase products that you want to use
@@ -111,46 +167,156 @@
 	const app = initializeApp(firebaseConfig);
 	const analytics = getAnalytics(app);
 
-		const db=getDatabase();
-		const auth=getAuth(app);
-		const dbref=ref(db);
+	const db=getDatabase();
+	const auth=getAuth(app);
+	const dbref=ref(db);
 
         
-let Emaillnp = document.getElementById('uid_mail');
-let Passlnp = document.getElementById('password-field');
+	let Emaillnp = document.getElementById('emailid');
+	let Passlnp = document.getElementById('instiPassword');
 
 
-    let SignInuser = evt =>{
-        evt.preventDefault(); 
-        signInWithEmailAndPassword(auth,Emaillnp.value,Passlnp.value)
-            .then((credentials)=>{
-               get(child(dbref,'UsersAuthList/'+ credentials.user.uid)).then((snapshot)=>{
+	let SignInuser = evt =>{
+	evt.preventDefault(); 
+	signInWithEmailAndPassword(auth,Emaillnp.value,Passlnp.value)
+	.then((credentials)=>{
+		if(credentials.user.emailVerified)
+		{
+		get(child(dbref,'institutions/'+ credentials.user.uid)).then((snapshot)=>{
+			if(snapshot.exists())
+			{
+			sessionStorage.setItem("institution-name", JSON.stringify({
+				name:snapshot.val().name
+			}));
+			sessionStorage.setItem("user-creds",JSON.stringify(credentials.user));
+			
+			credentials.user.getIdToken().then((idToken) => {
+				// You can use this token to authenticate requests to your server
+				sessionStorage.setItem("jwt", idToken);
+				//alert(idToken);
+        	});
+			
+			window.location.href='institution.html';
+			}
+		})
+		}
+		else {
+		alert("Verify your email address before logging in.");
+		}
+	})
+	.catch((error)=>{
+		alert(error.message);
+		console.log(error.code);
+		console.log(error.message);
+	})
+	}
 
-				if(snapshot.exists()){
-					sessionStorage.setItem("user-info",JSON.stringify({
-						fullname:snapshot.val().fullname
-					}));
-					sessionStorage.setItem("user-creds",JSON.stringify(credentials.user));
-					window.location.href='login_student.html';
-				}
-			   })
-				
-            })
-            .catch((error)=>{
-                alert(error.message);
-                console.log(error.code);
-                console.log(error.message);
-            })
-    }
+	institution_sign_in.addEventListener('submit', SignInuser);
 
-	student_sign_in.addEventListener('submit',SignInuser);
+
+
+
+	const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+	const resetEmailInput = document.getElementById('resetEmail');
+	const forgotPasswordText = document.getElementById('forgotPasswordText');
+	//const resetEmailGroup = document.querySelector('.input-group'); // Select the parent container
+	const sendResetButton = document.getElementById('sendResetButton');
+
+	forgotPasswordLink.addEventListener('click', (event) => {
+		event.preventDefault();
+		resetEmailInput.style.display = 'inline-block'; // Show the email input field
+		sendResetButton.style.display = 'inline-block'; // Show the send button
+		forgotPasswordText.style.display = 'none'; // Hide the "Forgot Password?" text link
+	});
+
+	sendResetButton.addEventListener('click', () => {
+		const email = resetEmailInput.value.trim();
+		if (email !== '') {
+			auth.sendPasswordResetEmail(email)
+				.then(() => {
+					alert('Password reset email sent. Please check your inbox.');
+				})
+				.catch((error) => {
+					console.error(error);
+					alert('Error sending password reset email. Please try again later.');
+				});
+		} else {
+			alert('Please enter your email address.');
+		}
+	});
+
+
+/*
+	$("#studButton").click(function() {
+        //event.preventDefault();
+        var institution = $("#institution").val();
+        var id = $("#id").val();
+        var password = $("#studPassword").val();
+		var email = id + "@" + institution + ".student";
+
+		signInWithEmailAndPassword(auth, email, password).then((credentials)=>{
+		if(credentials.user.emailVerified)
+		{
+		alert("Verify your email address before logging in.");
+		}
+		else {
+					get(child(dbref,'institutions/'+ credentials.user.uid)).then((snapshot)=>{
+			if(snapshot.exists())
+			{
+			sessionStorage.setItem("institution-name", JSON.stringify({
+				name:snapshot.val().name
+			}));
+			sessionStorage.setItem("user-creds",JSON.stringify(credentials.user));
+			
+			credentials.user.getIdToken().then((idToken) => {
+				// You can use this token to authenticate requests to your server
+				sessionStorage.setItem("jwt", idToken);
+				//alert(idToken);
+        	});
+			
+			window.location.href='institution.html';
+			}
+		})
+
+		}
+	})
+	.catch((error)=>{
+		alert(error.message);
+		console.log(error.code);
+		console.log(error.message);
+	})
+	}
+*/
 		
   </script>
 
-  
 
-  </script>
 
-	</body>
+
+
+
+<!--
+    <script>
+        $("#studButton").click(function() {
+            //event.preventDefault();
+            var institution = $("#institution").val();
+            var id = $("#id").val();
+            var password = $("#studPassword").val();
+            $.ajax({
+                url: "http://127.0.0.1:8000/login/student",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify({ id: id, institution: institution, password: password }),
+                success: function(data) {
+                    localStorage.setItem('jwt', data.access_token);
+            		window.location.href = 'institution.html';
+                },
+                error: function() {
+                    alert("Invalid credentials.");
+                }
+            });
+        });
+    </script>
+	-->
+  	</body>
 </html>
-
