@@ -220,8 +220,6 @@
 */
 		
   	</script>
-
-<!--
     <script>
         $("#studButton").click(function() {
             //event.preventDefault();
@@ -235,7 +233,7 @@
                 data: JSON.stringify({ id: id, institution: institution, password: password }),
                 success: function(data) {
                     localStorage.setItem('jwt', data.access_token);
-            		window.location.href = 'institution.html';
+            		window.location.href = 'student.html';
                 },
                 error: function() {
                     alert("Invalid credentials.");
@@ -243,6 +241,6 @@
             });
         });
     </script>
-	-->
+	
   	</body>
 </html>
