@@ -8,10 +8,10 @@
 </head>
 <body class="ExamForm">
     <div id="examForm" class="m-3 examForm">
-        <input type="text" id="examName" placeholder="Exam Name" class="m-2 input-box">
-        <input type="date" id="examDate" class="m-2 input-box">
-        <input type="number" id="questionCount" placeholder="Question Count" class="m-2 input-box">
-        <input type="number" id="maxMarks" placeholder="Max Marks" class="m-2 input-box">
+        <input type="text" id="examName" placeholder="Exam Name" class="m-2 input-box" required>
+        <input type="date" id="examDate" class="m-2 input-box" required>
+        <input type="number" id="questionCount" placeholder="Question Count" class="m-2 input-box" required>
+        <input type="number" id="maxMarks" placeholder="Max Marks" class="m-2 input-box" required>
         <button id="createExam" class="m-2 button2 btn-warning btn submit">Create Exam</button>
     </div>
 
@@ -20,7 +20,7 @@
     </div>
     
     <div id="ansForm" style="display: none;">
-        <h2>&nbsp;Upload Student Answer Sheets:</h2>
+        <h2 class="mx-4">Upload Student Answer Sheets:</h2>
         <div class="m-3 dynamicForm">
             Student Id: <input type="text" id="student" class="input-box"> 
             &emsp;&ensp;&nbsp; Answer Sheet: <input type="file" id="pdf" class="input-box m-2">
@@ -38,40 +38,49 @@
             console.log(jwt);
 
             $("#createExam").click(function() {
-
-                // get all the necessary data to send request
+            // Check if the input fields are empty
+            if ($("#examName").val() === "" || $("#examDate").val() === "" || $("#questionCount").val() === "" || $("#maxMarks").val() === "") {
+                // Display an error message
+                alert("Please enter all the necessary details to create an exam.");
+            } 
+            else 
+            {
+                //remove button after need
+                $("#createExam").remove();
+                 // Get all the necessary data to send request
                 var examData = {
-                    "name": $("#examName").val(),
-                    "date": $("#examDate").val(),
-                    "qstn_count": $("#questionCount").val(),
-                    "max_marks": $("#maxMarks").val()
+                "name": $("#examName").val(),
+                "date": $("#examDate").val(),
+                "qstn_count": $("#questionCount").val(),
+                "max_marks": $("#maxMarks").val()
                 }
 
-                // send post request to backend
+                // Send post request to backend
                 $.ajax({
-                    url: 'http://127.0.0.1:8000/exam/create',
-                    type: 'post',
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    data: JSON.stringify(examData),                    
-                    beforeSend: function(xhr) {
-                        xhr.setRequestHeader("Authorization", "Bearer " + jwt);
-                    },
-                    success: function(data) {
-                        // Display success message
-                        alert("Exam '" + data.name + "' created successfully!");
-                        
-                        // Store relevant data from the response
-                        sessionStorage.setItem("table_name", data.table_name);
-                        
-                        // Perform additional actions if needed
-                        // $("#keyForm").show(); and dynamically create form should actually come here
-                    },
-                    error: function(xhr, status, error) {
-                        alert("Failed to create exam. Please try again later.");
-                        console.error("Error:", xhr.responseText);
-                    }
+                url: 'http://127.0.0.1:8000/exam/create',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(examData),
+                beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + jwt);
+                },
+                success: function(data) {
+                // Display success message
+                alert("Exam '" + data.name + "' created successfully!");
+
+                 // Store relevant data from the response
+                sessionStorage.setItem("table_name", data.table_name);
+
+                // Perform additional actions if needed
+                // $("#keyForm").show(); and dynamically create form should actually come here
+                },
+                error: function(xhr, status, error) {
+                alert("Failed to create exam. Please try again later.");
+                console.error("Error:", xhr.responseText);
+                }
                 });
+
 
                 $("#keyForm").show();
 
@@ -85,7 +94,9 @@
                         </div>
                     `); 
                 }
-                $("#keyForm").prepend(`<h2>Upload the Answer Key:</h2>`);
+                $("#keyForm").prepend(`<h2 class="mx-4">Upload the Answer Key:</h2>`);
+                $("createExam").remove();
+            }
             });
         
 
