@@ -138,11 +138,12 @@
             
 //--------------//UPLOAD PDF REQUEST----------------------------//
             $(document).on('click', '.submitAnswer', function() 
-            {
+            {       var form = $(this).closest('.dynamicForm');
                     // Get the necessary data to send with the request
                     var studentId = $(this).closest('.dynamicForm').find('.input-box').val();
-                    var pdfFile = $(this).closest('.dynamicForm').find('#pdf')[0].files[0]; // Assuming the class of the file input is 'input-file'
-
+                    //var pdfFile = $(this).closest('.dynamicForm').find('#pdf')[0].files[0]; // Assuming the class of the file input is 'input-file'
+                    var pdfFile = form.find('.input-box[type="file"]').prop('files')[0];
+                    //alert(pdfFile);
                     // Create a FormData object to send the data as multipart/form-data
                     var formData = new FormData();
                     formData.append('student', studentId);
