@@ -68,34 +68,23 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     except FirebaseError:
         user = auth.create_user(email=student_email)
 
-    
-    db_path = f'students/{current_user}/exams/{tname}'
-
-
     # Upload the PDF file to Firebase Storage
-    ''' bucket = storage.bucket()
-    blob = bucket.blob(file.filename)
+    bucket = storage.bucket()
+    blob = bucket.blob(file.filename) # use unique filename instead
     blob.upload_from_file(file.file)
-    pdf_url = blob.public_url'''
+    pdf_url = blob.public_url
 
-    # Store metadata in Firebase Realtime Database
-    ref = db.reference(db_path)
-    new_entry = ref.push({
-        'student': student
-        #'pdf_url': pdf_url
+    # add details to firebase realtime database
+    uid = auth.get_user_by_email(student_email).uid
+    rtdb_path = f'students/{uid}/exams/{tname}'
+    ref = db.reference(rtdb_path)
+    ref.set({
+        'pdf_url': pdf_url
     })
     return {"message": "PDF uploaded successfully"}
 
 
      
-
-    # add tname under student in firebase @BEJ    
-
-    # add pdf to firebase storage @BEJ
-
-
-
-
 
 
 

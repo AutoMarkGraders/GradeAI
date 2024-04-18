@@ -33,5 +33,6 @@ cred = credentials.Certificate(os.getenv('FIREBASE_FILE_PATH'))
 
 # Initialize the Firebase Admin SDK
 firebase_admin.initialize_app(cred, {
-    'databaseURL' : 'https://auto-mark-grader-default-rtdb.firebaseio.com/'
+    'databaseURL' : 'https://auto-mark-grader-default-rtdb.firebaseio.com/',
+    'storageBucket': 'auto-mark-grader.appspot.com'
 })
