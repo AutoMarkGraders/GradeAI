@@ -24,6 +24,15 @@
   <body>
 <div style="display: flex; align-items: center; justify-content: space-between">
       <h1>Greetings Educator from InstituteName</h1>
+      <script>
+        // Retrieve institution name from session storage
+        const institutionName = sessionStorage.getItem("institutionName");
+
+        // Update the text content of the h1 element with the institution name
+        document.getElementById("institutionName").textContent = institutionName || "Greetings Educator from InstituteName";
+
+        // Other JavaScript code...
+    </script>
       <button class="btn btn-outline-success" type="button" id="signoutbutton">
         Sign Out
       </button>

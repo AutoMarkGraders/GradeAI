@@ -5,6 +5,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../frontend/css/bootstrap.min.css">
     <link rel="stylesheet" href="examcreate.css">
+
+    <style>
+        body {
+          background: linear-gradient(to bottom, rgb(0, 115, 255), rgb(245, 62, 25));
+          margin: 0;
+          padding: 0;
+          font-family: Arial, sans-serif;
+          height: 100vh; /* Ensure the body takes up the full height of the viewport */
+          overflow: hidden; /* Prevent scrolling */
+        }
+      </style>
+
+
+
+
 </head>
 <body class="ExamForm">
     <div id="examForm" class="m-3 examForm">
@@ -138,7 +153,8 @@
             
 //--------------//UPLOAD PDF REQUEST----------------------------//
             $(document).on('click', '.submitAnswer', function() 
-            {       var form = $(this).closest('.dynamicForm');
+            {       
+                    var form = $(this).closest('.dynamicForm');
                     // Get the necessary data to send with the request
                     var studentId = $(this).closest('.dynamicForm').find('.input-box').val();
                     //var pdfFile = $(this).closest('.dynamicForm').find('#pdf')[0].files[0]; // Assuming the class of the file input is 'input-file'
@@ -176,6 +192,7 @@
                         error: function(xhr, status, error) 
                         {
                             // Handle error response
+                            alert("pdf upload error " + data.message);
                             console.error('Error uploading PDF:', error);
                         }
                     });

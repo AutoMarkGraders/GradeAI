@@ -66,7 +66,7 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     try:
         user = auth.get_user_by_email(student_email)
     except FirebaseError:
-        user = auth.create_user(email=student_email)
+        user = auth.create_user(email=student_email,password='password')#pass word setting?!!!!!!!!!!!!!!!!!!!!!!!!!!!%%%^&*))(*&^%)
 
     # Upload the PDF file to Firebase Storage
     bucket = storage.bucket()
@@ -78,6 +78,8 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     uid = auth.get_user_by_email(student_email).uid
     rtdb_path = f'students/{uid}/exams/{tname}'
     ref = db.reference(rtdb_path)
+
+    # add pdf url to firebase realtime database
     ref.set({
         'pdf_url': pdf_url
     })
