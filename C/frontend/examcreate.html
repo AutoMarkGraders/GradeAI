@@ -28,6 +28,7 @@
         <input type="number" id="questionCount" placeholder="Question Count" class="m-2 input-box" required>
         <input type="number" id="maxMarks" placeholder="Max Marks" class="m-2 input-box" required>
         <button id="createExam" class="m-2 button2 btn-warning btn submit">Create Exam</button>
+        <button id="GoBack" class="m-2 button2 btn-warning btn submit px-4">Go Back</button>
     </div>
 
     <div id="keyForm" style="display: none;">
@@ -51,6 +52,11 @@
 
             var jwt = sessionStorage.getItem("jwt");
             console.log(jwt);
+
+            $("#GoBack").click(function() {
+                // Navigate to the previous page
+                window.location.href = "institution.html";
+            });
 
             $("#createExam").click(function() {
             // Check if the input fields are empty

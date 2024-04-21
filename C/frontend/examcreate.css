@@ -55,7 +55,7 @@
     background: rgba(255,255,255,0.7);
     border: 1px solid black;
     border-radius: 5px;
-    width: 18vw;   
+    width: 12vw;   
 }
 .input-box::placeholder{
     color: #000000;
