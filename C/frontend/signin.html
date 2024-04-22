@@ -113,15 +113,12 @@
 
 <script src="sign.js">//for animation</script>
 
-<!--FIREBASE sdk setup and configuration-->
 <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
-
+   // import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
     import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-
     import { get, child } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
     // Your web app's Firebase configuration
@@ -138,7 +135,7 @@
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
+    //const analytics = getAnalytics(app);
     const db=getDatabase();
     const auth=getAuth(app);
     const dbref=ref(db);
@@ -177,22 +174,14 @@
 
     $("#studButton").click(function()
     {
-        //event.preventDefault();
-        var institution = $("#institution").val();
-        var id = $("#id").val();
-        var password = $("#studPassword").val();
-        var email = id + "@" + institution + ".student";
-		alert(email);
-		alert(password);
-
-        signInWithEmailAndPassword(auth, email, password).then((credentials)=>
-        {
-            if(credentials.user.emailVerified)
-            {
-                alert("Verify your email address before logging in.");
-            }
-            else {
-                get(child(dbref,'institutions/'+ credentials.user.uid)).then((snapshot)=>{
+        event.preventDefault();
+        let institution = $("#institution").val();
+        let id = $("#id").val();
+        let password = $("#studPassword").val();
+        let email = id + "@" + institution + ".student";
+        signInWithEmailAndPassword(auth, email, password).then((credentials)=> {
+            //else {
+                /*get(child(dbref,'students/'+ credentials.user.uid)).then((snapshot)=>{
                     if(snapshot.exists())
                     {
                         sessionStorage.setItem("institution-name", JSON.stringify({
@@ -200,52 +189,31 @@
                         }));
                         sessionStorage.setItem("user-creds",JSON.stringify(credentials.user));
 
-                        credentials.user.getIdToken().then((idToken) => {
+                        credentials.user.getIdToken().then((idToken) => 
+						{
                             // You can use this token to authenticate requests to your server
                             sessionStorage.setItem("jwt", idToken);
                             //alert(idToken);
                         });
 
-                       // window.location.href='institution.html';
+                        window.location.href='student.html';
                     }
-                })
+                })*/
 
-            }
+           // }
+		    credentials.user.getIdToken().then((idToken) => {
+                sessionStorage.setItem("jwt", idToken);
+				sessionStorage.setItem("user", id)
+            });
+            window.location.href='student.html';
         })
-        .catch((error)=>
-        {
+        .catch((error)=> {
             alert(error.message);
             console.log(error.code);
             console.log(error.message);
         })
-
     });
 
 </script>
-
-<script>
-    $("#studButton").click(function()
-    {
-        //event.preventDefault();
-        var institution = $("#institution").val();
-        var id = $("#id").val();
-        var password = $("#studPassword").val();
-        $.ajax({
-            url: "http://127.0.0.1:8000/login/student",
-            type: "post",
-            contentType: "application/json",
-            data: JSON.stringify({ id: id, institution: institution, password: password }),
-            success: function(data) {
-                localStorage.setItem('jwt', data.access_token);
-                window.location.href ='student.html';
-            },
-            error: function() {
-                alert("Invalid credentials.");
-            }
-        });
-    })
-</script>
-
-
 </body>
 </html>
