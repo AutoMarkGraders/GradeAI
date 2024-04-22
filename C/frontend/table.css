@@ -41,13 +41,13 @@ td{
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
 
-section{
+/*section{
   background: linear-gradient(to right, #16588E, #81C4FF);
   font-family: 'Roboto', sans-serif;
-  border-radius: 20px; /* Add this line */
+  border-radius: 20px; *//* Add this line *//*
   width: 80vw;
   margin: 0 auto;
-}
+}*/
 
 
 /* for custom scrollbar for webkit browser*/

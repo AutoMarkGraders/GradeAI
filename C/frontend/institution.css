@@ -1,0 +1,45 @@
+.page-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 10%;
+    /*background-color: beige;*/
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.page-sidebar{
+    display: block;
+    align-items: center;
+    /*background-color: coral;*/
+    height: 100%;
+    width: 30%;
+}
+
+.page-main{
+    display: inline-flex;
+    /*background-color: darkblue;*/
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+
+.tbl{
+  width:65%;
+  table-layout: fixed;
+  border-spacing: 0 5px;
+  /*background-color: black;*/
+  align-items: center;
+  background: linear-gradient(to right, #16588E, #81C4FF);
+  font-family: 'Roboto', sans-serif;
+  border-radius: 20px; /* Add this line */
+  height: fit-content;
+  margin: 0 auto;
+  
+  
+}
