@@ -6,6 +6,14 @@ $(document).ready(function() {
 	let animation = true;
 	let curSlide = 1;
 	let scrolledUp, nextSlide;
+
+	// your JavaScript code here
+
+const appTextLine = document.querySelector('.app__text-line');
+appTextLine.style.transform = 'translate3d(0, -125px, 0)';
+appTextLine.style.opacity = 0;
+
+// more JavaScript code here
 	
 	let pagination = function(slide, target) {
 		animation = true;

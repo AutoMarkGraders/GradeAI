@@ -10,6 +10,7 @@ from ..database import get_db, firebase_admin
 from firebase_admin import auth, db
 from firebase_admin.exceptions import FirebaseError
 from firebase_admin import storage
+import datetime
 
 router = APIRouter(
     prefix="/exam",
@@ -70,7 +71,8 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
 
     # Upload the PDF file to Firebase Storage
     bucket = storage.bucket()
-    blob = bucket.blob(file.filename) # use unique filename instead
+    blob = bucket.blob(str(datetime.datetime.now().timestamp()) + file.filename.split('.')[-1]) # use timestamp as filename and keep the file extension
+   # blob = bucket.blob(file.filename) # use unique filename instead
     blob.upload_from_file(file.file)
     pdf_url = blob.public_url
 
