@@ -52,7 +52,7 @@ def upload_if_needed(pathname: str) -> list[str]:
 prompt_parts = [
   "Display the text in input image.",
   "input: ",
-  *upload_if_needed(r"test.jpg"),
+  *upload_if_needed(r"train.jpg"),
   "output: Hello world !",
   "input: ",
   *upload_if_needed(r"j1.jpg"),
