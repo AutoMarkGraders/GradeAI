@@ -2,18 +2,21 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 10%;
+    height: 14vh;
     /*background-color: beige;*/
     padding-left: 10px;
     padding-right: 10px;
+    padding-bottom: 4vh;
 }
 
 .page-sidebar{
     display: block;
     align-items: center;
-    /*background-color: coral;*/
-    height: 100%;
-    width: 30%;
+    border: solid 5px #000;
+    border-radius: 20px;
+    height: 55vh;
+    margin-top: 13vh;
+    width: 25vw;
 }
 
 .page-main{
@@ -30,7 +33,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
 
 .tbl{
-  width:65%;
+  width:70%;
   table-layout: fixed;
   border-spacing: 0 5px;
   /*background-color: black;*/
@@ -42,4 +45,24 @@
   margin: 0 auto;
   
   
+}
+
+.greet{
+    font-size: 40px;            /*fix*/
+    margin-top: 15vh;
+    text-align: center;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-left: 2vh;
+    margin-right: 2vh;
+}
+
+.createexam{
+    font-size: 25px;            /*fix*/
+    justify-content: center;
+    align-items: center;
+    border-radius: 4vw;
+    padding-left: 4vw;
+    padding-right: 4vw;
+    margin-left: 6vw;
+    margin-top: 5vh;
 }

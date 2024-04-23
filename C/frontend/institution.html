@@ -25,13 +25,23 @@
   <body>
 <div class="page-header">
       
-      <h1>Greetings Educator from InstituteName</h1>
+      <h1 id="institutionName">Greetings Educator from {institutionName}</h1>
       <script>
         // Retrieve institution name from session storage
-        const institutionName = sessionStorage.getItem("institutionName");
+        
+         // Retrieve institution name from session storage
+         const institutionName = sessionStorage.getItem("user");
+
+        // Update the h1 element with the retrieved institution name
+        const h1Element = document.getElementById("institutionName");
+        if (h1Element) {
+          h1Element.textContent = `Greetings Educator from ${institutionName}`;
+        } else {
+          console.error("Element with ID 'institutionName' not found.");
+        }
 
         // Update the text content of the h1 element with the institution name
-        document.getElementById("institutionName").textContent = institutionName || "Greetings Educator from InstituteName";
+       // document.getElementById("institutionName").textContent = institutionName || "Greetings Educator from InstituteName";
 
         // Other JavaScript code...
     </script>
@@ -44,9 +54,9 @@
     <h2 id="greet"></h2>
 
   <div class="page-main">
-    <div class="page-sidebar">
-      <h2 id="greet">hello</h2>
-      <a href="examcreate.html" class="btn btn-primary" id="createButton">
+    <div class="page-sidebar mx-4">
+      <h2 id="greet" class=" greet">Do you want to create a new exam?</h2>
+      <a href="examcreate.html" class="btn btn-warning submit createexam" id="createButton">
         Create
       </a>
     </div>
