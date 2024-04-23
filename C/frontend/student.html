@@ -6,8 +6,8 @@
     <link rel="stylesheet" type="text/css" href="student.css">
     <title>Student</title>
 </head>
-<div class="caption">STUDENT-UID</div>	
-<div id="table">
+<div class="caption">STUDENT-UID</div>
+<button id="signoutbutton">Sign Out</button><div id="table">
 	<div class="header-row row">
     <span class="cell primary"><a href="#">EXAM NAME<i class="fa fa-fw fa-sort"></i></a></span>
     <span class="cell"><a href="#">SUBJECT<i class="fa fa-fw fa-sort"></i></a></span>
@@ -72,6 +72,47 @@
   </div>
   
 </div>
+
+<script>  // to ensure valid session and signout button functionality (can be used in all pages)
+  var jwt = sessionStorage.getItem("jwt");
+  console.log(jwt);
+  let UserCreds = JSON.parse(sessionStorage.getItem("user-creds"));
+  //alert("Welcome, " + UserCreds);
+  let UserInfo = sessionStorage.getItem("user");
+  //let MsgHead = document.getElementById("msg");//let GreetHead = document.getElementById("greet");
+
+  //to ensure valid session
+  window.addEventListener('load', function() {
+    if (!sessionStorage.getItem("jwt")) {
+      alert("You are not signed in!");
+      window.location.href = "signin.html";
+    }
+  });
+
+  //signout button functionality
+  document.getElementById("signoutbutton").addEventListener("click", function() {
+    sessionStorage.removeItem("user-creds");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("jwt");
+    window.location.href = "signin.html";
+  });
+</script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script type="module">
+const firebaseConfig = {
+  apiKey: "AIzaSyBz1pSw5rCyFXdmRtepCCryQLRrkGVdl7k",
+  authDomain: "auto-mark-grader.firebaseapp.com",
+  projectId: "auto-mark-grader",
+  storageBucket: "auto-mark-grader.appspot.com",
+  messagingSenderId: "1036661490233",
+  appId: "1:1036661490233:web:7d2b16ff18ee727ebfc3e8",
+  measurementId: "G-43ZSMWENXR"
+};
+</script>
+
+
+
 
 </body>
 </html>

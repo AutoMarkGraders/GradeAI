@@ -5,6 +5,19 @@ body {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
        font-weight: 300;
 }
+.sign-out-button {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #f00;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+  
+  .sign-out-button:hover {
+    background-color: #d00;
+  }
 
 #table {
     display: table;
