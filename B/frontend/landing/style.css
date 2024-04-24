@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
 html {
   box-sizing: border-box;
 }
@@ -12,13 +14,14 @@ html {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: linear-gradient(to left bottom, #f2e3c6 0%, #a7a1a5 100%);
+  background-image: linear-gradient(to left bottom, #81C4FF 0%, #a7a1a5 100%);
   overflow: hidden;
 }
 .app {
   position: relative;
-  min-width: 850px;
-  height: 540px;
+  min-width: 70vw;
+  height: 90vh;
+  width: 70vw;
   box-shadow: 0 0 60px rgba(0, 0, 0, .3);
   overflow: hidden;
 }
@@ -38,11 +41,11 @@ html {
   left: 0;
 }
 .app__bgimg-image--1 {
-  background: url('img1.jpg') center center no-repeat;
+  background: url('bg2.jpg') center center no-repeat;
   background-size: cover;
 }
 .app__bgimg-image--2 {
-  background: url('img2.jpg') center center no-repeat;
+  background: url('bg1.png') center center no-repeat;
   background-size: cover;
   opacity: 0;
   transition: opacity 0ms 1300ms;
@@ -66,6 +69,8 @@ html {
 }
 .app__text-line--3 {
   transition: transform 1500ms 2200ms, opacity 1500ms 3250ms;
+  font-family: 'Poppins', sans-serif;
+
 }
 .app__text-line--2 {
   transition: transform 1500ms 2100ms, opacity 1500ms 3000ms;
@@ -80,7 +85,7 @@ html {
 }
 .app__text-line--3 {
   font-size: 40px;
-  font-weight: 300;
+  font-weight: 700;
 }
 .app__text-line--2 {
   margin-top: 10px;
@@ -124,13 +129,13 @@ html {
 .app__img {
   position: absolute;
   transform: translate3d(0, -750px, 0);
-  width: 850px;
-  height: 100%;
+  width: 70vw;
+  height: 50%;
   transition: transform 3s cubic-bezier(0.6, 0.13, 0.31, 1.02);
   will-change: transform;
 }
 .app__img img {
-  min-width: 100%;
+  min-width: 70vw;
   user-select: none;
 }
 .initial .app__img {
