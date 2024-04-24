@@ -10,7 +10,7 @@ table{
  }
  
 .tbl-content{
-  max-height:50vh;
+  max-height:75vh;
   overflow-x:auto;
   margin-top: 0px;
   border: 0px solid #37658B;

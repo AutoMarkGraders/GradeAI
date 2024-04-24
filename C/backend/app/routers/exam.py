@@ -72,7 +72,6 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     # Upload the PDF file to Firebase Storage
     bucket = storage.bucket()
     blob = bucket.blob(str(datetime.datetime.now().timestamp()) + file.filename.split('.')[-1]) # use timestamp as filename and keep the file extension
-   # blob = bucket.blob(file.filename) # use unique filename instead
     blob.upload_from_file(file.file)
     pdf_url = blob.public_url
 
@@ -80,11 +79,10 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     uid = auth.get_user_by_email(student_email).uid
     rtdb_path = f'students/{uid}/exams/{tname}'
     ref = db.reference(rtdb_path)
+    ref.set({'pdf_url': pdf_url})    # add pdf url to firebase
 
-    # add pdf url to firebase realtime database
-    ref.set({
-        'pdf_url': pdf_url
-    })
+
+
     return {"message": "PDF uploaded successfully"}
 
 
