@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
 from sqlalchemy.orm import Session
 from sqlalchemy import Table, Column, Integer, String, MetaData, insert, func
+from sqlalchemy import inspect
 
 from .. import schemas, models, oauth
 from ..database import get_db, firebase_admin
@@ -22,10 +23,12 @@ def delete_exam(exam_name: str, pdb: Session = Depends(get_db), current_user: st
 
     #Delete the table with the name current_user_exam_name
     table_name = current_user + "_" + exam_name
-    metadata = MetaData(bind=pdb.get_bind())
+    metadata = MetaData()
+    metadata.bind = pdb.get_bind()
     table = Table(table_name, metadata, autoload_with=pdb.bind)
-    if table.exists():
-        table.drop(pdb.bind)
+    inspector = inspect(pdb.get_bind())
+    if inspector.has_table(table_name):
+        table.drop(pdb.bind)   
 
     pdb.delete(exam) #delete the row from the exams table
     pdb.commit()

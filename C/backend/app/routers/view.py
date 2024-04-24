@@ -1,5 +1,3 @@
-
-
 #functions to view the exams
 
 

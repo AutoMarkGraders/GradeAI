@@ -26,7 +26,8 @@ def create_exam(exam: schemas.ExamCreate, pdb: Session = Depends(get_db), curren
     pdb.refresh(new_exam)
 
     # Create a new table for the exam
-    metadata = MetaData(bind=pdb.get_bind())
+    metadata = MetaData()
+    metadata.bind = pdb.get_bind()
     table_name = f"{new_exam.institution}_{new_exam.name}"
     columns = [Column('student_id', String, primary_key=True)]
     for i in range(1, new_exam.qstn_count + 1):
@@ -35,7 +36,7 @@ def create_exam(exam: schemas.ExamCreate, pdb: Session = Depends(get_db), curren
     columns.append(Column('total', Integer))
     columns.append(Column('grade', String))    
     table = Table(table_name, metadata, *columns, extend_existing=True)
-    metadata.create_all()
+    metadata.create_all(bind=metadata.bind)
 
     return {"name": new_exam.name, "table_name": table_name}
 
@@ -48,7 +49,8 @@ def upload_anskey(anskey: dict, tname: str, pdb: Session = Depends(get_db), curr
     akey['total'] = total
     
     # Create a reference to the table
-    metadata = MetaData(bind=pdb.get_bind())
+    metadata = MetaData()
+    metadata.bind = pdb.get_bind()
     t = Table(tname, metadata, autoload_with=pdb.get_bind())
 
     # Insert akey as a new row into the table
