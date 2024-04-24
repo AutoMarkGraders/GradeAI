@@ -38,11 +38,11 @@ html {
   left: 0;
 }
 .app__bgimg-image--1 {
-  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/537051/city22222.jpg') center center no-repeat;
+  background: url('img1.jpg') center center no-repeat;
   background-size: cover;
 }
 .app__bgimg-image--2 {
-  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/537051/forest.jpg') center center no-repeat;
+  background: url('img2.jpg') center center no-repeat;
   background-size: cover;
   opacity: 0;
   transition: opacity 0ms 1300ms;
