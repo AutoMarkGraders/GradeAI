@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Create Exam</title>
+    <title>GradeAI | New Exam</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../frontend/css/bootstrap.min.css">
     <link rel="stylesheet" href="examcreate.css">
-
-
-
+    <link rel="icon" href="favico.png">
 
 </head>
 <body class="ExamForm" >
     
-    <div id="examForm" class="m-3 examForm">
+    <div id="examForm" class="examForm">
         <input type="text" id="examName" placeholder="Exam Name" class="m-2 input-box" required>
         <input type="date" id="examDate" class="m-2 input-box" required>
         <input type="number" id="questionCount" placeholder="Question Count" class="m-2 input-box" required>
@@ -26,7 +24,7 @@
     </div>
     
     <div id="ansForm" style="display: none;">
-        <h2 class="mx-4">Upload Student Answer Sheets:</h2>
+        <br><h2 class="mx-4">Upload Student Answer Sheets:</h2>
         <div class="m-3 dynamicForm">
             Student Id: <input type="text" id="student" class="input-box"> 
             &emsp;&ensp;&nbsp; Answer Sheet: <input type="file" id="pdf" class="input-box m-2">
@@ -77,10 +75,8 @@
                 xhr.setRequestHeader("Authorization", "Bearer " + jwt);
                 },
                 success: function(data) {
-                // Display success message
-                alert("Exam '" + data.name + "' created successfully!");
+                //alert("Exam '" + data.name + "' created successfully!");
 
-                 // Store relevant data from the response
                 sessionStorage.setItem("table_name", data.table_name);
 
                 // Perform additional actions if needed
@@ -89,6 +85,7 @@
                 error: function(xhr, status, error) {
                 alert("Failed to create exam. Please try again later.");
                 console.error("Error:", xhr.responseText);
+                window.location.href = "institution.html";
                 }
                 });
 
