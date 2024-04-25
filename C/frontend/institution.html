@@ -22,20 +22,17 @@
   </head>
 
   <body>
-    <div class="page-header">
-      <h1 id="institutionName">Greetings Educator from {institutionName}</h1>
-      <script>
-        const institutionName = sessionStorage.getItem("user");
-        const h1Element = document.getElementById("institutionName");
-        if (h1Element) {
-          h1Element.textContent = `Greetings Educator from ${institutionName}`;
-        } else {
-          console.error("Element with ID 'institutionName' not found.");
-        }
-      </script>
-      <button class="btn btn-outline-success" type="button" id="signoutbutton">
-        Sign Out
-      </button>
+    <div class="header">
+      <h1>GradeAI</h1>
+      <div class="header-right">
+        <h2 id="institutionName">{institutionName}</h2>
+        <script>
+          document.getElementById("institutionName").textContent = sessionStorage.getItem("user");
+        </script>
+        <button class="btn btn-outline-success" type="button" id="signoutbutton">
+          Sign Out
+        </button>
+      </div>
     </div>
 
     <div class="page-main">

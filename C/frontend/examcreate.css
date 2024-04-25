@@ -1,6 +1,6 @@
 :root {
     --primary-color: #81C4FF;
-    --secondary-color: #ffffff;
+    --secondary-color: #16588E;
     --black: #000000;
     --white: #ffffff;
     --gray: #efefef;
@@ -9,7 +9,7 @@
 }
 
 .examForm{
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     border-radius: 10px;
     border-bottom-left-radius: 70px;  /* adjust as needed */
     border-bottom-right-radius: 70px; 

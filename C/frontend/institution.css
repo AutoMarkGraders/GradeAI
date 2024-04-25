@@ -1,10 +1,17 @@
-.page-header{
+.header{
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 14vh;
     /*background-color: beige;*/
     padding: 4%;
+    border-bottom: solid 5px #000;
+    margin-bottom: 10vh;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10vw; /* adjust as needed */
 }
 h1{
     font-family: 'Poppins', sans-serif;
@@ -17,7 +24,7 @@ h1{
     border: solid 5px #000;
     border-radius: 20px;
     height: 55vh;
-    margin-top: 13vh;
+    margin-top: 0vh;
     width: 25vw;
 }
 
