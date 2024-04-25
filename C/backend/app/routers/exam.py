@@ -7,6 +7,7 @@ from sqlalchemy import Table, Column, Integer, String, MetaData, insert, func
 
 from .. import schemas, models, oauth
 from ..database import get_db, firebase_admin
+from ..extract import extractText
 from firebase_admin import auth, db
 from firebase_admin.exceptions import FirebaseError
 from firebase_admin import storage
@@ -84,30 +85,26 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     ref.set({'pdf_url': pdf_url})    # add pdf url to firebase
 
 
-
     return {"message": "PDF uploaded successfully"}
+    '''
+     # Convert the PDF to a sequence of PIL Image objects
+    images = convert_from_path(file.file)
+
+    # Save each image to the parent directory of the current directory
+    parent_dir = os.path.dirname(os.getcwd())
+    for i, image in enumerate(images):
+        image_path = os.path.join(parent_dir, f"{i + 1}.png")
+        image.save(image_path, "PNG")
+    '''
 
 
-     
-
-
-
-
-
-
-
-
-
-
-
-
-    # ocr pdf and create ans dict @DR
+    answers = extractText(file)
 
     ans = { #dummy ans dict for testing
-    "student_id": f"{student}",
-    "ans1": "hello there",
-    "ans2": "general kenobi"
+    "student_id": f"{student}"
     }
+    for i, answer in enumerate(answers):
+        ans[f'ans{i+1}'] = answer
 
     # Grade using Gemini
 
