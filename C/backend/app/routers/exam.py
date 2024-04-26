@@ -7,11 +7,12 @@ from sqlalchemy import Table, Column, Integer, String, MetaData, insert, func
 
 from .. import schemas, models, oauth
 from ..database import get_db, firebase_admin
-from ..extract import extractText
+from .. import extract
 from firebase_admin import auth, db
 from firebase_admin.exceptions import FirebaseError
 from firebase_admin import storage
 import datetime
+import os
 
 router = APIRouter(
     prefix="/exam",
@@ -72,9 +73,16 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     except FirebaseError:
         user = auth.create_user(email=student_email,password='password')#pass word setting?!!!!!!!!!!!!!!!!!!!!!!!!!!!%%%^&*))(*&^%)
 
-    # Upload the PDF file to Firebase Storage
+    # Save the pdf to the current directory
+    file_path = os.path.join(os.getcwd(), file.filename)
+    with open(file_path, "wb") as buffer:
+        buffer.write(file.file.read())    
+    #print(os.path.getsize(file_path))
+
+    # Upload the PDF to Firebase Storage
     bucket = storage.bucket()
     blob = bucket.blob(str(datetime.datetime.now().timestamp()) + file.filename.split('.')[-1]) # use timestamp as filename and keep the file extension
+    file.file.seek(0)  # go back to the start of the file
     blob.upload_from_file(file.file)
     pdf_url = blob.public_url
 
@@ -83,28 +91,14 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     rtdb_path = f'students/{uid}/exams/{tname}'
     ref = db.reference(rtdb_path)
     ref.set({'pdf_url': pdf_url})    # add pdf url to firebase
-
-
-    return {"message": "PDF uploaded successfully"}
-    '''
-     # Convert the PDF to a sequence of PIL Image objects
-    images = convert_from_path(file.file)
-
-    # Save each image to the parent directory of the current directory
-    parent_dir = os.path.dirname(os.getcwd())
-    for i, image in enumerate(images):
-        image_path = os.path.join(parent_dir, f"{i + 1}.png")
-        image.save(image_path, "PNG")
-    '''
-
-
-    answers = extractText(file)
-
-    ans = { #dummy ans dict for testing
-    "student_id": f"{student}"
-    }
+    
+    answers = extract.extractText(file_path) #OCR
+    
+    ans = {"student_id": f"{student}"}
     for i, answer in enumerate(answers):
         ans[f'ans{i+1}'] = answer
+
+    return {"message": ans}
 
     # Grade using Gemini
 

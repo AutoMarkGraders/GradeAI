@@ -33,34 +33,12 @@ def upload_if_needed(pathname: str) -> list[str]:
   uploaded_files.append(genai.upload_file(path=path, display_name=hash_id))
   return [uploaded_files[-1]]
 
-'''    
-prompt_parts = [
-  "Display the text in input image.",
-  "input: ",
-  *upload_if_needed(r"trial.png"),
-  "output: Hello world",
-  "input: ",
-  *upload_if_needed(r"test.png"),
-  "output: ",
-]
-
-response = model.generate_content(prompt_parts)
-print(response.text)
-
-
-# delete only after a complete loop?
-for uploaded_file in uploaded_files:
-  genai.delete_file(name=uploaded_file.name)
-
-'''
-
-def extractText(file_path: str):
 #def extractText(file: UploadFile):
+def extractText(file_path: str):
+  
   answers = []
   
   # Convert the PDF to a sequence of PIL Image objects
-  #images = convert_from_path(file.file)
-
   images = convert_from_path(file_path) #requires system's PATH setup
   # Save each image to the current directory and extract text
   for i, image in enumerate(images):
@@ -81,11 +59,11 @@ def extractText(file_path: str):
     answers.append(response.text)
 
     # Delete the image file
-    #os.remove(image_path)
+    os.remove(image_path)
 
   for uploaded_file in uploaded_files:
     genai.delete_file(name=uploaded_file.name)
 
   return answers
 
-extractText("test.pdf")
+#extractText("test.pdf")

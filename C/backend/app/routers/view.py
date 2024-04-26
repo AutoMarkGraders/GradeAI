@@ -42,11 +42,12 @@ def view_exam(exam_name: str, pdb: Session = Depends(get_db), current_user: str 
     result = pdb.execute(query)
     rows = result.fetchall()
 
+    '''
     # Filter out the answer columns
     filtered_rows = []
     for row in rows:
         row_dict = dict(row)
         filtered_row = {key: value for key, value in row_dict.items() if not key.startswith('ans')}
         filtered_rows.append(filtered_row)
-
-    return filtered_rows
+    '''
+    return rows
