@@ -1,4 +1,3 @@
-
 #functions to write to table
 
 from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
@@ -49,16 +48,19 @@ def upload_anskey(anskey: dict, tname: str, pdb: Session = Depends(get_db), curr
     akey.update(anskey) #adds individual answers and marks to akey
     total = sum(value for i, value in enumerate(anskey.values()) if i % 2 != 0) #total marks
     akey['total'] = total
+    akey['grade'] = 'X'
     
-    # Create a reference to the table
-    metadata = MetaData()
-    metadata.bind = pdb.get_bind()
-    t = Table(tname, metadata, autoload_with=pdb.get_bind())
-
-    # Insert akey as a new row into the table
-    stmt = insert(t).values(**akey)
-    pdb.execute(stmt)
-    pdb.commit()
+    try:
+        # Create a reference to the table
+        metadata = MetaData()
+        metadata.bind = pdb.get_bind()
+        t = Table(tname, metadata, autoload_with=pdb.get_bind())
+        # Insert akey as a new row into the table
+        stmt = insert(t).values(**akey)
+        pdb.execute(stmt)
+        pdb.commit()
+    except Exception as e:   
+        raise HTTPException(status_code=500, detail="Internal server error")
 
     return {"message": f"Answer key inserted into {tname}"}
 

@@ -15,9 +15,6 @@ class ExamCreate(BaseModel): # (exam.py) request model for the create_exam
     
     avg_marks: Optional[int] = None
     contestants: Optional[int] = None
-    #mark_each: Optional[list[int]] = None
-    #answer_key: Optional[str] = None
-    #answers: Optional[list[str]] = None
 
 class ExamOut(BaseModel): # (exam.py) response model for the create_exam and get_exam
     #id: int
