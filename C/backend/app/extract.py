@@ -33,7 +33,11 @@ def upload_if_needed(pathname: str) -> list[str]:
   uploaded_files.append(genai.upload_file(path=path, display_name=hash_id))
   return [uploaded_files[-1]]
 
-#def extractText(file: UploadFile):
+data_set = [
+  "Display the text in input image.",
+]
+
+
 def extractText(file_path: str):
   
   answers = []
@@ -45,17 +49,16 @@ def extractText(file_path: str):
     image_path = os.path.join(os.getcwd(), f"{i + 1}.png")
     image.save(image_path, "PNG")
 
-    # Prepare the prompt parts
     prompt_parts = [
-      "Display the text in input image.",
       "input: ",
       *upload_if_needed(image_path),
       "output: ",
     ]
+    data_set.extend(prompt_parts)
 
-    # Extract text from the image
-    response = model.generate_content(prompt_parts)
-    print(response.text)
+    response = model.generate_content(data_set) #OCR
+    #print(response.text)
+    # clean the text??
     answers.append(response.text)
 
     # Delete the image file

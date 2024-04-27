@@ -82,7 +82,7 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     # Upload the PDF to Firebase Storage
     bucket = storage.bucket()
     blob = bucket.blob(str(datetime.datetime.now().timestamp()) + file.filename.split('.')[-1]) # use timestamp as filename and keep the file extension
-    file.file.seek(0)  # go back to the start of the file
+    file.file.seek(0)  # go to start of file
     blob.upload_from_file(file.file)
     pdf_url = blob.public_url
 
@@ -92,21 +92,27 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     ref = db.reference(rtdb_path)
     ref.set({'pdf_url': pdf_url})    # add pdf url to firebase
     
-    answers = extract.extractText(file_path) #OCR
-    
+    #OCR using Gemini
+    try:
+        answers = extract.extractText(file_path) 
+    except Exception as e:
+        answers = ["dummy", "data"]
+
+    # Delete the pdf file from memory
+    os.remove(file_path)
+
+    # Insert ans as a new row into tname
     ans = {"student_id": f"{student}"}
     for i, answer in enumerate(answers):
         ans[f'ans{i+1}'] = answer
-
-    return {"message": ans}
-
-    # Grade using Gemini
-
-    # Insert ans as a new row into the table
-    metadata = MetaData(bind=pdb.get_bind()) # Create a reference to the tname table
+    metadata = MetaData()
+    metadata.bind = pdb.get_bind()
     t = Table(tname, metadata, autoload_with=pdb.get_bind())
     stmt = insert(t).values(**ans)
     pdb.execute(stmt)
     pdb.commit()
+
+    # Grade using Gemini
+
 
     return {"message": f"Answer inserted into {tname}"}
