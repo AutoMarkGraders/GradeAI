@@ -15,6 +15,9 @@ a {
   align-items: center;
   gap: 10vw; /* adjust as needed */
 }
+#profile{
+    width: 6vh;
+}
 h1{
     color: white;
     font-family: 'Poppins', sans-serif;
