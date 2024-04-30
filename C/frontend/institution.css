@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+
 .header{
     display: flex;
     align-items: center;
@@ -24,15 +26,6 @@ h1{
     font-size: 2.5rem;
     font-weight: 800;
 }
-.page-sidebar{
-    display: block;
-    align-items: center;
-    border: solid 5px #000;
-    border-radius: 20px;
-    height: 55vh;
-    margin-top: 0vh;
-    width: 25vw;
-}
 
 .page-main{
     display: inline-flex;
@@ -40,12 +33,38 @@ h1{
     height: 100%;
     width: 100%;
     justify-content: space-between;
-    padding-bottom: 10px;
-    padding-right: 10px;
-    padding-left: 10px;
+    padding-bottom: 2vh;
+    padding-right: 3vw;
+    padding-left: 3vw;
+}
+.page-sidebar{
+    display: block;
+    align-items: center;
+    border: solid 0.7vh #000;
+    border-radius: 5vh;
+    height: 65vh;
+    margin-top: 0vh;
+    width: 25vw;
+}
+.greet{
+    font-size: 5.8vh;            /*fix*/
+    margin-top: 15vh;
+    text-align: center;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-left: 2vh;
+    margin-right: 2vh;
+}
+.createButton{
+    font-size: 3vh;            /*fix*/
+    justify-content: center;
+    align-items: center;
+    border-radius: 4vw;
+    padding-left: 4vw;
+    padding-right: 4vw;
+    margin-left: 6vw;
+    margin-top: 5vh;
 }
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
 
 .tbl{
   width:70%;
@@ -62,22 +81,3 @@ h1{
   
 }
 
-.greet{
-    font-size: 40px;            /*fix*/
-    margin-top: 15vh;
-    text-align: center;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    margin-left: 2vh;
-    margin-right: 2vh;
-}
-
-.createexam{
-    font-size: 25px;            /*fix*/
-    justify-content: center;
-    align-items: center;
-    border-radius: 4vw;
-    padding-left: 4vw;
-    padding-right: 4vw;
-    margin-left: 6vw;
-    margin-top: 5vh;
-}

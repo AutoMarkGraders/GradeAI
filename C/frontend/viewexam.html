@@ -3,42 +3,69 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Institution</title>
+    <title>GradeAI | Exam 👁‍🗨</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="table.css" />
+    <link rel="stylesheet" href="viewexam.css"/>
 </head>
 
 <body>
-    <div style="display: flex; align-items: center; justify-content: space-between">
-    <h1>InstituteName | Results of ExamName:</h1>
-    <button class="btn btn-outline-success" type="button" id="signoutbutton">
+
+  <div class="header">
+    <a href="signin.html" target="_blank">
+      <h1>GradeAI</h1>
+    </a>
+    <div class="header-right">
+      <img id="profile" src="profile.png" alt="user">
+      <h2 id="userName">{userName}</h2>
+      <script>
+        document.getElementById("userName").textContent = sessionStorage.getItem("user");
+      </script>
+      <button class="btn btn-danger " type="button" id="signoutbutton">
         Sign Out
-    </button>
+      </button>
     </div>
+  </div>
+    
 
+    <!--dynamic table-->
     <section>
-    <!--for demo wrap-->
-    <div class="tbl-header">
-      <table cellpadding="0" cellspacing="0" border="0">
-        <thead>
-        </thead>
-      </table>
-    </div>
-    <div class="tbl-content">
-      <table cellpadding="0" cellspacing="0" border="0">
-        <tbody>
-          <tr>
-            <td>Data</td>
-            <td>Comes </td>
-            <td>here</td>
-            <td>automatically</td>
-            <td>PDFlink</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    </section>
+      <!--for demo wrap-->
+      <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Answer 1</th>
+              <th>Marks 1</th>
+              <th>Answer 2</th>
+              <th>Marks 2</th>
+              <th>Total</th>
+              <th>Grade</th>
+              <th>View</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="tbl-content">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <tbody>
+            <tr>
+              <td>Data</td>
+              <td>Comes </td>
+              <td>here</td>
+              <td>automatically</td>
+              <td>on</td>
+              <td>opening</td>
+              <td>or</td>
+              <td>refreshing</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </section>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
     <script>
@@ -91,3 +118,30 @@
             });
         });
     </script>
+
+
+    <script>  // to ensure valid session and signout button functionality (can be used in all pages)
+      var jwt = sessionStorage.getItem("jwt");
+      console.log(jwt);
+      let UserCreds = JSON.parse(sessionStorage.getItem("user-creds"));
+      //alert("Welcome, " + UserCreds);
+      let UserInfo = sessionStorage.getItem("user");
+
+      //to ensure valid session
+      window.addEventListener('load', function() {
+        if (!sessionStorage.getItem("jwt")) {
+          alert("You are not signed in!");
+          //window.location.href = "signin.html";
+        }
+      });
+
+      //signout button functionality
+      document.getElementById("signoutbutton").addEventListener("click", function() {
+        sessionStorage.removeItem("user-creds");
+        sessionStorage.removeItem("user");
+        sessionStorage.removeItem("jwt");
+        window.location.href = "signin.html";
+      });
+    </script>
+  </body>
+</html>    

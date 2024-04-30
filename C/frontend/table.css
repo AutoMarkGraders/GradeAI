@@ -10,7 +10,7 @@ table{
  }
  
 .tbl-content{
-  max-height:75vh;
+  max-height:55vh;
   overflow-x:auto;
   margin-top: 0px;
   border: 0px solid #37658B;
@@ -21,7 +21,7 @@ th{
   padding: 20px 15px;
   text-align: left;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 2.6vh;
   color: #fff;
   text-transform: uppercase;
 }
@@ -30,7 +30,7 @@ td{
   text-align: left;
   vertical-align: middle;
   font-weight: 300;
-  font-size: 20px;
+  font-size: 2.5vh;
   color: #fff;
   border-bottom: solid 1px #37658B;
 }
@@ -43,14 +43,13 @@ td{
 /*section{
   background: linear-gradient(to right, #16588E, #81C4FF);
   font-family: 'Roboto', sans-serif;
-  border-radius: 20px; *//* Add this line *//*
+  border-radius: 20px;  
   width: 80vw;
   margin: 0 auto;
 }*/
 
 
 /* for custom scrollbar for webkit browser*/
-
 ::-webkit-scrollbar {
     width: 6px;
 } 
