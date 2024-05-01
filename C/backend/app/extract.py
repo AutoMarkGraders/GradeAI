@@ -36,7 +36,7 @@ def upload_if_needed(pathname: str) -> list[str]:
 data_set = [
   "Display the text in input image without any edits.",
   "input: ",
-  *upload_if_needed('datasets/j1.jpg'),
+  *upload_if_needed('app/datasets/j1.jpg'),#path should be relative to the main.py file
   "output: 1) Early warning system is an important part of disaster prevention & mitigation measures. It is pivotal to help state holders and civilians to take precautions and prepare for a possible disaster.Early warning systems are necessary to start proper disaster response like evacuation, storing of relief camps etc. This saves lines and reduces loss of property in any disaster, time is a major constraint and hence early warning system helps in disaster risk reduction. For example, a Tsunami early warning system helps fishermen to get out of sea, people of low lying areas and coastal areas to move to higher ground. This makes evacuation faster, less lives are affected and people can take their loved ones and important goods along. 2) The main objective of disaster response is to save lives. For this disaster response efforts include proper evacuation plan, preparation of evacuation etc. Disaster response also needs to set up proper communication to reduce impact of disaster.",
 ]
 

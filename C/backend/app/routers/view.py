@@ -16,7 +16,6 @@ router = APIRouter(
     tags=['Views'] # for documentation
 )
 
-#
 @router.get("/", status_code=status.HTTP_200_OK, response_model=List[schemas.ExamsView])#view/ exam function is hosted here
 def view_exams(pdb: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
     
@@ -35,19 +34,14 @@ def view_exam(exam_name: str, pdb: Session = Depends(get_db), current_user: str 
 
     # Reflect the table from the database
     metadata = MetaData()
-    table = Table(table_name, metadata, autoload_with=pdb.get_bind())
+    metadata.bind = pdb.get_bind()
+    table = Table(table_name, metadata, autoload_with=pdb.bind)
 
     # Query the table
     query = table.select()
     result = pdb.execute(query)
     rows = result.fetchall()
-
-    '''
-    # Filter out the answer columns
-    filtered_rows = []
-    for row in rows:
-        row_dict = dict(row)
-        filtered_row = {key: value for key, value in row_dict.items() if not key.startswith('ans')}
-        filtered_rows.append(filtered_row)
-    '''
-    return rows
+    # Convert rows to list of dictionaries
+    rows_as_dicts = [row._asdict() for row in rows]
+    
+    return rows_as_dicts

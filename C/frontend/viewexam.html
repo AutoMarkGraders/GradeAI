@@ -16,9 +16,9 @@
     </a>
     <div class="header-right">
       <img id="profile" src="profile.png" alt="user">
-      <h2 id="userName">{userName}</h2>
+      <h2 id="userName"></h2>
       <script>
-        document.getElementById("userName").textContent = sessionStorage.getItem("user");
+        document.getElementById("userName").textContent = 'Institute: ' + sessionStorage.getItem("user");
       </script>
       <button class="btn btn-danger " type="button" id="signoutbutton">
         Sign Out
@@ -26,22 +26,18 @@
     </div>
   </div>
     
-
-    <!--dynamic table-->
+    <!-- table-->
     <section>
       <!--for demo wrap-->
       <div class="tbl-header">
         <table cellpadding="0" cellspacing="0" border="0">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Answer 1</th>
-              <th>Marks 1</th>
-              <th>Answer 2</th>
-              <th>Marks 2</th>
+              <th>Student ID</th>
+              <th>Mark Distribution</th>
               <th>Total</th>
               <th>Grade</th>
-              <th>View</th>
+              <th>Answer Sheet</th>
             </tr>
           </thead>
         </table>
@@ -53,78 +49,22 @@
               <td>Data</td>
               <td>Comes </td>
               <td>here</td>
-              <td>automatically</td>
               <td>on</td>
               <td>opening</td>
-              <td>or</td>
-              <td>refreshing</td>
             </tr>
           </tbody>
         </table>
       </div>
-      </section>
+    </section>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
-    <script>
-        // for the table
-        $(window).on("load resize ", function() {
-            var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
-            $('.tbl-header').css({'padding-right':scrollWidth});
-        }).resize();
-
-        // Send a GET request to the server when the page loads
-        $(document).ready(function() {
-            var exam_name = sessionStorage.getItem('exam_name');
-            var qstn_count = sessionStorage.getItem('qstn_count');
-            $.ajax({
-            url: 'http://127.0.0.1:8000/view/' + exam_name,
-            method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
-            },
-            success: function(data) {
-
-                // Generate the table columns
-                var thead = $('.tbl-header table thead');
-                var tr = $('<tr>');
-                tr.append($('<th>').text('StudentID'));
-                for (var i = 1; i <= qstn_count; i++) {
-                    tr.append($('<th>').text('Mark' + i));
-                }
-                tr.append($('<th>').text('Total'));
-                tr.append($('<th>').text('Grade'));
-                tr.append($('<th>').text('AnswerSheet'));
-                thead.append(tr);
-
-
-
-                // Fill the table with the response
-                var tbody = $('.tbl-content tbody');
-                data.forEach(function(item) {
-                    var row = $('<tr>');
-                    row.append($('<td>').text(item.student_id));
-                    for (var i = 1; i <= qstn_count; i++) {
-                        row.append($('<td>').text(item['mark' + i]));
-                    }
-                    row.append($('<td>').text(item.total));
-                    row.append($('<td>').text(item.grade));
-                    row.append($('<td>').text(item.answerkey));
-                    tbody.append(row);
-                });
-            }
-            });
-        });
-    </script>
-
-
     <script>  // to ensure valid session and signout button functionality (can be used in all pages)
       var jwt = sessionStorage.getItem("jwt");
       console.log(jwt);
       let UserCreds = JSON.parse(sessionStorage.getItem("user-creds"));
-      //alert("Welcome, " + UserCreds);
       let UserInfo = sessionStorage.getItem("user");
 
       //to ensure valid session
@@ -143,5 +83,43 @@
         window.location.href = "signin.html";
       });
     </script>
+
+    <script>
+        // for the table
+        $(window).on("load resize ", function() {
+            var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
+            $('.tbl-header').css({'padding-right':scrollWidth});
+        }).resize();
+
+        // Send a GET request to the server when the page loads
+        $(document).ready(function() {
+            var exam_name = sessionStorage.getItem('exam_name');
+            $.ajax({
+            url: 'http://127.0.0.1:8000/view/' + exam_name,
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+            },
+            success: function(data) {
+
+                // Fill the table with the response
+                var tbody = $('.tbl-content tbody');
+                data.forEach(function(item) {
+                    var row = $('<tr>');
+                    row.append($('<td>').text(item.student_id));
+                    //second column here
+                    var marks = Object.keys(item).filter(key => key.startsWith('mark'));
+                    var marksText = marks.map(mark => item[mark] || 'NA').join(', ');
+                    row.append($('<td>').text(marksText));
+                    row.append($('<td>').text(item.total || 'NA'));
+                    row.append($('<td>').text(item.grade || 'NA'));
+                    row.append($('<td>').text('📄'));
+                    tbody.append(row);
+                });
+            }
+            });
+        });
+    </script>
+
   </body>
 </html>    
