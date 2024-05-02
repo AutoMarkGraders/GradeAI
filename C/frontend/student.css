@@ -1,3 +1,7 @@
+body {
+    color: white;
+}
+
 .header{
     display: flex;
     align-items: center;
@@ -13,7 +17,7 @@ a {
 .header-right {
   display: flex;
   align-items: center;
-  gap: 10vw; /* adjust as needed */
+  gap: 5vw;
 }
 #profile{
     width: 6vh;
