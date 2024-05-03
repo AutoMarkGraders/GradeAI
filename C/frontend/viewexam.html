@@ -64,8 +64,8 @@
     <script>  // to ensure valid session and signout button functionality (can be used in all pages)
       var jwt = sessionStorage.getItem("jwt");
       console.log(jwt);
-      let UserCreds = JSON.parse(sessionStorage.getItem("user-creds"));
-      let UserInfo = sessionStorage.getItem("user");
+      //let UserCreds = JSON.parse(sessionStorage.getItem("user-creds"));
+      //let UserInfo = sessionStorage.getItem("user");
 
       //to ensure valid session
       window.addEventListener('load', function() {
@@ -77,7 +77,7 @@
 
       //signout button functionality
       document.getElementById("signoutbutton").addEventListener("click", function() {
-        sessionStorage.removeItem("user-creds");
+        //sessionStorage.removeItem("user-creds");
         sessionStorage.removeItem("user");
         sessionStorage.removeItem("jwt");
         window.location.href = "signin.html";

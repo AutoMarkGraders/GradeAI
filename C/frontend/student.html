@@ -16,9 +16,9 @@
     </a>
     <div class="header-right">
       <img id="profile" src="profile.png" alt="user">
-      <h2 id="userName">{userName}</h2>
+      <h2 id="userName"></h2>
       <script>
-        document.getElementById("userName").textContent = sessionStorage.getItem("user");
+        document.getElementById("userName").textContent = sessionStorage.getItem("user")+' | '+sessionStorage.getItem("institution");
       </script>
       <button class="btn btn-danger" type="button" id="signoutbutton">
         Sign Out
@@ -97,9 +97,6 @@
   <script>  // to ensure valid session and signout button functionality (can be used in all pages)
     var jwt = sessionStorage.getItem("jwt");
     console.log(jwt);
-    let UserCreds = JSON.parse(sessionStorage.getItem("user-creds"));
-    //alert("Welcome, " + UserCreds);
-    let UserInfo = sessionStorage.getItem("user");
 
     //to ensure valid session
     window.addEventListener('load', function() {
@@ -111,7 +108,7 @@
 
     //signout button functionality
     document.getElementById("signoutbutton").addEventListener("click", function() {
-      sessionStorage.removeItem("user-creds");
+      sessionStorage.removeItem("institution");
       sessionStorage.removeItem("user");
       sessionStorage.removeItem("jwt");
       window.location.href = "signin.html";

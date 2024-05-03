@@ -151,7 +151,7 @@
                 get(child(dbref,'institutions/'+ credentials.user.uid)).then((snapshot)=>{
                     if(snapshot.exists()) {
                         sessionStorage.setItem("user", snapshot.val().name);
-                        sessionStorage.setItem("user-creds",JSON.stringify(credentials.user));
+                        //sessionStorage.setItem("user-creds",JSON.stringify(credentials.user));
                         credentials.user.getIdToken().then((idToken) => {
                             sessionStorage.setItem("jwt", idToken);
                         });
@@ -182,28 +182,24 @@
         signInWithEmailAndPassword(auth, email, password).then((credentials)=> {
             //else {
                 /*get(child(dbref,'students/'+ credentials.user.uid)).then((snapshot)=>{
-                    if(snapshot.exists())
-                    {
+                    if(snapshot.exists()){
                         sessionStorage.setItem("institution-name", JSON.stringify({
                             name:snapshot.val().name
                         }));
                         sessionStorage.setItem("user-creds",JSON.stringify(credentials.user));
-
-                        credentials.user.getIdToken().then((idToken) => 
-						{
+                        credentials.user.getIdToken().then((idToken) => {
                             // You can use this token to authenticate requests to your server
                             sessionStorage.setItem("jwt", idToken);
                             //alert(idToken);
                         });
-
                         window.location.href='student.html';
                     }
-                })*/
-
-           // }
+                })
+            }*/
 		    credentials.user.getIdToken().then((idToken) => {
                 sessionStorage.setItem("jwt", idToken);
-				sessionStorage.setItem("user", id)
+				sessionStorage.setItem("user", id);
+                sessionStorage.setItem("institution", institution);
             });
             window.location.href='student.html';
         })
