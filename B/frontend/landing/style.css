@@ -14,7 +14,7 @@ html {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: linear-gradient(to left bottom, #467280da 100%, #a7a1a5 100%);
+  background-image: linear-gradient(to right top, #e03d3d, #f1617b, #f488b1, #f0b0d9, #eed4f2, #eadbf8, #e6e2fc, #e5e8ff, #cad9ff, #a7cbff, #77bfff, #00b4ff);
   overflow: hidden;
 }
 .app {

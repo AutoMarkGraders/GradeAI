@@ -7,5 +7,5 @@ $(window).on('load', function() {
             // Show the main content
             $('.cont').fadeIn('slow');
         });
-    }, 7000); // Adjust the duration (in milliseconds) as needed
+    }, 5500); // Adjust the duration (in milliseconds) as needed
 });
