@@ -14,16 +14,30 @@ html {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: linear-gradient(to left bottom, #81C4FF 0%, #a7a1a5 100%);
+  background-image: linear-gradient(to left bottom, #467280da 100%, #a7a1a5 100%);
   overflow: hidden;
 }
 .app {
   position: relative;
   min-width: 70vw;
   height: 90vh;
-  width: 70vw;
-  box-shadow: 0 0 60px rgba(0, 0, 0, .3);
+  width: 80vw;
+  box-shadow: 0 0 60px rgb(6, 97, 128);
   overflow: hidden;
+}
+.app__img {
+  position: relative;
+  transform: translate3d(0, -750px, 0);
+  width: 70vw;
+  height: 50%;
+  transition: transform 3s cubic-bezier(0.6, 0.13, 0.31, 1.02);
+  will-change: transform;
+}
+.app__img img {
+  min-width: 80vw;
+  height: 273vh;
+
+  user-select: none;
 }
 .app__bgimg {
   position: absolute;
@@ -84,9 +98,24 @@ html {
   color: #0a101d;
 }
 .app__text-line--3 {
-  font-size: 40px;
+  font-size: 80px;
   font-weight: 700;
+  color: linear-gradient(#467280da 100%, #a7a1a5 100%);
+  animation: text-animation 5s infinite alternate;
 }
+@keyframes text-animation {
+  0% {
+    color: #09c3fbfc;
+  }
+  50% {
+    color: rgb(14, 77, 141);
+  }
+  100% {
+    color: #da1b1b;
+  }
+}
+
+
 .app__text-line--2 {
   margin-top: 10px;
   font-size: 14px;
@@ -126,18 +155,7 @@ html {
   opacity: 0;
   transition: transform 1500ms 300ms, opacity 400ms 500ms;
 }
-.app__img {
-  position: absolute;
-  transform: translate3d(0, -750px, 0);
-  width: 70vw;
-  height: 50%;
-  transition: transform 3s cubic-bezier(0.6, 0.13, 0.31, 1.02);
-  will-change: transform;
-}
-.app__img img {
-  min-width: 70vw;
-  user-select: none;
-}
+
 .initial .app__img {
   transform: translate3d(0, 0, 0);
 }
@@ -294,4 +312,48 @@ html {
 .icon-link--twitter {
   left: auto;
   right: 5px;
+}
+
+
+
+
+
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #e3f2fd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#loading-screen svg {
+  font-family: 'Russo One', sans-serif;
+  width: 100%;
+  height: 100%;
+}
+
+#loading-screen text {
+  text-transform: uppercase;
+  animation: stroke 5s infinite alternate;
+  stroke-width: 2;
+  stroke: #365fa0;
+  font-size: 140px;
+}
+
+@keyframes stroke {
+  0%   {
+      fill: rgba(72, 138, 20, 0); stroke: rgba(54, 95, 160, 1);
+      stroke-dashoffset: 25%; stroke-dasharray: 0 50%; stroke-width: 2;
+  }
+  70%  {fill: rgba(72, 138, 20, 0); stroke: rgba(54, 95, 160, 1); }
+  80%  {fill: rgba(72, 138, 20, 0); stroke: rgba(54, 95, 160, 1); stroke-width: 3; }
+  100% {
+      fill: rgba(72, 138, 204, 1); stroke: rgba(54, 95, 160, 0); 
+      stroke-dashoffset: -25%; stroke-dasharray: 50% 0; stroke-width: 0;
+  }
 }
