@@ -1,157 +1,81 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-  	<title>MARK</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>GradeAI | Home</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="land.js"></script>
+	<script src="loading1.js"></script>
 
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+</head>
+<body>
+	 <!-- Loading screen -->
+	 <div id="loading-screen">
+        <svg viewBox="0 0 1320 300">
+            <text x="50%" y="50%" dy=".35em" text-anchor="middle">
+                 Grade AI 
+                
+            </text>
+        </svg>
+    </div>
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	
-	<link rel="stylesheet" href="css/style.css">
 
-	</head>
-	<nav class="navbar navbar-expand-lg navbar-dark fixed-top nav-col">
-		<div class="container-fluid">
-		  <a class="navbar-brand" href="#">Navbar</a>
-		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		  </button>
-		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-			  <li class="nav-item">
-				<a class="nav-link active" aria-current="page" href="#">Home</a>
-			  </li>
-			  <li class="nav-item">
-				<a class="nav-link" href="#">Link</a>
-			  </li>
-			  <li class="nav-item">
-				<a class="nav-link active" aria-current="page" href="#">Sign In</a>
-			</li>
-			</ul>
+
+
+	<div class="cont" style="display: none;">
+		<div class="mouse"></div>
+		<div class="app">
+			<div class="app__bgimg">
+				<div class="app__bgimg-image app__bgimg-image--1">
+				</div>
+				<div class="app__bgimg-image app__bgimg-image--2">
+				</div>
+			</div>
+			<div class="app__img">
+				<img onmousedown="return true" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/537051/whiteTest4.png" alt="city" />
+			</div>
 			
-		  </div>
-		</div>
-	  </nav>
-	<body class="img js-fullheight" style="background-image: url(images/bg.jpg);">
-	<section class="ftco-section">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-6 text-center mb-5">
-					<h2 class="heading-section">///AMG</h2>
-				</div>
+			<div class="app__text app__text--1">
+				<div class="app__text-line app__text-line--4">AMG presents</div>
+				<div class="app__text-line app__text-line--3 svg">GradeAI</div>
+				<div class="app__text-line app__text-line--2">AI answer sheet evaluator</div>
+				<div class="app__text-line app__text-line--1"><img src="img2.jpg" alt="" /></div>
 			</div>
-			<div class="row justify-content-center">
-				<div class="col-md-6 col-lg-4">
-					<div class="login-wrap p-0">
-		      	<h3 class="mb-4 text-center">Have an account?</h3>
+			
+			<div class="app__text app__text--2">
+				<div class="app__text-line app__text-line--4">DIV1 HERE</div>
 
-		      	<form action="files.html" class="signin-form" id="student_sign_in">
-		      		<div class="form-group">
-		      			<input type="text" class="form-control" placeholder="UID Mail" required id="uid_mail">
-		      		</div>
-	                <div class="form-group">
-						<input id="password-field" type="password" class="form-control" placeholder="Password" required >
-						<span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-	                </div>
-					<div class="form-group">
-						<button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
-					</div>
-	            
-	            </form>
-			  
-			  <!-- sign up -->
-	          <p class="w-100 text-center">&mdash; Or Sign up &mdash;</p>
-	          <div class="social d-flex text-center">
-	          	<a href="signup.html" class="px-2 py-2 mr-md-1 rounded">
-					 Sign Up
-				</a>
-	          	
-	          </div>
-		      </div>
-				</div>
+				<a href="signin.html">
+					
+				<div class="app__text-line app__text-line--3"><button title="get started" class="button-63">Get started</button></div>
+			    </a>
+				<div class="app__text-line app__text-line--2">DIV 3</div>
+				<div class="app__text-line app__text-line--1"><img src="img1.jpg" alt="" /></div>
 			</div>
 		</div>
-	</section>
-
-	<script src="js/jquery.min.js"></script>
-  <script src="js/popper.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/main.js"></script>
-
-
-<!--FIREBASE sdk setup and configuration-->
-<script type="module">
-	// Import the functions you need from the SDKs you need
-	import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-	import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
-
-	import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
-	import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-
-	import { get, child } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
-
-	// TODO: Add SDKs for Firebase products that you want to use
-	// https://firebase.google.com/docs/web/setup#available-libraries
-  
-	// Your web app's Firebase configuration
-	// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-	const firebaseConfig = {
-	  apiKey: "AIzaSyBz1pSw5rCyFXdmRtepCCryQLRrkGVdl7k",
-	  authDomain: "auto-mark-grader.firebaseapp.com",
-	  projectId: "auto-mark-grader",
-	  storageBucket: "auto-mark-grader.appspot.com",
-	  messagingSenderId: "1036661490233",
-	  appId: "1:1036661490233:web:7d2b16ff18ee727ebfc3e8",
-	  measurementId: "G-43ZSMWENXR"
-	};
-  
-	// Initialize Firebase
-	const app = initializeApp(firebaseConfig);
-	const analytics = getAnalytics(app);
-
-	const db=getDatabase();
-	const auth=getAuth(app);
-	const dbref=ref(db);
-
-        
-	let Emaillnp = document.getElementById('emailid');
-	let Passlnp = document.getElementById('instiPassword');
+		<div class="pages">
+			<ul class='pages__list'>
+				<li data-target='1' class='pages__item pages__item--1 page__item-active'></li>
+				<li data-target='2' class='pages__item pages__item--2'></li>
+			</ul>
+		</div>
+	</div>
+	<a href="signup.html" target="_blank" class="icon-link">
+		<img src="bg1.png">
+	  </a>
+	  <a href="https://twitter.com/mrspok407" target="_blank" class="icon-link icon-link--twitter">
+		<img src="bg2.jpg">
+	  </a>
 
 
-    let SignInuser = evt =>{
-        evt.preventDefault(); 
-        signInWithEmailAndPassword(auth,Emaillnp.value,Passlnp.value)
-            .then((credentials)=>{
-               get(child(dbref,'UsersAuthList/'+ credentials.user.uid)).then((snapshot)=>{
 
-				if(snapshot.exists()){
-					sessionStorage.setItem("user-info", JSON.stringify({ //is this local storage
-						fullname:snapshot.val().fullname
-					}));
-					sessionStorage.setItem("user-creds",JSON.stringify(credentials.user));
-					//window.location.href='login_student.html';
-					alert(fullname);
-				}
-			   })
-				
-            })
-            .catch((error)=>{
-                alert(error.message);
-                console.log(error.code);
-                console.log(error.message);
-            })
-    }
+	
 
-	student_sign_in.addEventListener('submit',SignInuser);
-		
-  </script>
 
-  
 
-  </script>
 
-	</body>
+	
+</body>
 </html>
-
