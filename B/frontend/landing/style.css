@@ -323,7 +323,7 @@ html {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom right, #0591d2fc 30%, #f50303 70%);
+  background-image: linear-gradient(to right top, #e03d3d, #e94a8e, #ca74d3, #8a9bfa, #3fb9ff, #29c0fe, #10c7fc, #00cef9, #00c8fb, #00c2fd, #00bbff, #00b4ff);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -340,7 +340,7 @@ html {
   text-transform: uppercase;
   animation: stroke 5s infinite alternate;
   stroke-width: 2;
-  stroke: #7c1515;
+  stroke: #000000;
   font-size: 140px;
 }
 
@@ -352,7 +352,7 @@ html {
   70%  {fill: rgba(72, 138, 20, 0); stroke: rgba(54, 95, 160, 1); }
   80%  {fill: rgba(72, 138, 20, 0); stroke: rgba(54, 95, 160, 1); stroke-width: 3; }
   100% {
-      fill: rgba(72, 138, 204, 1); stroke: rgba(54, 95, 160, 0); 
+      fill: rgb(0, 0, 0); stroke: rgba(54, 95, 160, 0); 
       stroke-dashoffset: -25%; stroke-dasharray: 50% 0; stroke-width: 0;
   }
 }
