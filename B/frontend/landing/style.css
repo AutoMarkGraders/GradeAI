@@ -323,7 +323,7 @@ html {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to right top, #e03d3d, #e94a8e, #ca74d3, #8a9bfa, #3fb9ff, #29c0fe, #10c7fc, #00cef9, #00c8fb, #00c2fd, #00bbff, #00b4ff);
+  background-image: linear-gradient(to right top, #e03d3d, #f1617b, #f488b1, #f0b0d9, #eed4f2, #eadbf8, #e6e2fc, #e5e8ff, #cad9ff, #a7cbff, #77bfff, #00b4ff);
   display: flex;
   justify-content: center;
   align-items: center;
