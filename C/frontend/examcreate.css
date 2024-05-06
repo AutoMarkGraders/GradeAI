@@ -19,29 +19,28 @@
 .examForm{
     background-color: var(--secondary-color);
     border-radius: 10px;
-    border-bottom-left-radius: 70px;  /* adjust as needed */
+    border-bottom-left-radius: 70px;
     border-bottom-right-radius: 70px; 
     padding: 2%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
     margin-bottom: 5vh;
 }
 .examForm input, .examForm button {
     flex-grow: 1;
     margin: 0.5em;
-    box-sizing: border-box;
 }
 .shortButton{
     border: 1px solid white;
     border-radius: 50px;
+    font-size: 3.5vh;
 }
 
 .dynamicForm{
     padding: 3vh 3vw;
     margin: 5vh 5vw;
     background-color: var(--primary-color);
-    border: 2px solid black;
     border-radius: 10px;
 }
 
@@ -53,6 +52,8 @@
     transform: translate(-50%, -50%);
     padding: 3px;
     border-radius: 50px;
+    font-size: 3.5vh;
+
 }
 
 .submitAnswer{
@@ -62,17 +63,30 @@
 
 .input-box{
     background: rgba(255,255,255,0.7);
+    border: 1px solid white;
+    border-radius: 5px;
+    max-width: 15vw;
+    height: 8vh;   
+    text-align: center;
+    font-size: 3.5vh;
+}
+
+.qstn-box{
+    background: rgba(255,255,255,0.7);
     border: 1px solid black;
     border-radius: 5px;
-    max-width: 15vw;   
+    width: 82vw;
+    scrollbar-width: none;
+
 }
 
 .key-box{
     background: rgba(255,255,255,0.7);
-    width: 78vw;
+    width: 82vw;
     height: 20vh;
     border: 1px solid black;
     border-radius: 5px;
+    scrollbar-width: none;
 }
 
 .number-box{
@@ -82,12 +96,6 @@
     width: 5vw;
 }
 
-.qstn-box{
-    background: rgba(255,255,255,0.7);
-    border: 1px solid black;
-    border-radius: 5px;
-    width: 78vw;
-}
 
 h2{
     font-family: 'Poppins', sans-serif;
