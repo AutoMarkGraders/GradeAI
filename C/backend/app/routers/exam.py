@@ -116,6 +116,30 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     pdb.commit()
 
     # Grade using Gemini
+    return {"message": f"Answers uploaded to {tname}"}
 
 
-    return {"message": f"Answer inserted into {tname}"}
+@router.post("/evaluate/{tname}", status_code=status.HTTP_201_CREATED)
+def evaluate_exam(tname: str, pdb: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
+    
+    # Create a reference to the table
+    metadata = MetaData()
+    metadata.bind = pdb.get_bind()
+    t = Table(tname, metadata, autoload_with=pdb.get_bind())
+
+    result = pdb.execute(t.select().where(t.c.student_id == 'answerkey'))
+    answerkey = list(result.fetchone())
+    answers = list(pdb.execute(t.select().where(t.c.student_id != 'answerkey')))
+    
+    for i in range(1, len(answerkey) - 2, 2):
+        #print(answerkey[i])
+        for j in range(len(answers)):
+            print(answers[j][i])
+
+            #evaluate(answers[j][i], answerkey[i], answerkey[i+1])
+
+
+
+
+
+    return answerkey
