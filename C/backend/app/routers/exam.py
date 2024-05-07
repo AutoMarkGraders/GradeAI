@@ -99,6 +99,7 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
         answers = extract.extractText(file_path) 
     except Exception as e:
         answers = ["dummy", "data"]
+        #print(e)
 
     # Delete the pdf file from memory
     os.remove(file_path)

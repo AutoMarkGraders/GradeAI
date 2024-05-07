@@ -8,6 +8,7 @@
     background-color: #16588E;
     padding: 4%;
     margin-bottom: 10vh;
+    color: white;
 }
 a {
     text-decoration: none;
@@ -15,7 +16,7 @@ a {
 .header-right {
   display: flex;
   align-items: center;
-  gap: 10vw; /* adjust as needed */
+  gap: 5vw; /* adjust as needed */
 }
 #profile{
     width: 6vh;

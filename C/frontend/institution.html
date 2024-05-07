@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
     <link rel="stylesheet" href="table.css" />
     <link rel="stylesheet" href="institution.css" />
+    <link rel="icon" href="favicon.png">
 
     <style>
       body {
@@ -29,9 +30,9 @@
       </a>
       <div class="header-right">
         <img id="profile" src="profile.png" alt="user">
-        <h2 id="userName">{userName}</h2>
+        <h2 id="userName"></h2>
         <script>
-          document.getElementById("userName").textContent = sessionStorage.getItem("user");
+          document.getElementById("userName").textContent = 'Institute: ' + sessionStorage.getItem("user");
         </script>
         <button class="btn btn-danger" type="button" id="signoutbutton">
           Sign Out
