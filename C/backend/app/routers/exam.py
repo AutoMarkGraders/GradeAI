@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
 from sqlalchemy.orm import Session
-from sqlalchemy import Table, Column, Integer, String, MetaData, insert, func
+from sqlalchemy import Table, Column, Integer, String, MetaData, insert, select, update
 
 from .. import schemas, models, oauth
 from ..database import get_db, firebase_admin
@@ -127,19 +127,37 @@ def evaluate_exam(tname: str, pdb: Session = Depends(get_db), current_user: str 
     metadata.bind = pdb.get_bind()
     t = Table(tname, metadata, autoload_with=pdb.get_bind())
 
-    result = pdb.execute(t.select().where(t.c.student_id == 'answerkey'))
-    answerkey = list(result.fetchone())
+    answerkey = list(pdb.execute(t.select().where(t.c.student_id == 'answerkey')).fetchone())
     answers = list(pdb.execute(t.select().where(t.c.student_id != 'answerkey')))
+    headCount  = len(answers)
+    marks = [[] for _ in range(headCount)]  # 2D list to store marks of all students
     
-    for i in range(1, len(answerkey) - 2, 2):
+    for stud in range(1, len(answerkey) - 2, 2):
         #print(answerkey[i])
-        for j in range(len(answers)):
-            print(answers[j][i])
+        for stud in range(headCount):
+            #print(answers[j][i])
 
-            #evaluate(answers[j][i], answerkey[i], answerkey[i+1])
+            #mark = evaluate(answers[j][i], answerkey[i], answerkey[i+1])
+            mark = 4 # table cant store float values!!!!      
+            marks[stud].append(mark)
 
+    keyTotal = pdb.execute(select(t.c.total).where(t.c.student_id == 'answerkey')).fetchone()[0]
+    grades = [(50, 'F'), (55, 'D'), (60, 'D+'), (65, 'C'), (70, 'C+'), (75, 'B'), (80, 'B+'), (85, 'A'), (90, 'A+'), (100, 'S')]
+    for stud in range(headCount):
+        total = sum(marks[stud])
+        percentage = (total/keyTotal)*100
+        grade = 'S'
+        for limit, grade in grades:
+            if percentage < limit:
+                break
 
+        result = {}
+        for i in range(len(marks[stud])):
+            result[f'mark{i+1}'] = marks[stud][i]
+        result['total'] = total
+        result['grade'] = grade
 
+        pdb.execute(update(t).where(t.c.student_id == answers[stud][0]).values(**result))
+        pdb.commit()
 
-
-    return answerkey
+    return marks
