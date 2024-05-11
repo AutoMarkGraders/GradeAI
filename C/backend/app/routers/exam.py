@@ -38,6 +38,7 @@ def create_exam(exam: schemas.ExamCreate, pdb: Session = Depends(get_db), curren
         columns.append(Column(f'mark{i}', Float))
     columns.append(Column('total', Integer))
     columns.append(Column('grade', String))    
+    columns.append(Column('pdfURL', String))
     table = Table(table_name, metadata, *columns, extend_existing=True)
     metadata.create_all(bind=metadata.bind)
 
@@ -51,6 +52,7 @@ def upload_anskey(anskey: dict, tname: str, pdb: Session = Depends(get_db), curr
     total = sum(value for i, value in enumerate(anskey.values()) if i % 2 != 0) #total marks
     akey['total'] = total
     akey['grade'] = 'X'
+    akey['pdfURL'] = 'X' # convert answer key to pdf and upload to firebase storage
     
     try:
         # Create a reference to the table
@@ -58,8 +60,7 @@ def upload_anskey(anskey: dict, tname: str, pdb: Session = Depends(get_db), curr
         metadata.bind = pdb.get_bind()
         t = Table(tname, metadata, autoload_with=pdb.get_bind())
         # Insert akey as a new row into the table
-        stmt = insert(t).values(**akey)
-        pdb.execute(stmt)
+        pdb.execute(insert(t).values(**akey))
         pdb.commit()
     except Exception as e:   
         raise HTTPException(status_code=500, detail="Internal server error")
@@ -110,6 +111,8 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     ans = {"student_id": f"{student}"}
     for i, answer in enumerate(answers):
         ans[f'ans{i+1}'] = answer
+    ans['pdfURL'] = pdf_url  
+
     metadata = MetaData()
     metadata.bind = pdb.get_bind()
     t = Table(tname, metadata, autoload_with=pdb.get_bind())
@@ -129,12 +132,15 @@ def evaluate_exam(tname: str, pdb: Session = Depends(get_db), current_user: str 
     metadata.bind = pdb.get_bind()
     t = Table(tname, metadata, autoload_with=pdb.get_bind())
 
-    answerkey = list(pdb.execute(t.select().where(t.c.student_id == 'answerkey')).fetchone())
     answers = list(pdb.execute(t.select().where(t.c.student_id != 'answerkey')))
     headCount  = len(answers)
+    # set headCount in the exams table
+    pdb.query(models.Exam).filter(models.Exam.institution == current_user, models.Exam.name == tname[len(current_user)+1:]).first().contestants = headCount
+    pdb.commit()
+
     marks = [[] for _ in range(headCount)]  # 2D list to store marks of all students
-    
-    for q in range(1, len(answerkey) - 2, 2):
+    answerkey = list(pdb.execute(t.select().where(t.c.student_id == 'answerkey')).fetchone())
+    for q in range(1, len(answerkey) - 3, 2):
         #print(answerkey[q])
         for stud in range(headCount):
             #print(answers[stud][q])

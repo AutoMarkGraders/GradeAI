@@ -64,14 +64,15 @@ response = model.generate_content(dataset[0]+l3)
 print(response.text)
 mark.append(response.text)
 '''
-prompt_parts = [
-    "My answer: Hello world.",
-    "Answer key: Hello world.",
-    "Maxscore: 5",
-    "score: 5",
-]
 
 def getMark(a, k, m):
+  prompt_parts = [
+    "My answer: Hello world. How are you?",
+    "Answer key: Hello world.",
+    "Maxscore: 5",
+    "score: 3",
+  ]
+
   prompt_parts.extend([
     "My answer: " + a,
     "Answer key: " + k,
