@@ -2,16 +2,18 @@
 
 from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
 from sqlalchemy.orm import Session
-from sqlalchemy import Table, Column, Integer, String, MetaData, insert, select, update
+from sqlalchemy import Table, Column, Integer, Float, String, MetaData, insert, select, update
 
 from .. import schemas, models, oauth
 from ..database import get_db, firebase_admin
-from .. import extract
+from .. import extract, evaluate
 from firebase_admin import auth, db
 from firebase_admin.exceptions import FirebaseError
 from firebase_admin import storage
 import datetime
 import os
+from math import ceil
+from random import randrange
 
 router = APIRouter(
     prefix="/exam",
@@ -33,7 +35,7 @@ def create_exam(exam: schemas.ExamCreate, pdb: Session = Depends(get_db), curren
     columns = [Column('student_id', String, primary_key=True)]
     for i in range(1, new_exam.qstn_count + 1):
         columns.append(Column(f'ans{i}', String))
-        columns.append(Column(f'mark{i}', Integer))
+        columns.append(Column(f'mark{i}', Float))
     columns.append(Column('total', Integer))
     columns.append(Column('grade', String))    
     table = Table(table_name, metadata, *columns, extend_existing=True)
@@ -132,19 +134,23 @@ def evaluate_exam(tname: str, pdb: Session = Depends(get_db), current_user: str 
     headCount  = len(answers)
     marks = [[] for _ in range(headCount)]  # 2D list to store marks of all students
     
-    for stud in range(1, len(answerkey) - 2, 2):
-        #print(answerkey[i])
+    for q in range(1, len(answerkey) - 2, 2):
+        #print(answerkey[q])
         for stud in range(headCount):
-            #print(answers[j][i])
+            #print(answers[stud][q])
+            #print(answers[stud][q], answerkey[q], answerkey[q+1], '\n')
 
-            #mark = evaluate(answers[j][i], answerkey[i], answerkey[i+1])
-            mark = 4 # table cant store float values!!!!      
+            try:
+                mark = evaluate.getMark(answers[stud][q], answerkey[q], int(answerkey[q+1]))
+            except Exception as e:
+                mark = randrange(int(answerkey[q+1])) # dummy marks if gemini fails
+                print('dummy', e)
             marks[stud].append(mark)
 
     keyTotal = pdb.execute(select(t.c.total).where(t.c.student_id == 'answerkey')).fetchone()[0]
     grades = [(50, 'F'), (55, 'D'), (60, 'D+'), (65, 'C'), (70, 'C+'), (75, 'B'), (80, 'B+'), (85, 'A'), (90, 'A+'), (100, 'S')]
     for stud in range(headCount):
-        total = sum(marks[stud])
+        total = ceil(sum(marks[stud]))
         percentage = (total/keyTotal)*100
         grade = 'S'
         for limit, grade in grades:

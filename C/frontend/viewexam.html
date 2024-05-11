@@ -110,8 +110,7 @@
                     row.append($('<td>').text(item.student_id));
                     //second column here
                     var marks = Object.keys(item).filter(key => key.startsWith('mark'));
-                    var marksText = marks.map(mark => item[mark] || 'NA').join(', ');
-                    row.append($('<td>').text(marksText));
+                    var marksText = marks.map(mark => (item[mark] === null || item[mark] === undefined) ? 'NA' : item[mark]).join(', ');                    row.append($('<td>').text(marksText));
                     row.append($('<td>').text(item.total || 'NA'));
                     row.append($('<td>').text(item.grade || 'NA'));
                     row.append($('<td>').text('📄'));

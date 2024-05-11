@@ -19,6 +19,7 @@ safety_settings = [
 
 model = genai.GenerativeModel(model_name="gemini-1.0-pro-001",generation_config=generation_config,safety_settings=safety_settings)
 
+'''
 #question and answer 1
 l1=["My answer: Participating disaster risk management in the context of stakeholders, organisations, suffers by the disaster and who are affected by a disaster and action plan in case of risks. ",
   "Answer key: explain participatory stakeholder engagement - 2 Mark .\nImportance's and Need Of  participatory stakeholder engagement - 3 Mark.",
@@ -62,9 +63,24 @@ mark.append(response.text)
 response = model.generate_content(dataset[0]+l3)
 print(response.text)
 mark.append(response.text)
+'''
+prompt_parts = [
+    "My answer: Hello world.",
+    "Answer key: Hello world.",
+    "Maxscore: 5",
+    "score: 5",
+]
 
-response = model.generate_content(dataset[0]+l4)
-print(response.text)
-mark.append(response.text)
+def getMark(a, k, m):
+  prompt_parts.extend([
+    "My answer: " + a,
+    "Answer key: " + k,
+    "Maxscore: " + str(m),
+    "score: ",
+  ])
+  mark = int(str(model.generate_content(prompt_parts).text))
+  return mark 
 
-print(mark)
+
+if __name__ == "__main__":
+  print(getMark("hello", "hello world", 5))
