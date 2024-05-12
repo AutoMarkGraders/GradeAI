@@ -20,7 +20,7 @@ html {
 .app {
   position: relative;
   min-width: 70vw;
-  height: 90vh;
+  height: 85vh;
   width: 80vw;
   box-shadow: 0 0 60px rgb(6, 97, 128);
   overflow: hidden;
@@ -67,7 +67,7 @@ html {
 }
 .app__text {
   position: absolute;
-  right: 90px;
+  right: 115px;
   top: 80px;
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
@@ -93,7 +93,7 @@ html {
   transition: transform 1500ms 2000ms, opacity 1500ms 2750ms;
 }
 .app__text-line--4 {
-  font-size: 30px;
+  font-size: 35px;
   font-weight: 700;
   color: #0a101d;
 }
@@ -106,9 +106,14 @@ html {
 .app__text-line--1 {
   color: #a7a1a5;
   font-size: 16px;
+  line-height: 20px;
 }
 .app__text-line--1 span {
   color: #09c3fbfc;
+}
+.app__text-line--4 span{
+  color: linear-gradient(#467280da 100%, #a7a1a5 100%);
+  animation: text-animation 5s infinite alternate;
 }
 @keyframes text-animation {
   0% {
@@ -149,14 +154,19 @@ html {
   left: 80px;
   z-index: -1;
   transition: z-index 1500ms;
-  background-color: #00b4ff;
 }
 .get_started{
   text-decoration: none;
 }
+.get_started img{
+  height: auto;
+  width: 28px;
+  padding-left: 5px;
+}
 .app__text--2 .app__text-line--4 {
   opacity: 0;
   transition: transform 1500ms 525ms, opacity 400ms 725ms;
+  margin-bottom: 35px;
 }
 .app__text--2 .app__text-line--3 {
   opacity: 0;
@@ -169,6 +179,7 @@ html {
 .app__text--2 .app__text-line--1 {
   opacity: 0;
   transition: transform 1500ms 300ms, opacity 400ms 500ms;
+  margin-bottom: 45px;
 }
 
 .initial .app__img {
@@ -316,17 +327,17 @@ html {
 }
 .icon-link {
   position: absolute;
-  left: 5px;
-  bottom: 5px;
-  width: 50px;
+  right: 10px;
+  bottom: 10px;
+  width: 40px;
 }
 .icon-link img {
   width: 100%;
   vertical-align: top;
 }
-.icon-link--twitter {
-  left: auto;
-  right: 5px;
+.icon-link--github {
+  right: auto;
+  left: 10px;
 }
 
 
@@ -353,7 +364,7 @@ html {
 
 #loading-screen text {
   text-transform: uppercase;
-  animation: stroke 5s infinite alternate;
+  animation: stroke 3s infinite alternate;
   stroke-width: 2;
   stroke: #000000;
   font-size: 140px;
@@ -400,6 +411,5 @@ html {
 .button-63:active,
 .button-63:hover {
   outline: 0;
-  
 }
 
