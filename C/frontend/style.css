@@ -20,7 +20,7 @@ html {
 .app {
   position: relative;
   min-width: 70vw;
-  height: 85vh;
+  height: 90vh;
   width: 80vw;
   box-shadow: 0 0 60px rgb(6, 97, 128);
   overflow: hidden;
@@ -104,7 +104,7 @@ html {
   animation: text-animation 5s infinite alternate;
 }
 .app__text-line--1 {
-  color: #a7a1a5;
+  color: #625f61;
   font-size: 16px;
   line-height: 20px;
 }
