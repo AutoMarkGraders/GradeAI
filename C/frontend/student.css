@@ -9,7 +9,6 @@ body {
     height: 14vh;
     background-color: #16588E;
     padding: 4%;
-    margin-bottom: 10vh;
 }
 a {
     text-decoration: none;
@@ -33,28 +32,12 @@ h1{
 
 #table {
     display: table;
-     
      width: 100%; 
      background: #fff;
      margin: 0;
      box-sizing: border-box;
 
  }
-
- .caption {
-     display: block;
-    width: 100%;
-    background: #000;
-    height: 55px;
-    padding-left: 10px;
-    color: #fff;
-    font-size: 25px;
-    line-height: 55px;
-    text-shadow: 3px 2px 4px rgb(244, 123, 31);
-    box-sizing: border-box;
-    letter-spacing: 3px;
-}
-
 
  .header-row {
      background: #f47b1f;
@@ -78,13 +61,13 @@ justify-content: space-between;
 .cell {
     display: table-cell;
     font-size: 15px;
-    padding: 14px 6px 14px 12px; 
+    padding: 8px 6px 6px 8px; 
     border: 1px solid #e5e5e5;
     text-align: left;
     font-family: monospace;
     text-wrap: balance;
     word-wrap: break-word;
-    min-width: 11vw;
+    min-width: 8vw;
     /*white-space: nowrap;*/
 }
 
