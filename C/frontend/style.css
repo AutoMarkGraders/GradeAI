@@ -67,8 +67,8 @@ html {
 }
 .app__text {
   position: absolute;
-  right: 165px;
-  top: 150px;
+  right: 90px;
+  top: 80px;
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
   z-index: 1;
@@ -93,7 +93,7 @@ html {
   transition: transform 1500ms 2000ms, opacity 1500ms 2750ms;
 }
 .app__text-line--4 {
-  font-size: 50px;
+  font-size: 30px;
   font-weight: 700;
   color: #0a101d;
 }
@@ -102,6 +102,13 @@ html {
   font-weight: 700;
   color: linear-gradient(#467280da 100%, #a7a1a5 100%);
   animation: text-animation 5s infinite alternate;
+}
+.app__text-line--1 {
+  color: #a7a1a5;
+  font-size: 16px;
+}
+.app__text-line--1 span {
+  color: #09c3fbfc;
 }
 @keyframes text-animation {
   0% {
@@ -120,7 +127,11 @@ html {
   margin-top: 10px;
   font-size: 14px;
   font-weight: 500;
-  color: #09c;
+  color: #09c3fbfc;
+}
+.app__text-line--4 span{
+  color: linear-gradient(#467280da 100%, #a7a1a5 100%);
+  animation: text-animation 5s infinite alternate;
 }
 .app__text-line--1 {
   margin-top: 15px;
@@ -138,6 +149,10 @@ html {
   left: 80px;
   z-index: -1;
   transition: z-index 1500ms;
+  background-color: #00b4ff;
+}
+.get_started{
+  text-decoration: none;
 }
 .app__text--2 .app__text-line--4 {
   opacity: 0;
@@ -385,5 +400,6 @@ html {
 .button-63:active,
 .button-63:hover {
   outline: 0;
+  
 }
 
