@@ -72,15 +72,24 @@ justify-content: space-between;
 }
 .row {
     display: table-row;
+    color: black;
 }
 
 .cell {
     display: table-cell;
     font-size: 15px;
-    padding: 10px 5px 10px 12px; 
+    padding: 14px 6px 14px 12px; 
     border: 1px solid #e5e5e5;
     text-align: left;
-font-family: monospace;
+    font-family: monospace;
+    text-wrap: balance;
+    word-wrap: break-word;
+    min-width: 11vw;
+    /*white-space: nowrap;*/
+}
+
+.cell:last-child {
+    min-width: 0;
 }
 
 .primary {
