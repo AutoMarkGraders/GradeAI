@@ -97,6 +97,7 @@
                             `); 
                         }
                         $("#keyForm").prepend(`<h2>Upload the Answer Key</h2>`);
+                        alert("Enter the Exam details in the upcoming pages.");    
                     //}    
                 }
             });
@@ -204,14 +205,36 @@
 
             });
 
-//--------------  SUBMIT ANSWERS ----------------------------//
+//--------------  EVALUATE ANSWERS ----------------------------//
             $("#submitAnswers").click(function() {
+
+                alert("Performing AI driven evaluation, please wait..");
+
+                var table_name = sessionStorage.getItem("table_name");
+                
+                // send post request to backend
+                $.ajax({
+                url: 'http://127.0.0.1:8000/exam/evaluate/' + table_name,
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + jwt);
+                },
+                success: function(data) {
+                alert("Exam Evaluation Completed!");
                 window.location.href = "institution.html";
+                },
+                error: function(xhr, status, error) {
+                alert("Failed to evaluate exam. Please try again later.");
+                console.error("Error:", xhr.responseText);
+                //window.location.href = "institution.html";
+                }
+                });
             
             });
 
-
-        }); 
+        }); // end document.ready
     </script>
 </body>
 </html>

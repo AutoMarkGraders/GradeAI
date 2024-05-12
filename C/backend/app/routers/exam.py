@@ -11,6 +11,7 @@ from firebase_admin import auth, db
 from firebase_admin.exceptions import FirebaseError
 from firebase_admin import storage
 import datetime
+from PyPDF2 import PdfFileReader
 import os
 from math import ceil
 from random import randrange
@@ -49,7 +50,7 @@ def create_exam(exam: schemas.ExamCreate, pdb: Session = Depends(get_db), curren
 def upload_anskey(anskey: dict, tname: str, pdb: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
     akey = {"student_id": "answerkey"}
     akey.update(anskey) #adds individual answers and marks to akey
-    total = sum(value for i, value in enumerate(anskey.values()) if i % 2 != 0) #total marks
+    total = sum(value for i, value in enumerate(anskey.values()) if i % 2 != 0)
     akey['total'] = total
     akey['grade'] = 'X'
     akey['pdfURL'] = 'X' # convert answer key to pdf and upload to firebase storage
@@ -76,7 +77,7 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     try:
         user = auth.get_user_by_email(student_email)
     except FirebaseError:
-        user = auth.create_user(email=student_email,password='password')#pass word setting?!!!!!!!!!!!!!!!!!!!!!!!!!!!%%%^&*))(*&^%)
+        user = auth.create_user(email=student_email,password='college123')#pass word setting?!!!!!!!!!!!!!!!!!!!!!!!!!!!%%%^&*))(*&^%)
 
     # Save the pdf to the current directory
     file_path = os.path.join(os.getcwd(), file.filename)
@@ -86,22 +87,24 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
 
     # Upload the PDF to Firebase Storage
     bucket = storage.bucket()
-    blob = bucket.blob(str(datetime.datetime.now().timestamp()) + file.filename.split('.')[-1]) # use timestamp as filename and keep the file extension
+    blob = bucket.blob(str(int(datetime.datetime.now().timestamp())) + '.' + file.filename.split('.')[-1]) # use timestamp as filename and keep the file extension
     file.file.seek(0)  # go to start of file
-    blob.upload_from_file(file.file)
+    blob.upload_from_file(file.file, content_type='application/pdf')
     pdf_url = blob.public_url
 
     # add details to firebase realtime database
     uid = auth.get_user_by_email(student_email).uid
     rtdb_path = f'students/{uid}/exams/{tname}'
     ref = db.reference(rtdb_path)
-    ref.set({'pdf_url': pdf_url})    # add pdf url to firebase
+    ref.set({'pdf_url': pdf_url})    # add pdf url to firebase (no need though)
     
     #OCR using Gemini
     try:
         answers = extract.extractText(file_path) 
     except Exception as e:
-        answers = ["dummy", "data"]
+        with open(file_path, "rb") as myfile:
+            num_pages = PdfFileReader(myfile).getNumPages()
+        answers = ["dummy"] * num_pages
         #print(e)
 
     # Delete the pdf file from memory
@@ -116,11 +119,9 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     metadata = MetaData()
     metadata.bind = pdb.get_bind()
     t = Table(tname, metadata, autoload_with=pdb.get_bind())
-    stmt = insert(t).values(**ans)
-    pdb.execute(stmt)
+    pdb.execute(insert(t).values(**ans))
     pdb.commit()
 
-    # Grade using Gemini
     return {"message": f"Answers uploaded to {tname}"}
 
 

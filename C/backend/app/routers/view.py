@@ -3,7 +3,7 @@
 
 from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
 from sqlalchemy.orm import Session, load_only
-from sqlalchemy import Table, Column, Integer, String, MetaData, insert, func, text
+from sqlalchemy import Table, Column, Integer, String, MetaData, insert, desc, text
 from typing import List
 
 from .. import schemas, models, oauth
@@ -37,10 +37,8 @@ def view_exam(exam_name: str, pdb: Session = Depends(get_db), current_user: str 
     metadata.bind = pdb.get_bind()
     table = Table(table_name, metadata, autoload_with=pdb.bind)
 
-    # Query the table
-    query = table.select()
-    result = pdb.execute(query)
-    rows = result.fetchall()
+    # Query the table based on total
+    rows = pdb.execute(table.select().order_by(desc('total'))).fetchall()
     # Convert rows to list of dictionaries
     rows_as_dicts = [row._asdict() for row in rows]
     
