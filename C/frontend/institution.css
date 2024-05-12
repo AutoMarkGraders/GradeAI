@@ -46,6 +46,8 @@ h1{
     height: 65vh;
     margin-top: 0vh;
     width: 25vw;
+    background-color: #16588E;
+    color: white;
 }
 .greet{
     font-size: 5.8vh;            /*fix*/
