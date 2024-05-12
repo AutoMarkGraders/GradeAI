@@ -70,7 +70,6 @@ html {
   right: 115px;
   top: 80px;
   font-family: 'Roboto', sans-serif;
-  text-transform: uppercase;
   z-index: 1;
 }
 .app__text-line {
@@ -96,17 +95,19 @@ html {
   font-size: 35px;
   font-weight: 700;
   color: #0a101d;
+  text-transform: uppercase;
 }
 .app__text-line--3 {
   font-size: 80px;
   font-weight: 700;
   color: linear-gradient(#467280da 100%, #a7a1a5 100%);
   animation: text-animation 5s infinite alternate;
+  text-transform: uppercase;
 }
 .app__text-line--1 {
   color: #625f61;
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 18px;
+  line-height: 22px;
 }
 .app__text-line--1 span {
   color: #09c3fbfc;
@@ -130,8 +131,9 @@ html {
 
 .app__text-line--2 {
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 500;
+  text-transform: uppercase;
   color: #09c3fbfc;
 }
 .app__text-line--4 span{
