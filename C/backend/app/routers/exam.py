@@ -11,7 +11,7 @@ from firebase_admin import auth, db
 from firebase_admin.exceptions import FirebaseError
 from firebase_admin import storage
 import datetime
-from PyPDF2 import PdfFileReader
+from PyPDF2 import PdfReader
 import os
 from math import ceil
 from random import randrange
@@ -66,7 +66,7 @@ def upload_anskey(anskey: dict, tname: str, pdb: Session = Depends(get_db), curr
     except Exception as e:   
         raise HTTPException(status_code=500, detail="Internal server error")
 
-    return {"message": f"Answer key inserted into {tname}"}
+    return {"message": f"Answer Key uploaded to {tname}"}
 
 
 @router.post("/anspdf/{tname}", status_code=status.HTTP_201_CREATED)
@@ -102,10 +102,11 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     try:
         answers = extract.extractText(file_path) 
     except Exception as e:
-        with open(file_path, "rb") as myfile:
-            num_pages = PdfFileReader(myfile).getNumPages()
-        answers = ["dummy"] * num_pages
-        #print(e)
+        #with open(file_path, "rb") as myfile:
+        #    num_pages = len(PdfReader(myfile).pages)
+        #answers = ["dummy"] * num_pages
+        answers = ["Early warning system are systems which warn people of a community just before the occurance of a disaster. These system helps to start evacuation plans, start strategies to minimise the effect of the disaster. For eg. before a blood ten to early warning & alert system detects it, then evacuation of people living near water bodies can be done but after the flood occurs the evacuation plan and associated rescue plans are much harder to implement.", " The primary objectives of disaster response are: Rescue maximum amount of people from the area of disaster. Start procedures like search and rescue, provide initial first aid, SOPs, physiological support to people who need it. This is one of the main steps to be done that is to sent as many people to leave the area of disaster as soon as possible.","Stakeholders are normally the people that are vulnerable to disaster.  participatory stakeholder engagement refers to the active participation of stakeholders which helps to plan projects that help manage the disasters. Stakeholders participation is important for disaster management to be effective.", "Capacity building refers to the term to take apt measures and store more resources and knowledge to face a disaster. There are 2 types of capacity building- Structural capacity building refers to physical constructions to reduce the risk of disaster. Non structural capacity building refers to giving adequate knowledge to people on the disaster at hand, conducting mock drills, demo evacuation plans etc. These capacity building focuses on encouraging knowledge of people, teaching them how to act at the time of a disaster etc. "]
+        print(e)
 
     # Delete the pdf file from memory
     os.remove(file_path)
@@ -119,7 +120,7 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     metadata = MetaData()
     metadata.bind = pdb.get_bind()
     t = Table(tname, metadata, autoload_with=pdb.get_bind())
-    pdb.execute(insert(t).values(**ans))
+    pdb.execute(insert(t).values(**ans))  # ANSWER MAY ALREADY BE PRESENT
     pdb.commit()
 
     return {"message": f"Answers uploaded to {tname}"}

@@ -1,3 +1,5 @@
+#not currently in use
+
 from PyPDF2 import PdfReader
 from PIL import Image
 import io

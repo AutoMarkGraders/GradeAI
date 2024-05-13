@@ -80,4 +80,4 @@ def extractText(file_path: str):
 
   return answers
 
-#extractText("test.pdf")
+#print(extractText("test.pdf"))

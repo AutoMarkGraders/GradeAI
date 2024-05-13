@@ -92,25 +92,23 @@ html {
   transition: transform 1500ms 2000ms, opacity 1500ms 2750ms;
 }
 .app__text-line--4 {
-  font-size: 35px;
+  font-size: 45px;
   font-weight: 700;
   color: #0a101d;
-  text-transform: uppercase;
 }
 .app__text-line--3 {
-  font-size: 80px;
+  font-size: 100px;
   font-weight: 700;
   color: linear-gradient(#467280da 100%, #a7a1a5 100%);
   animation: text-animation 5s infinite alternate;
-  text-transform: uppercase;
 }
 .app__text-line--1 {
   color: #625f61;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 22px;
 }
 .app__text-line--1 span {
-  color: #09c3fbfc;
+  color: black;
 }
 .app__text-line--4 span{
   color: linear-gradient(#467280da 100%, #a7a1a5 100%);
@@ -133,8 +131,7 @@ html {
   margin-top: 10px;
   font-size: 20px;
   font-weight: 500;
-  text-transform: uppercase;
-  color: #09c3fbfc;
+  color: black;
 }
 .app__text-line--4 span{
   color: linear-gradient(#467280da 100%, #a7a1a5 100%);
@@ -365,7 +362,6 @@ html {
 }
 
 #loading-screen text {
-  text-transform: uppercase;
   animation: stroke 3s infinite alternate;
   stroke-width: 2;
   stroke: #000000;
