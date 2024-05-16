@@ -55,11 +55,11 @@ html {
   left: 0;
 }
 .app__bgimg-image--1 {
-  background: url('bg2.jpg') center center no-repeat;
+  background: url('pages/assets/bg2.jpg') center center no-repeat;
   background-size: cover;
 }
 .app__bgimg-image--2 {
-  background: url('bg1.png') center center no-repeat;
+  background: url('pages/assets/bg1.png') center center no-repeat;
   background-size: cover;
   opacity: 0;
   transition: opacity 0ms 1300ms;
