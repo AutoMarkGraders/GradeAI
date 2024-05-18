@@ -80,11 +80,11 @@
                     error: function(xhr, status, error) {
                     alert("Failed to create exam. Please try again later.");
                     console.error("Error:", xhr.responseText);
-                    //window.location.href = "institution.html";
+                    window.location.href = "institution.html";
                     }
                     });
 
-                    //if (successful) {
+                    if (successful) {
                         $("#keyForm").show();
                         // dynamically create form based on question count 
                         for (let i = $("#questionCount").val()-1; i >=0; i--) {
@@ -98,7 +98,7 @@
                         }
                         $("#keyForm").prepend(`<h2>Upload the Answer Key</h2>`);
                         alert("Enter the Exam details in the upcoming pages.");    
-                    //}    
+                    }    
                 }
             });
         

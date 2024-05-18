@@ -35,7 +35,7 @@ def upload_if_needed(pathname: str) -> list[str]:
 
 
 
-def extractText(file_path: str):
+def extractText(pdf_file_path: str) -> list[str]:
 
   uploaded_files = []
   
@@ -49,7 +49,7 @@ def extractText(file_path: str):
   answers = []
   
   # Convert the PDF to of PIL Image objects
-  images = convert_from_path(file_path) #requires system's PATH setup, something else on ubuntu
+  images = convert_from_path(pdf_file_path) #requires system's PATH setup, something else on ubuntu
   
   # Save each image to the current directory and extract text
   for i, image in enumerate(images):

@@ -65,7 +65,7 @@ print(response.text)
 mark.append(response.text)
 '''
 
-def getMark(a, k, m):
+def getMark(a, k, m) -> int:
   prompt_parts = [
   "My answer: Early warning systems are an important part of disaster prevention/ mitigation measures. * It is pivotal to help state prepare for disasters to take precautions and prepare for a possible disaster. * Early warning systems are necessary to start preparing relief camps etc. for evacuation during disasters. * This saves lives and reduces loss of property.* In some disasters, time is a major constraint and hence early warning system helps in disaster risk reduction.* Eg:- Tsunami early warning system helps fishermen, to get out of sea, people of low lying areas and coastal areas to move to higher ground. This makes evacuation faster, less lives are affected and people can take their loved ones and important goods along.",
   "Answer key: Explain early warning system   - 1 Mark.\nwhy is early warning system important - 2 Mark .\nexplain how early warning system lead to disaster prevention and mitigation - 2 Mark.",
@@ -123,7 +123,9 @@ def getMark(a, k, m):
     "Maxscore: " + str(m),
     "score: ",
   ])
+
   mark = int(str(model.generate_content(prompt_parts).text))
+
   return mark 
 
 

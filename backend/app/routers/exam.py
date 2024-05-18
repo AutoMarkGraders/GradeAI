@@ -23,6 +23,10 @@ router = APIRouter(
 
 @router.post("/create", status_code=status.HTTP_201_CREATED, response_model=schemas.ExamOut)
 def create_exam(exam: schemas.ExamCreate, pdb: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
+    
+    if pdb.query(models.Exam).filter_by(institution=current_user, name=exam.name).one_or_none() is not None:
+        raise HTTPException(status_code=409, detail="Item already exists")
+    
     # insert details into the exams table
     new_exam = models.Exam(institution=current_user, **dict(exam))
     pdb.add(new_exam)
@@ -47,7 +51,7 @@ def create_exam(exam: schemas.ExamCreate, pdb: Session = Depends(get_db), curren
 
 
 @router.post("/anskey/{tname}", status_code=status.HTTP_201_CREATED)
-def upload_anskey(anskey: dict, tname: str, pdb: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
+def upload_anskey(tname: str, anskey: dict, pdb: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
     akey = {"student_id": "answerkey"}
     akey.update(anskey) #adds individual answers and marks to akey
     total = sum(value for i, value in enumerate(anskey.values()) if i % 2 != 0)
@@ -72,16 +76,24 @@ def upload_anskey(anskey: dict, tname: str, pdb: Session = Depends(get_db), curr
 @router.post("/anspdf/{tname}", status_code=status.HTTP_201_CREATED)
 def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...), pdb: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
     
+    # check if entry was made for the student
+    metadata = MetaData()
+    metadata.bind = pdb.get_bind()
+    t = Table(tname, metadata, autoload_with=pdb.get_bind())
+    entry = pdb.execute(select(t).where(t.c.student_id == student)).fetchone()
+    if entry is not None:
+        raise HTTPException(status_code=409, detail="Item already exists")
+
     # add student if not present in firebase authentication
     student_email = f"{student}@{current_user}.student"
     try:
         user = auth.get_user_by_email(student_email)
     except FirebaseError:
-        user = auth.create_user(email=student_email,password='college123')#pass word setting?!!!!!!!!!!!!!!!!!!!!!!!!!!!%%%^&*))(*&^%)
+        user = auth.create_user(email=student_email, password='college123')
 
     # Save the pdf to the current directory
-    file_path = os.path.join(os.getcwd(), file.filename)
-    with open(file_path, "wb") as buffer:
+    pdf_file_path = os.path.join(os.getcwd(), file.filename)
+    with open(pdf_file_path, "wb") as buffer:
         buffer.write(file.file.read())    
     #print(os.path.getsize(file_path))
 
@@ -100,16 +112,15 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     
     #OCR using Gemini
     try:
-        answers = extract.extractText(file_path) 
+        answers = extract.extractText(pdf_file_path) 
     except Exception as e:
-        #with open(file_path, "rb") as myfile:
-        #    num_pages = len(PdfReader(myfile).pages)
-        #answers = ["dummy"] * num_pages
-        answers = ["Early warning system are systems which warn people of a community just before the occurance of a disaster. These system helps to start evacuation plans, start strategies to minimise the effect of the disaster. For eg. before a blood ten to early warning & alert system detects it, then evacuation of people living near water bodies can be done but after the flood occurs the evacuation plan and associated rescue plans are much harder to implement.", " The primary objectives of disaster response are: Rescue maximum amount of people from the area of disaster. Start procedures like search and rescue, provide initial first aid, SOPs, physiological support to people who need it. This is one of the main steps to be done that is to sent as many people to leave the area of disaster as soon as possible.","Stakeholders are normally the people that are vulnerable to disaster.  participatory stakeholder engagement refers to the active participation of stakeholders which helps to plan projects that help manage the disasters. Stakeholders participation is important for disaster management to be effective.", "Capacity building refers to the term to take apt measures and store more resources and knowledge to face a disaster. There are 2 types of capacity building- Structural capacity building refers to physical constructions to reduce the risk of disaster. Non structural capacity building refers to giving adequate knowledge to people on the disaster at hand, conducting mock drills, demo evacuation plans etc. These capacity building focuses on encouraging knowledge of people, teaching them how to act at the time of a disaster etc. "]
+        with open(pdf_file_path, "rb") as pdf_file:
+            num_pages = len(PdfReader(pdf_file).pages)
+        answers = ["dummy"] * num_pages
         print(e)
 
     # Delete the pdf file from memory
-    os.remove(file_path)
+    os.remove(pdf_file_path)
 
     # Insert ans as a new row into tname
     ans = {"student_id": f"{student}"}
@@ -117,10 +128,7 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
         ans[f'ans{i+1}'] = answer
     ans['pdfURL'] = pdf_url  
 
-    metadata = MetaData()
-    metadata.bind = pdb.get_bind()
-    t = Table(tname, metadata, autoload_with=pdb.get_bind())
-    pdb.execute(insert(t).values(**ans))  # ANSWER MAY ALREADY BE PRESENT
+    pdb.execute(insert(t).values(**ans))
     pdb.commit()
 
     return {"message": f"Answers uploaded to {tname}"}
@@ -147,7 +155,6 @@ def evaluate_exam(tname: str, pdb: Session = Depends(get_db), current_user: str 
         for stud in range(headCount):
             #print(answers[stud][q])
             #print(answers[stud][q], answerkey[q], answerkey[q+1], '\n')
-
             try:
                 mark = evaluate.getMark(answers[stud][q], answerkey[q], int(answerkey[q+1]))
             except Exception as e:
