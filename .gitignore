@@ -1,3 +1,11 @@
 test.*
 trial.*
 .DS_Store
+
+__pycache__
+*.env
+trial.py
+semantics.py
+ensemble.py
+FirebaseCreds.json
+payment_qr.png

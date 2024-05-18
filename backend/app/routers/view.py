@@ -43,3 +43,21 @@ def view_exam(exam_name: str, pdb: Session = Depends(get_db), current_user: str 
     rows_as_dicts = [row._asdict() for row in rows]
     
     return rows_as_dicts
+
+
+'''
+@router.get("/student", status_code=status.HTTP_200_OK)
+def stud_exams(pdb: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
+
+    # Reflect the table from the database
+    metadata = MetaData()
+    metadata.bind = pdb.get_bind()
+    table = Table(table_name, metadata, autoload_with=pdb.bind)
+
+    # Query the table based on total
+    rows = pdb.execute(table.select().order_by(desc('total'))).fetchall()
+    # Convert rows to list of dictionaries
+    rows_as_dicts = [row._asdict() for row in rows]
+    
+    return rows_as_dicts
+'''
