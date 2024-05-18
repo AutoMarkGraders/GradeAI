@@ -105,7 +105,7 @@
                     //second column here
                     var marks = Object.keys(item).filter(key => key.startsWith('mark'));
                     var marksText = marks.map(mark => (item[mark] === null || item[mark] === undefined) ? 'NA' : item[mark]).join(', ');                    row.append($('<td>').text(marksText));
-                    row.append($('<td>').text(item.total || 'NA'));
+                    row.append($('<td>').text((item.total === undefined || item.total === null) ? 'NA' : item.total));
                     row.append($('<td>').text(item.grade || 'NA'));
                     row.append($('<td>').html('<a href="' + item.pdfURL + '" target="_blank">📄</a>'));
                     tbody.append(row);

@@ -149,10 +149,9 @@
         evt.preventDefault();
         signInWithEmailAndPassword(auth,emailid.value,instiPassword.value).then((credentials)=>{
             if(credentials.user.emailVerified) {
-                get(child(dbref,'institutions/'+ credentials.user.uid)).then((snapshot)=>{
+                get(child(dbref,'users/'+ credentials.user.uid)).then((snapshot)=>{
                     if(snapshot.exists()) {
                         sessionStorage.setItem("user", snapshot.val().name);
-                        //sessionStorage.setItem("user-creds",JSON.stringify(credentials.user));
                         credentials.user.getIdToken().then((idToken) => {
                             sessionStorage.setItem("jwt", idToken);
                         });

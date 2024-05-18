@@ -90,6 +90,9 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
         user = auth.get_user_by_email(student_email)
     except FirebaseError:
         user = auth.create_user(email=student_email, password='college123')
+        # Add the student to the Realtime Database
+        ref = db.reference('users/')
+        ref.child(user.uid).set({'name': student,})
 
     # Save the pdf to the current directory
     pdf_file_path = os.path.join(os.getcwd(), file.filename)

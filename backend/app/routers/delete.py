@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
+from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
-from sqlalchemy import Table, Column, Integer, String, MetaData, insert, func
+from sqlalchemy import Table, Column, Integer, String, MetaData, insert
 from sqlalchemy import inspect
 
 from .. import schemas, models, oauth
@@ -22,9 +22,9 @@ def delete_exam(exam_name: str, pdb: Session = Depends(get_db), current_user: st
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Exam not found")#stuff below raise wont run
 
     #Delete the table with the name current_user_exam_name
-    table_name = current_user + "_" + exam_name
     metadata = MetaData()
     metadata.bind = pdb.get_bind()
+    table_name = current_user + "_" + exam_name
     table = Table(table_name, metadata, autoload_with=pdb.bind)
     inspector = inspect(pdb.get_bind())
     if inspector.has_table(table_name):

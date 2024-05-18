@@ -79,7 +79,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
 
-    import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+    import { getDatabase, set, ref, get } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
     import { getAuth, createUserWithEmailAndPassword , sendEmailVerification} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -101,35 +101,53 @@
     const analytics = getAnalytics(app);
 
     const db=getDatabase();
+    const usersRef = ref(db, 'users');
     const auth=getAuth(app);
 
-    let Emaillnp = document.getElementById('email');
-    let Passlnp = document.getElementById('password');
-    let Fnamelnp = document.getElementById("name");
+    let email = document.getElementById('email');
+    let password = document.getElementById('password');
+    let name = document.getElementById("name");
 
-    let Registeruser = evt => {
+    let registerUser = evt => {
         evt.preventDefault(); 
-        createUserWithEmailAndPassword(auth, Emaillnp.value, Passlnp.value)
-        .then((credentials) => {
-            set(ref(db, 'institutions/'+credentials.user.uid), {
-                name: Fnamelnp.value
-            }).then(() => {
-                sendEmailVerification(auth.currentUser)
-                .then(() => {
-                    // Email verification sent!
-                    alert("Verification link sent to your Email id.");
-                }).catch((error) => {
-                    console.error(error);
-                    alert("Error sending verification email: " + error.message);
-                });       
+
+        // Get a reference to the 'users' object in Firebase database
+        let nameTaken = false;
+        const usersRef = ref(db, 'users');
+        get(usersRef)
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                let users = snapshot.val();
+                for (let id in users) {
+                    if (users[id].name === name.value) {
+                        alert("Name is already taken!");
+                        nameTaken = true;
+                        break;
+                    }
+                }
+            }
+            if (!nameTaken) { // add name to users object
+                createUserWithEmailAndPassword(auth, email.value, password.value)
+                .then((credentials) => {
+                    set(ref(db, 'users/'+credentials.user.uid), {
+                        name: name.value
+                    })
+                    .then(() => {
+                        sendEmailVerification(auth.currentUser).then(() => {alert("Verification link sent to your Email id.");})
+                        .catch((error) => {
+                            console.error(error);
+                            alert("Error sending verification email: " + error.message);
+                        });       
                     });
                 })
-                .catch((error) => {
-                    alert(error.message);
-                    console.error(error);
-                });    
+            }
+        })
+        .catch((error) => {
+            alert(error.message);
+            console.error(error);
+        });    
     }
-    myform.addEventListener('submit', Registeruser);
+    myform.addEventListener('submit', registerUser);
     
     </script>
 </body>
