@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
 from sqlalchemy.orm import Session
-from sqlalchemy import Table, Column, Integer, Float, String, MetaData, insert, select, update
+from sqlalchemy import Table, Column, Integer, Float, String, MetaData, insert, select, update, func
 
 from .. import schemas, models, oauth
 from ..database import get_db, firebase_admin
@@ -94,6 +94,15 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
         ref = db.reference('users/')
         ref.child(user.uid).set({'name': student,})
 
+    # add to students table if not present
+    stud = pdb.query(models.Student).filter(models.Student.email == student_email).first() 
+    if not stud:
+        new_stud = models.Student(email=student_email, institution=current_user, exams_attended=[tname])
+        pdb.add(new_stud)
+    else:
+        stud.exams_attended = func.array_append(models.Student.exams_attended, tname)
+    pdb.commit()
+
     # Save the pdf to the current directory
     pdf_file_path = os.path.join(os.getcwd(), file.filename)
     with open(pdf_file_path, "wb") as buffer:
@@ -108,10 +117,10 @@ def upload_pdf(tname: str, student: str = Form(...), file: UploadFile = File(...
     pdf_url = blob.public_url
 
     # add details to firebase realtime database
-    uid = auth.get_user_by_email(student_email).uid
-    rtdb_path = f'students/{uid}/exams/{tname}'
-    ref = db.reference(rtdb_path)
-    ref.set({'pdf_url': pdf_url})    # add pdf url to firebase (no need though)
+    #uid = auth.get_user_by_email(student_email).uid
+    #rtdb_path = f'students/{uid}/exams/{tname}'
+    #ref = db.reference(rtdb_path)
+    #ref.set({'pdf_url': pdf_url})    # add pdf url to firebase (no need though)
     
     #OCR using Gemini
     try:

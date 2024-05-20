@@ -48,7 +48,7 @@
             $("#createExam").click(function() {
                 // Check if the input fields are empty
                 if ($("#examName").val() === "" || $("#examDate").val() === "" || $("#questionCount").val() === "" || $("#maxMarks").val() === "") {
-                    alert("Please enter all the necessary details to create an exam.");
+                    alert("Please enter all the necessary details to create an Exam.");
                 } 
                 else 
                 {
@@ -72,19 +72,14 @@
                     beforeSend: function(xhr) {
                     xhr.setRequestHeader("Authorization", "Bearer " + jwt);
                     },
-                    success: function(data) {
-                    //alert("Exam '" + data.name + "' created successfully!");
-                    sessionStorage.setItem("table_name", data.table_name);
-                    successful = true;
-                    },
                     error: function(xhr, status, error) {
                     alert("Failed to create exam. Please try again later.");
                     console.error("Error:", xhr.responseText);
                     window.location.href = "institution.html";
-                    }
-                    });
-
-                    if (successful) {
+                    },
+                    success: function(data) {
+                        //alert("Exam '" + data.name + "' created successfully!");
+                        sessionStorage.setItem("table_name", data.table_name);
                         $("#keyForm").show();
                         // dynamically create form based on question count 
                         for (let i = $("#questionCount").val()-1; i >=0; i--) {
@@ -97,10 +92,11 @@
                             `); 
                         }
                         $("#keyForm").prepend(`<h2>Upload the Answer Key</h2>`);
-                        alert("Enter the Exam details in the upcoming pages.");    
-                    }    
+                        alert("Enter the Exam details in the upcoming pages.");
+                    }
+                    }); //end ajax
                 }
-            });
+            }); //end createExam click
         
 
 //--------------  UPLOAD ANSWER KEY ----------------------------//
