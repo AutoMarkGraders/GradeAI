@@ -3,7 +3,7 @@
 
 from fastapi import APIRouter, Depends, status, HTTPException, File, UploadFile, Form
 from sqlalchemy.orm import Session, load_only
-from sqlalchemy import Table, Column, Integer, String, MetaData, insert, desc, text
+from sqlalchemy import Table, Column, Integer, String, MetaData, select, desc, func
 from typing import List
 
 from .. import schemas, models, oauth
@@ -45,19 +45,46 @@ def view_exam(exam_name: str, pdb: Session = Depends(get_db), current_user: str 
     return rows_as_dicts
 
 
-'''
-@router.get("/student", status_code=status.HTTP_200_OK)
-def stud_exams(pdb: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
+@router.get("/student/{institution}", status_code=status.HTTP_200_OK)
+def stud_exams(institution: str, pdb: Session = Depends(get_db), current_user: str = Depends(oauth.get_current_user)):
 
-    # Reflect the table from the database
-    metadata = MetaData()
-    metadata.bind = pdb.get_bind()
-    table = Table(table_name, metadata, autoload_with=pdb.bind)
+    # Get exams_attended
+    email = f'{current_user}@{institution}.student'
+    exams = pdb.query(models.Student).filter(models.Student.email == email).one_or_none().exams_attended
 
-    # Query the table based on total
-    rows = pdb.execute(table.select().order_by(desc('total'))).fetchall()
-    # Convert rows to list of dictionaries
-    rows_as_dicts = [row._asdict() for row in rows]
+    l = len(institution) + 1
+    results = []
     
-    return rows_as_dicts
-'''
+    for exam in exams:
+        result = {}
+        result['exam'] = exam[l:]
+    
+        metadata = MetaData()
+        metadata.bind = pdb.get_bind()
+        t = Table(exam, metadata, autoload_with=pdb.bind)
+
+        total = pdb.execute(t.select().where(t.c.student_id == 'answerkey')).fetchone().total
+        result['total'] = total
+
+        row = pdb.execute(t.select().where(t.c.student_id == current_user)).fetchone()
+        result['marks'] = row.total
+        result['grade'] = row.grade
+        result['pdfURL'] = row.pdfURL
+        
+        '''
+        # Calculate the rank
+        rank_query = select([
+            t.c.student_id,
+            func.row_number().over(order_by=desc(t.c.total)).label('rank')
+        ]).subquery()
+        
+        rank = pdb.execute(
+            select([rank_query.c.rank]).where(rank_query.c.student_id == current_user)
+        ).scalar()
+        result['rank'] = rank
+        '''
+
+        results.append(result)
+
+    return results
+    
