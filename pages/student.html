@@ -29,25 +29,37 @@
 
 
   
+  <div class="table-container">
     <div class="header-row row">
-      <span class="cell primary"><a href="#">EXAM NAME<i class="fa fa-fw fa-sort"></i></a></span>
-      <span class="cell"><a href="#">TOTAL MARKS<i class="fa fa-fw fa-sort"></i></a></span>
-      <span class="cell"><a href="#">YOUR MARKS<i class="fa fa-fw fa-sort"></i></a></span>
-      <span class="cell"><a href="#">GRADE<i class="fa fa-fw fa-sort"></i></a></span>
-      <span class="cell"><a href="#">RANK<i class="fa fa-fw fa-sort"></i></a></span>
-      <span class="cell"><a href="#">DETAILED RESULTS</a></span>
+      <span class="cell primary">EXAM NAME<i class="fa fa-fw fa-sort"></i></span>
+      <span class="cell">TOTAL MARKS<i class="fa fa-fw fa-sort"></i></span>
+      <span class="cell">YOUR MARKS<i class="fa fa-fw fa-sort"></i></span>
+      <span class="cell">GRADE<i class="fa fa-fw fa-sort"></i></span>
+      <span class="cell">DETAILED RESULTS</a></span>
     </div>
     <div class="row">
-    <input type="radio" name="expand">
-      <span class="cell primary" data-label="Vehicle">DisasterMan</span>
+      <span class="cell" data-label="Vehicle">DisasterMan</span>
       <span class="cell" data-label="Exterior">40</span>
       <span class="cell" data-label="Interior">30</span>
       <span class="cell" data-label="Engine">A</span>
-      <span class="cell" data-label="Trans">2</span>
       <span class="cell" data-label="Trans"><img width="25" src="https://cdn0.iconfinder.com/data/icons/feather/96/591256-link-512.png"></span>
     </div>
-    
-  </div>
+  </div>  
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script type="module">
+    const firebaseConfig = {
+      apiKey: "AIzaSyBz1pSw5rCyFXdmRtepCCryQLRrkGVdl7k",
+      authDomain: "auto-mark-grader.firebaseapp.com",
+      projectId: "auto-mark-grader",
+      storageBucket: "auto-mark-grader.appspot.com",
+      messagingSenderId: "1036661490233",
+      appId: "1:1036661490233:web:7d2b16ff18ee727ebfc3e8",
+      measurementId: "G-43ZSMWENXR"
+    };
+  </script>
+
 
   <script>  // to ensure valid session and signout button functionality (can be used in all pages)
     var jwt = sessionStorage.getItem("jwt");
@@ -71,21 +83,35 @@
   </script>
 
   
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-  <script type="module">
-  const firebaseConfig = {
-    apiKey: "AIzaSyBz1pSw5rCyFXdmRtepCCryQLRrkGVdl7k",
-    authDomain: "auto-mark-grader.firebaseapp.com",
-    projectId: "auto-mark-grader",
-    storageBucket: "auto-mark-grader.appspot.com",
-    messagingSenderId: "1036661490233",
-    appId: "1:1036661490233:web:7d2b16ff18ee727ebfc3e8",
-    measurementId: "G-43ZSMWENXR"
-  };
+  <script>
+    // Send a GET request to the server when the page loads
+    $(document).ready(function() {
+
+      var institution = sessionStorage.getItem("institution");
+      
+      $.ajax({
+        url: 'http://127.0.0.1:8000/view/student/'+institution,
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+        },
+        success: function(data) 
+        {
+          // Fill the table with the response
+          data.forEach(function(item) {
+            var row = $('<div class="row"></div>');
+            row.append('<span class="cell" data-label="Exam Name">' + item[0] + '</span>');
+            row.append('<span class="cell" data-label="Total Marks">' + item[1] + '</span>');
+            row.append('<span class="cell" data-label="Your Marks">' + item[2] + '</span>');
+            row.append('<span class="cell" data-label="Grade">' + item[3] + '</span>');
+            row.append('<span class="cell" data-label="Detailed Results"><a href="' + item[4] + '"><img width="25" src="https://cdn0.iconfinder.com/data/icons/feather/96/591256-link-512.png"></a></span>');
+            $('.table-container').append(row);
+          });
+          
+        } //end success
+      });//end ajax
+    });//end document.ready
   </script>
-
-
 
 
 </body>

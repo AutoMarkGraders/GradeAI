@@ -37,26 +37,29 @@ h1{
      margin: 0;
      box-sizing: border-box;
 
- }
+}
 
- .header-row {
+.table-container {
+  margin: 20px; /* Adjust as needed */
+}
+
+.header-row {
      background: #f47b1f;
      color: #fff;
 
  }
 .header-row .cell{font-size: 18px;}
 .header-row .cell a {
-color: #fff;
-text-decoration: none;
-font-family: monospace;
-display: flex;
-flex-direction: row;
-justify-content: space-between;
+    color: #fff;
+    text-decoration: none;
+    font-family: monospace;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 .row {
     display: table-row;
     color: black;
-    
 }
 
 .cell {
