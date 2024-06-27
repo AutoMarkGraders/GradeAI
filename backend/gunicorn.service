@@ -3,12 +3,12 @@ Description=gunicorn instance to server api
 After=network.target
 
 [Service]
-User=alan
-Group=alan
-WorkingDirectory=/home/alan/app/src/A/backend
-Environment="PATH=/home/alan/app/venv/bin"
-EnvironmentFile=/home/alan/.env
-ExecStart=/home/alan/app/venv/bin/gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:8000
+User=Alan
+Group=Alan
+WorkingDirectory=/home/Alan/app/src/backend/
+Environment="PATH=/home/Alan/app/venv/bin"
+EnvironmentFile=/home/Alan/.env
+ExecStart=/home/Alan/app/venv/bin/gunicorn -w 2 -k uvicorn.workers.UvicornWorker app.main:app --bind 0.0.0.0:8000
 
 [Install]
 WantedBy=multi-user.target
