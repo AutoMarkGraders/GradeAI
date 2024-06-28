@@ -23,4 +23,4 @@ app.include_router(delete.router)
 
 @app.get("/")
 def root():
-    return {"message":"hello there"}
+    return {"message":"check out api.gradeai.site/docs for api documentation"}
