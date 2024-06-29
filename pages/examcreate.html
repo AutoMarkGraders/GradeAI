@@ -64,7 +64,7 @@
 
                     // Send post request to backend
                     $.ajax({
-                    url: 'http://127.0.0.1:8000/exam/create',
+                    url: 'https://api.gradeai.site/exam/create',
                     type: 'post',
                     dataType: 'json',
                     contentType: 'application/json',
@@ -115,7 +115,7 @@
 
                 // send post request to backend
                 $.ajax({
-                url: 'http://127.0.0.1:8000/exam/anskey/' + table_name,
+                url: 'https://api.gradeai.site/exam/anskey/' + table_name,
                 type: 'post',
                 dataType: 'json',
                 contentType: 'application/json',
@@ -166,7 +166,7 @@
 
                 // Send the AJAX request
                 $.ajax({
-                url: 'http://127.0.0.1:8000/exam/anspdf/' + table_name,
+                url: 'https://api.gradeai.site/exam/anspdf/' + table_name,
                 type: 'POST',
                 data: formData,
                 contentType: false, // to prevent jQuery from setting the content type
@@ -210,7 +210,7 @@
                 
                 // send post request to backend
                 $.ajax({
-                url: 'http://127.0.0.1:8000/exam/evaluate/' + table_name,
+                url: 'https://api.gradeai.site/exam/evaluate/' + table_name,
                 type: 'post',
                 dataType: 'json',
                 contentType: 'application/json',
