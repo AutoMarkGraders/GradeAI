@@ -90,7 +90,7 @@
       var institution = sessionStorage.getItem("institution");
       
       $.ajax({
-        url: 'http://127.0.0.1:8000/view/student/'+institution,
+        url: 'https://api.gradeai.site/view/student/'+institution,
         method: 'GET',
         headers: {
           'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
