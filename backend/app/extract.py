@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 load_dotenv() # Load from .env file
 
 from pdf2image import convert_from_path
+# Specify the path to the Poppler binaries for ubuntu
+poppler_path = "/usr/bin"
 from fastapi import UploadFile
 import re
 
@@ -50,6 +52,7 @@ def extractText(pdf_file_path: str) -> list[str]:
   
   # Convert the PDF to of PIL Image objects
   images = convert_from_path(pdf_file_path) #requires system's PATH setup, something else on ubuntu
+  #images = convert_from_path(pdf_file_path, poppler_path=poppler_path) # for ubuntu
   
   # Save each image to the current directory and extract text
   for i, image in enumerate(images):
